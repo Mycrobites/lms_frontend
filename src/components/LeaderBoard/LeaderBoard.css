@@ -1,80 +1,77 @@
 .Leaderboard {
-  margin-bottom: 500px;
-  max-width: 450px;
-  width: 90vw;
-  padding: 15px;
+	max-width: 450px;
+	padding: 15px;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 30px;
 }
 
 .header h2 {
-  font-size: 25px;
-  font-weight: 600;
+	font-size: 25px;
+	font-weight: 600;
 }
 
 .header select {
-  width: 100px;
-  outline: none;
-  cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.4);
+	width: 100px;
+	outline: none;
+	cursor: pointer;
+	border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 table .title {
-  background-color: #f3f3f3;
-  padding: 10px;
+	background-color: #f3f3f3;
+	padding: 10px;
 }
 
 table {
-  width: 100%;
-  border: none;
-  border-collapse: collapse;
-  padding: 10px;
+	width: 100%;
+	border: none;
+	border-collapse: collapse;
+	padding: 10px;
 }
 
 table th {
-  font-size: 16px;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
-  text-align: left;
-  padding: 10px;
+	font-size: 16px;
+	font-weight: 600;
+	color: rgba(0, 0, 0, 0.5);
+	text-align: left;
+	padding: 10px;
 }
 
 table td {
-  margin: 5px 0;
-  padding: 10px;
+	margin: 5px 0;
+	padding: 10px;
 }
 
 table tr {
-  border: none;
-  padding: 10px;
+	border: none;
+	padding: 10px;
 }
 
 .Student {
-  width: 100%;
-  align-items: center;
+	width: 100%;
+	align-items: center;
 }
 
 .Student img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-right: 10px;
 }
 
 .Student .name {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .Student td,
 .name h3 {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
+	font-size: 14px;
+	font-weight: 600;
+	color: rgba(0, 0, 0, 0.5);
 }
-

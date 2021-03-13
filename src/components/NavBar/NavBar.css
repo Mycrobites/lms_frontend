@@ -1,103 +1,104 @@
 .navbar,
 .logo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .navbar {
-  padding: 20px;
-  position: sticky;
-  top: 0%;
-  border-bottom: 0.5px solid rgb(235, 235, 235);
-  z-index: 10;
-  height: 14vh;
+	padding: 20px;
+	position: sticky;
+	top: 0%;
+	border-bottom: 0.5px solid rgb(235, 235, 235);
+	z-index: 10;
+	height: 14vh;
+	background: white;
 }
 
 .logo img {
-  width: 200px;
-  height: 50px;
-  object-fit: contain;
+	width: 200px;
+	height: 50px;
+	object-fit: contain;
 }
 .user {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  color: rgb(100, 100, 100);
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	color: rgb(100, 100, 100);
 }
 .user > * {
-  margin: 0 10px;
+	margin: 0 10px;
 }
 .user button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  outline: none;
-  background: inherit;
-  cursor: pointer;
-  color: gray;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	outline: none;
+	background: inherit;
+	cursor: pointer;
+	color: gray;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
 }
 
 .user button:hover {
-  background: #eeeeee;
-  color: black;
+	background: #eeeeee;
+	color: black;
 }
 
 #notification {
-  margin: 0 20px;
-  position: relative;
+	margin: 0 20px;
+	position: relative;
 }
 
 #notification span {
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  color: white;
-  background: rgb(0, 110, 255);
-  width: 15px;
-  height: 15px;
-  font-size: 0.8em;
-  font-weight: 700;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	color: white;
+	background: rgb(0, 110, 255);
+	width: 15px;
+	height: 15px;
+	font-size: 0.8em;
+	font-weight: 700;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 @media only screen and (max-width: 650px) {
-  .navbar {
-    padding: 20px 10px;
-    position: sticky;
-    top: 0%;
-    border-bottom: 0.5px solid rgb(235, 235, 235);
-  }
-  .logo img {
-    width: 150px;
-    height: 50px;
-    object-fit: contain;
-  }
-  .user {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  #user-name {
-    display: none;
-  }
-  #notification {
-    margin: 0px;
-  }
+	.navbar {
+		padding: 20px 10px;
+		position: sticky;
+		top: 0%;
+		border-bottom: 0.5px solid rgb(235, 235, 235);
+	}
+	.logo img {
+		width: 150px;
+		height: 50px;
+		object-fit: contain;
+	}
+	.user {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	#user-name {
+		display: none;
+	}
+	#notification {
+		margin: 0px;
+	}
 }
 
 @media only screen and (max-width: 400px) {
-  .logo img {
-    width: 100px;
-    height: 50px;
-    object-fit: contain;
-    margin: 0 5px;
-  }
+	.logo img {
+		width: 100px;
+		height: 50px;
+		object-fit: contain;
+		margin: 0 5px;
+	}
 }

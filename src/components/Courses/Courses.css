@@ -1,0 +1,170 @@
+.Courses {
+  max-width: 800px;
+  width: 90vw;
+  padding: 15px;
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+}
+
+.header h2 {
+  font-size: 25px;
+  font-weight: 600;
+  margin-right: 20px;
+}
+
+.premium {
+  width: 100px;
+  font-weight: 600;
+  font-size: 12px;
+  background-color: #3172ff;
+  border: none;
+  color: #fff;
+  padding: 8px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  opacity: 0.5;
+}
+
+.bookmark,
+.search {
+  cursor: pointer;
+  outline: none;
+  background: transparent;
+  border: none;
+}
+
+.bookmark svg,
+.search svg {
+  font-size: 22px;
+}
+
+.bookmark svg {
+  color: #3172ff;
+}
+
+.search svg {
+  margin-left: 20px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.courses {
+  display: flex;
+  align-items: center;
+  margin: 15px 0 30px 0;
+}
+
+.courses img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.courses h2 {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: 600;
+}
+
+.course-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 30px;
+  justify-content: left;
+}
+
+.Course {
+  border-radius: 25px;
+  box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.course-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-title img {
+  border-radius: 20px;
+  margin-right: 20px;
+}
+
+.course-title h3 {
+  text-transform: uppercase;
+  font-size: 15px;
+  margin-bottom: 7px;
+}
+
+.title h2 {
+  font-size: 22px;
+}
+
+.instructor {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px 0;
+  position: relative;
+}
+
+.instructor::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: rgba(0, 0, 0, 0.07);
+  border-radius: 5px;
+}
+
+.instructor h2 {
+  font-size: 18px;
+}
+
+.instructor p {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 18px;
+}
+
+.instructor img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0 15px;
+}
+
+.progress {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.progress h3 {
+  font-size: 18px;
+}
+
+.progress img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+  justify-self: end;
+}

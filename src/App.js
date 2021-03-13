@@ -1,12 +1,15 @@
-import React from 'react'
-import './App.css';
+import Courses from "./components/Courses/Courses.jsx";
+import LeaderBoard from "./components/LeaderBoard/LeaderBoard.jsx";
+import UpcomingLessons from "./components/UpcomingLessons/UpcomingLessons.jsx";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-    this is react dashboard
+      <UpcomingLessons />
+      <Courses />
+      <LeaderBoard />
     </div>
   );
-}
+};
 
 export default App;

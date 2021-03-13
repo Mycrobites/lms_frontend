@@ -1,10 +1,13 @@
 import React from 'react'
+import NavBar from '../../components/NavBar/NavBar'
+import SideBar from '../../components/SideBar/SideBar'
 import './Achievement.css'
 
 const Achievement = () => {
     return (
         <div>
-            this is achievement page
+            <NavBar/>
+            <SideBar active={"achievement"}/>
         </div>
     )
 }

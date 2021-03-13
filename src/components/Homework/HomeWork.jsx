@@ -11,7 +11,7 @@ const Subject = (props) =>{
     
     return(
         <div className="Subject">
-            <div> 
+            <div style={{marginLeft: "-35px"}}> 
                 <PieChart width={100} height={100}>
                     <text
                         x={50}
@@ -19,7 +19,7 @@ const Subject = (props) =>{
                         textAnchor="middle"
                         dominantBaseline="middle"
                     >
-                        {props.percent}
+                        {`${props.percent} %`}
                     </text>
                     <Pie
                         data={data}
@@ -35,13 +35,13 @@ const Subject = (props) =>{
                         <Cell
                         key="test"
                         
-                        fill="#82ca9d"
+                        fill="cyan"
                         />
                     </Pie>
                     </PieChart>
                 </div>
             <div className="timing1">
-                <div style={{paddingTop: "15px"}}><h2>{props.name}</h2><br/>
+                <div ><h2>{props.name}</h2><br/>
                     Sep 7, 2021
                 </div>
                    

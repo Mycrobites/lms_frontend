@@ -3,7 +3,7 @@ import CalendarComponent from '../../components/Calendar/Calendar'
 import Courses from '../../components/Courses/Courses'
 import LeaderBoard from '../../components/LeaderBoard/LeaderBoard'
 import UpcomingLessons from '../../components/UpcomingLessons/UpcomingLessons'
-
+import Task from '../../components/Task/Task'
 import './Home.css'
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
             <LeaderBoard/>
             <Courses/>
             <CalendarComponent />
-            
+            <Task/>
         </div>
     )
 }

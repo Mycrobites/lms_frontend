@@ -1,6 +1,11 @@
 .Leaderboard {
-	max-width: 450px;
+	max-width: 600px;
+	height: 350px;
+	overflow: scroll;
 	padding: 15px;
+}
+.Leaderboard::-webkit-scrollbar {
+	display: none;
 }
 
 .header {
@@ -10,7 +15,7 @@
 }
 
 .header h2 {
-	font-size: 25px;
+	font-size: 1.5em;
 	font-weight: 600;
 }
 
@@ -18,7 +23,13 @@
 	width: 100px;
 	outline: none;
 	cursor: pointer;
-	border: 1px solid rgba(0, 0, 0, 0.4);
+	border: none;
+	background: #f1f1f1;
+	padding: 5px;
+	font-weight: 600;
+}
+.header select:focus {
+	border: 0.5px solid blue;
 }
 
 table .title {
@@ -34,7 +45,7 @@ table {
 }
 
 table th {
-	font-size: 16px;
+	font-size: 13px;
 	font-weight: 600;
 	color: rgba(0, 0, 0, 0.5);
 	text-align: left;
@@ -71,7 +82,8 @@ table tr {
 
 .Student td,
 .name h3 {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 600;
 	color: rgba(0, 0, 0, 0.5);
+	text-align: center;
 }

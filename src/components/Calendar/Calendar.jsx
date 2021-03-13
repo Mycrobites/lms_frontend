@@ -8,7 +8,8 @@ const CalendarComponent = () => {
     return (
         <div className='calendar'>
        <Calendar onChange={onChange}
-       value={value} />
+       value={value}
+       className='react-calendar' />
         </div>
     )
 }

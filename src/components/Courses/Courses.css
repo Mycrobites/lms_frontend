@@ -1,189 +1,100 @@
 .Courses {
-	max-width: 800px;
-	width: 90vw;
-	padding: 15px;
-	margin-top: 50px;
-	margin-bottom: 100px;
+  /* max-width: 800px;
+  width: 90vw; */
+  padding: 15px;
+  margin-top: 50px;
+  margin-bottom: 100px;
 }
 
-.header {
-	display: grid;
-	grid-template-columns: auto 1fr auto auto;
-}
-
-.header h2 {
-	font-size: 25px;
-	font-weight: 600;
-	margin-right: 20px;
-}
-
-.premium {
-	width: 100px;
-	font-weight: 600;
-	font-size: 12px;
-	background-color: #3172ff;
-	border: none;
-	color: #fff;
-	padding: 8px 0;
-	border-radius: 10px;
-	cursor: pointer;
-	outline: none;
-	opacity: 0.5;
-}
-
-.bookmark,
-.search {
-	cursor: pointer;
-	outline: none;
-	background: transparent;
-	border: none;
-}
-
-.bookmark svg,
-.search svg {
-	font-size: 22px;
-}
-
-.bookmark svg {
-	color: #3172ff;
-}
-
-.search svg {
-	margin-left: 20px;
-	color: rgba(0, 0, 0, 0.4);
+.Courses h2 {
+  font-size: 1.2em;
+  font-weight: 600;
 }
 
 .courses {
-	display: flex;
-	align-items: center;
-	margin: 15px 0 30px 0;
+  display: flex;
+  align-items: center;
+  margin: 15px 0 30px 0;
 }
 
 .courses img {
-	width: 50px;
-	height: 50px;
-	object-fit: cover;
-	border-radius: 50%;
-	margin-right: 15px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 15px;
 }
 
 .courses h2 {
-	font-size: 18px;
-	color: rgba(0, 0, 0, 0.4);
-	font-weight: 600;
+  font-size: 1em;
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: 600;
+}
+
+.header h2 {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-bottom: 25px;
 }
 
 .course-cards {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-	grid-gap: 30px;
-	justify-content: left;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 30px;
+  justify-content: left;
 }
 
 .Course {
-	border-radius: 25px;
-	box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
-	padding: 25px;
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
-	flex-direction: column;
-	cursor: pointer;
+  border-radius: 25px;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  cursor: pointer;
 }
 
 .Course:hover {
-	box-shadow: 5px 10px 20px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 10px 20px 10px rgba(0, 0, 0, 0.1);
+}
+
+.enrolled-on h3 {
+  font-size: 0.9em;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+  margin-top: 5px;
 }
 
 .course-title {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.course-title img {
-	width: 50px;
-	height: 50px;
-	object-fit: contain;
-	border-radius: 20px;
-	margin-right: 20px;
-}
-
-.course-title h3 {
-	text-transform: uppercase;
-	font-size: 14px;
-	margin-bottom: 7px;
-	font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title h2 {
-	font-size: 20px;
-	font-weight: 700;
+  font-size: 1.15em;
+  font-weight: 700;
 }
 
-.instructor {
-	width: 100%;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	padding: 20px 0;
-	position: relative;
+.course-progress {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  margin-top: 10px;
+  background: none;
+  height: 30px;
 }
 
-.instructor::after {
-	content: '';
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 5px;
-	background-color: rgba(0, 0, 0, 0.07);
-	border-radius: 5px;
+.course-progress h3 {
+  font-size: 16px;
+  font-weight: 700;
 }
 
-.instructor h2 {
-	font-size: 16px;
-	font-weight: 700;
-}
-
-.instructor p {
-	font-weight: 600;
-	color: rgba(0, 0, 0, 0.4);
-	font-size: 16px;
-}
-
-.instructor img {
-	width: 40px;
-	height: 40px;
-	object-fit: cover;
-	border-radius: 50%;
-	margin: 0 15px;
-}
-progress {
-	height: 20px;
-	width: 150px;
-}
-
-.progress {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-top: 20px;
-	background: none;
-	height: 30px;
-}
-
-.progress h3 {
-	font-size: 16px;
-	margin: 0 5px;
-	font-weight: 700;
-}
-
-.progress img {
-	width: 30px;
-	height: 30px;
-	object-fit: cover;
-	border-radius: 50%;
-	justify-self: end;
+.course-progress progress {
+  height: 20px;
+  width: 80%;
+  align-self: center;
+  margin-left: 10%;
 }

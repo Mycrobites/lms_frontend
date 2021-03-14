@@ -1,12 +1,22 @@
 .box{
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: aliceblue;
-    text-align: center;
-    width: auto;
-    display:inline-block;
-    border:2px solid aquamarine;
-    border-radius: 1em;
-    box-shadow: 5px 10px grey;
+    width: fit-content;
+    border-radius: 25px;
+	box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.1);
+	padding: 25px;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+.timing h2 {
+	font-size: 1.1em;
+	font-weight: 500;
+}
+
+.timing p {
+	font-size: 10px;
+	font-weight: 600;
 }
 
 .heading{
@@ -20,11 +30,31 @@
 
 }
 
-.List{
-    /* display: flex; */
-}
-
 .Task{
     padding: 10px;
     text-align: center;
 }
+
+.Task {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 10px;
+    background-color: white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.checkbox__control {
+    display: inline-grid;
+    width: 1em;
+    height: 1em;
+    border-radius: 0.25em;
+    border: 0.1em solid currentColor;
+  }
+
+.plus{
+    float: right;
+}
+
+  

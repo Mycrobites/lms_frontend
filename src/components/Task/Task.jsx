@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Task.css';
-import plus from './icons8-plus-24.png';
+// import plus from './icons8-plus-24.png';
 import axios from 'axios';
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -8,7 +8,7 @@ import { Modal } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// import AddNewTodoModal from './Modal'
+import AddIcon from '@material-ui/icons/Add';
 
 const ax = axios.create({
   baseURL: 'https://lms-seg.herokuapp.com/api/todo/',
@@ -57,32 +57,8 @@ const sendTask = (url, task) =>
         },
       }));
     
-    
-    
     function AddNewTodoModal(props){
         const classes = useStyles();
-        const [taskName, setName] = React.useState();
-        const [dueDate, setDate] = React.useState();
-
-        const handleName=(event)=>{
-            event.preventDefault();
-            setName(event.target.value);
-        }
-        const handleDate=(event)=>{
-            event.preventDefault();
-            setDate(event.target.value);
-        }
-
-        const createNewTask=()=> {
-            const newTodo = {
-              title: taskName,
-              dueDate: dueDate,
-              isComplete: false,
-              user: 28
-            };
-            addTask(newTodo);
-            props.tasks = [...props.tasks, newTodo];
-        };
 
         return (
             <Modal
@@ -96,13 +72,12 @@ const sendTask = (url, task) =>
           >
             
             <Modal.Body>
-              <form method="POST" className={classes.container}>
+              <form method="POST" className={classes.container} onSubmit={props.createNewTask}>
                 <TextField
                   id="taskName"
                   label="Task Name"
                   autoComplete="current-password"
                   className={classes.textField}
-                  onChange={handleName}
                 />
                 <TextField
                   id="date"
@@ -112,14 +87,13 @@ const sendTask = (url, task) =>
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  onChange={handleDate}
                 />
                 <Button 
                   type="submit"
                   style={{ outline: 'none', marginTop: '10px'}}
                   variant="contained"
                   color="primary"
-                  onClick={createNewTask}
+                  onClick={props.onHide}
                 >
                   Add new
                 </Button>
@@ -133,35 +107,66 @@ const sendTask = (url, task) =>
       };
 
 
+class Tasks extends React.Component{
+  state = {
+    tasks: [],
+    modalShow: false
+  };
 
-function Task(){
-    var [tasks, setTasks] = useState([]);
-    const [modalShow, setModalShow] = React.useState(false);
+  showModal(){
+    this.setState({
+      modalShow: true,
+    });
+  };
 
-    useEffect(()=>{
-        let mounted = true;
-        ax
-            .get('Abhinay')
-            .then(res =>{
-                if(mounted) {
-                    setTasks(res.data);
-                }
-            })
-            .catch(err=>{
-                throw err;
-            });
-            return () => mounted = false;
-    }, []);
+  hideModal(){
+    this.setState({
+      modalShow: false,
+    });
+  };
 
+  
 
-    const handleChange = (event)=>{
-        let todo = tasks;
-        todo.forEach(task => {
-            if(task.id === event.target.value){
-                task.isComplete = event.target.checked;
-            }
-        })
-        tasks = todo;
+  render(){
+    let mounted = true;
+    ax
+      .get('Abhinay')
+      .then(res =>{
+        this.setState(
+            this.state.tasks = res.data
+        );
+      })
+      .catch(err=>{
+          throw err;
+      });
+
+    const handleChange = (id)=>{
+      let task = this.state.tasks.find(task => task.id === id);
+      if (task.isComplete === false){
+        task.isComplete = true;
+        ax.put(`https://lms-seg.herokuapp.com/api/todo/edit/${task.id}`, task)
+      }else{
+        task.isComplete = false;
+        ax.put(`https://lms-seg.herokuapp.com/api/todo/edit/${task.id}`, task)
+      }
+      let tasks = [...this.state.tasks]
+      this.setState({
+        tasks: tasks,
+      });
+    };
+
+    const createNewTask=(event)=> {
+      event.preventDefault();
+      const taskName = event.target.taskName.value;
+      const dueDate = event.target.date.value;
+      const newTodo = {
+        title: taskName,
+        dueDate: dueDate,
+        isComplete: false,
+        user: 28
+      };
+      addTask(newTodo);
+      this.state.tasks = [...this.state.tasks, newTodo];
     };
 
 
@@ -169,26 +174,27 @@ function Task(){
         <div className="box">
             <div className="heading">
                 Tasks
-                <div className="plus"><img src={plus} alt="hi" onClick={() => { setModalShow(true) }}/>
+                <div className="plus"><AddIcon onClick={() => { this.showModal() }}/>
                 <AddNewTodoModal
-                  show={modalShow}
-                  onHide={() => setModalShow(false)}
-                  tasks={tasks}
+                  show={this.state.modalShow}
+                  onHide={() => this.hideModal()}
+                  createNewTask={createNewTask}
                 />
                 </div>
             </div>
             <div className="List">
-                {tasks.map(task => 
+                {this.state.tasks.map((task) => (
                     <div key={task.id} className="Task">
-                        <input key={task.id} onChange={handleChange} type="checkbox" checked={task.isComplete} value={task.id}/>
+                        <input onClick={() => handleChange(task.id)} type="checkbox" checked={task.isComplete} value={task.id}/>
                         {task.title}<br/>
                         {task.dueDate}
-                        <EditRoundedIcon onClick={()=>{deleteTask(task.id)}}/>
+                        <DeleteIcon onClick={()=>{deleteTask(task.id)}}/>
                     </div>
-                )}
+                ))}
             </div>
         </div>
     );
+  }
 }
 
-export default Task;
+export default Tasks;

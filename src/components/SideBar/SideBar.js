@@ -1,11 +1,10 @@
-import React from "react";
-import "./SideBar.css";
 import { Link } from "react-router-dom";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import NoteAddOutlinedIcon from "@material-ui/icons/NoteAddOutlined";
 import ForumOutlinedIcon from "@material-ui/icons/ForumOutlined";
 import EmojiEventsOutlinedIcon from "@material-ui/icons/EmojiEventsOutlined";
+import "./SideBar.css";
 
 const SideBar = ({ active }) => {
   return (

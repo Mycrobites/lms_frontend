@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Student from "./Student.jsx";
+import Student from "./Student.js";
 import students from "./data";
 import "./LeaderBoard.css";
 

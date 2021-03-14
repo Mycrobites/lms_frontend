@@ -1,9 +1,4 @@
 .home {
-	margin-left: 250px;
-}
-
-@media only screen and (max-width: 900px) {
-	.home {
-		margin-left: 100px;
-	}
+  display: grid;
+  place-items: center;
 }

@@ -1,0 +1,4 @@
+.achievement {
+  display: grid;
+  place-items: center;
+}

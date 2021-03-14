@@ -1,4 +1,14 @@
 .Dashboard {
   margin-left: 220px;
-  padding: 10px;
+}
+
+.dashboard-items {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
+}
+
+@media (max-width: 900px) {
+  .Dashboard {
+    margin-left: 70px;
+  }
 }

@@ -113,10 +113,12 @@
 	text-transform: uppercase;
 	font-size: 14px;
 	margin-bottom: 7px;
+	font-weight: 700;
 }
 
 .title h2 {
 	font-size: 20px;
+	font-weight: 700;
 }
 
 .instructor {
@@ -134,13 +136,14 @@
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 3px;
+	height: 5px;
 	background-color: rgba(0, 0, 0, 0.07);
 	border-radius: 5px;
 }
 
 .instructor h2 {
 	font-size: 16px;
+	font-weight: 700;
 }
 
 .instructor p {
@@ -156,6 +159,10 @@
 	border-radius: 50%;
 	margin: 0 15px;
 }
+progress {
+	height: 20px;
+	width: 150px;
+}
 
 .progress {
 	width: 100%;
@@ -163,11 +170,14 @@
 	justify-content: space-between;
 	align-items: center;
 	margin-top: 20px;
+	background: none;
+	height: 30px;
 }
 
 .progress h3 {
-	font-size: 14px;
+	font-size: 16px;
 	margin: 0 5px;
+	font-weight: 700;
 }
 
 .progress img {

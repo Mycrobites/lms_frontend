@@ -16,7 +16,7 @@ const Course = (props) => {
       <div className="progress">
         <h3>{props.progress}%</h3>
         <div>
-          <progress value={props.progress} max={100} />
+          <progress  value={props.progress} max={100} />
         </div>
         <h3>{props.completed}</h3>
         <img src={props.flag} alt={props.title} />

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Loader from "../Loader/Loader";
 import Lesson from "./Lesson";
 import axios from "../../axios/axios";
 import "./UpcomingLessons.css";
@@ -10,9 +11,7 @@ const UpcomingLessons = () => {
   useEffect(() => {
     const fetchUpcomingEvents = async () => {
       try {
-        const { data } = await axios.post("/api/postUpcomingEvents/", {
-          user: "admin",
-        });
+        const { data } = await axios.get("/api/upcomingEvents/rajat");
         const sortedData = data
           .sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp))
           .reverse();

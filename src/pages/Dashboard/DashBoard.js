@@ -18,7 +18,7 @@ const DashBoard = () => {
         <Calendar />
         <Courses />
         <HomeWork />
-        <Task />
+        {/* <Task /> */}
         {/* <Task2 /> */}
       </div>
     </div>

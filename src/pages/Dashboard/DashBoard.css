@@ -2,7 +2,7 @@
   margin-left: 220px;
 }
 
-.dashboard-items {
+/* .dashboard-items {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
@@ -16,8 +16,8 @@
   grid-column: 2/4;
   grid-row: 3/4;
 }
+*/
 
-.dashboard-items .
 @media (max-width: 900px) {
   .Dashboard {
     margin-left: 70px;

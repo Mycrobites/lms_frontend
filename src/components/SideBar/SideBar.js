@@ -68,7 +68,7 @@ const SideBar = ({ active }) => {
           </Link>
         </div>
 
-        <div id={active === "forum" ? "active" : ""} className="menu">
+        <div id={active === "forum" ? "active" : ""} className="forum menu">
           <Link to="/forum">
             <ForumOutlinedIcon />
             Forum

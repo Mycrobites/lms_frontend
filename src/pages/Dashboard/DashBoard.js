@@ -3,6 +3,8 @@ import UpcomingLessons from "../../components/UpcomingLessons/UpcomingLessons";
 import Calendar from "../../components/Calendar/Calendar";
 import Courses from "../../components/Courses/Courses";
 import LeaderBoard from "../../components/LeaderBoard/LeaderBoard";
+import HomeWork from "../../components/Homework/HomeWork";
+// import Task2 from "../../components/Task/Task2";
 import Task from "../../components/Task/Task";
 import "./DashBoard.css";
 
@@ -15,7 +17,9 @@ const DashBoard = () => {
         <LeaderBoard />
         <Calendar />
         <Courses />
+        <HomeWork />
         <Task />
+        {/* <Task2 /> */}
       </div>
     </div>
   );

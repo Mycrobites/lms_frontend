@@ -5,7 +5,7 @@ const Course = (props) => {
     cname,
     total_lesson,
     date_of_enrollment,
-    is_complete,
+    // is_complete,
     percentage_completed,
     course_complete_percentage,
   } = props;

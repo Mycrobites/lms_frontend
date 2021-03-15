@@ -3,7 +3,7 @@ import "./Forum.css";
 
 const Forum = () => {
   return (
-    <div className="forum">
+    <div className="Forum">
       <SideBar active="forum" />
       Forum page
     </div>

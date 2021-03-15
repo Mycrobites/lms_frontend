@@ -1,0 +1,97 @@
+.Tasks {
+  padding: 15px;
+}
+
+.Tasks h1 {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.task-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.task-header button {
+  padding: 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: transparent;
+  margin-top: -7px;
+  border-radius: 50%;
+  margin-left: 5px;
+  padding: 5px;
+  transition: all 0.2s linear;
+}
+
+.task-header button:hover {
+  background-color: #eee;
+}
+
+.task-header button svg {
+  font-size: 25px;
+}
+
+.Task {
+  width: 400px;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  grid-gap: 10px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 15px;
+  margin: 15px 0;
+}
+
+.Task > * {
+  align-self: center;
+}
+
+input[type="checkbox"] {
+  padding: 100px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.task-title h3 {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.task-title p {
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+  margin: 0;
+}
+
+.edit--button,
+.delete--button {
+  cursor: pointer;
+  outline: none !important;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.edit--button svg,
+.delete--button svg {
+  font-size: 20px;
+}
+
+.edit--button:hover svg {
+  color: #435772 !important;
+}
+.delete--button:hover svg {
+  color: red;
+}

@@ -22,7 +22,7 @@ const Lesson = ({ timeStamp, topic, link }) => {
         <h2>{topic}</h2>
       </div>
       <a href={link} target="_blank" rel="noreferrer">
-        Lecture link
+        Join here
       </a>
     </div>
   );

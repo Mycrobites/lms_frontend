@@ -1,8 +1,9 @@
 .Leaderboard {
-  /* max-width: 600px; */
-  /* height: 350px; */
+  max-width: 600px;
+  height: 350px;
   overflow: scroll;
   padding: 15px;
+  margin-bottom: 50px;
 }
 .Leaderboard::-webkit-scrollbar {
   display: none;
@@ -51,7 +52,7 @@ table th {
   font-size: 13px;
   font-weight: 600;
   color: rgba(0, 0, 0, 0.5);
-  text-align: left;
+  text-align: center;
   padding: 10px;
 }
 

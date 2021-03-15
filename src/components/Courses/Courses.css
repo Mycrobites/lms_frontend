@@ -1,10 +1,15 @@
 .Courses {
-  /* max-width: 800px;
-  width: 90vw; */
+  max-width: 1000px;
+  width: 90vw; 
   padding: 15px;
-  margin-top: 50px;
-  margin-bottom: 100px;
+  margin: 50px 0;
+  height: 400px;
+ 
 }
+.Courses::-webkit-scrollbar{
+  display:none;
+}
+
 
 .Courses h2 {
   font-size: 1.2em;
@@ -38,13 +43,18 @@
 }
 
 .course-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 30px;
-  justify-content: left;
+display: flex;
+overflow: scroll;
+height: 250px;
+}
+.course-cards::-webkit-scrollbar{
+  display:none;
 }
 
 .Course {
+ min-width: 400px;
+ height: 200px;
+  margin: 0 20px;
   border-radius: 25px;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
   padding: 25px;
@@ -58,6 +68,7 @@
 .Course:hover {
   box-shadow: 5px 10px 20px 10px rgba(0, 0, 0, 0.1);
 }
+
 
 .enrolled-on h3 {
   font-size: 0.9em;

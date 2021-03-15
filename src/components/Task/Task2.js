@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "../../axios/axios";
-import Modal from "./Modal";
 import SingleTask from "./SingleTask";
 import { IoAdd } from "react-icons/io5";
 import "./Task2.css";

@@ -1,0 +1,54 @@
+.box{
+    width: fit-content;
+    border-radius: 25px;
+	box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.1);
+	padding: 25px;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+.box h1 {
+	font-size: 24px;
+	font-weight: 600;
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.heading{
+    margin: 10px;
+}
+
+.Task {
+	/* width: 300px;
+	height: 120px; */
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	grid-gap: 10px;  
+	justify-content: space-evenly;
+	align-items: center;
+	background-color: white;
+	box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.1);
+	margin: 10px 0;
+	padding: 15px;
+	border-radius: 15px;
+	font-size: 0.9em;
+	font-weight: 600;
+	color: black;
+	text-align: center;
+}
+
+input[type=text] {
+	padding: 6px 20px;
+	margin: 8px 2px;
+	box-sizing: border-box;
+	border-radius: 2px;
+	border-color: black;
+}
+input[type=date] {
+	padding: 5px 10px;
+	/* margin: 8px 2px; */
+	box-sizing: border-box;
+	border-radius: 2px;
+}

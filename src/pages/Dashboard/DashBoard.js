@@ -6,7 +6,9 @@ import LeaderBoard from "../../components/LeaderBoard/LeaderBoard";
 import HomeWork from "../../components/Homework/HomeWork";
 import Task2 from "../../components/Task/Task2";
 import Task from "../../components/Task/Task";
+import Tasks from "../../components/Tasks/Task"
 import "./DashBoard.css";
+import SingleTasks from "../../components/Task/SingleTask";
 
 const DashBoard = () => {
   return (
@@ -18,7 +20,7 @@ const DashBoard = () => {
         <Calendar />
         <Courses />
         <HomeWork />
-       <Task2 />
+       <Tasks />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import EditIcon from '@material-ui/icons/Edit';
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import EditIcon from "@material-ui/icons/Edit";
 import axios from "../../axios/axios";
 import months from "../Courses/months";
 
@@ -8,17 +8,16 @@ const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
   const [completed, setCompleted] = useState(isCompleted);
 
   const updateTask = async () => {
-    try{
-     await axios.put("/api/todo/edit" , {
-       "id": "hdshdbcsjdhsjcioaeuf",
-       "title": "hello world",
-       "dueDate": "2021-03-09",
-       "isComplete": false,
-       "user": 115
-     })
-    }
-    catch(err){
-      console.log(err.message)
+    try {
+      await axios.put("/api/todo/edit", {
+        id: "hdshdbcsjdhsjcioaeuf",
+        title: "hello world",
+        dueDate: "2021-03-09",
+        isComplete: false,
+        user: 115,
+      });
+    } catch (err) {
+      console.log(err.message);
     }
   };
 
@@ -31,7 +30,10 @@ const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
   };
 
   return (
-    <div className="Task">
+    <div
+      className="Task"
+      style={{ textDexoration: isCompleted ? "line-through" : "none" }}
+    >
       <input
         type="checkbox"
         checked={completed}

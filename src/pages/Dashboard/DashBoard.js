@@ -4,11 +4,11 @@ import Calendar from "../../components/Calendar/Calendar";
 import Courses from "../../components/Courses/Courses";
 import LeaderBoard from "../../components/LeaderBoard/LeaderBoard";
 import HomeWork from "../../components/Homework/HomeWork";
-import Task2 from "../../components/Task/Task2";
 import Task from "../../components/Task/Task";
-import Tasks from "../../components/Tasks/Task"
+// import Task from "../../components/Task/Task";
+// import Tasks from "../../components/Tasks/Task";
 import "./DashBoard.css";
-import SingleTasks from "../../components/Task/SingleTask";
+// import SingleTasks from "../../components/Task/SingleTask";
 
 const DashBoard = () => {
   return (
@@ -20,7 +20,7 @@ const DashBoard = () => {
         <Calendar />
         <Courses />
         <HomeWork />
-       <Tasks />
+        <Task />
       </div>
     </div>
   );

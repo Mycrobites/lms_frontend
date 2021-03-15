@@ -1,27 +1,7 @@
-.Subject {
-  width: 300px;
-  height: 120px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: white;
-  box-shadow: 2px 2px 5px 3px rgba(0, 0, 0, 0.1);
-  margin: 15px 0;
-  padding: 15px;
-  border-radius: 15px;
-  font-size: 0.9em;
-  font-weight: 600;
-  color: gray;
-}
-
 .box1 {
-  margin: 50px 0;
-  width: fit-content;
-  height: fit-content;
   padding: 15px;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: flex-start;
   flex-direction: column;
 }
 
@@ -29,6 +9,20 @@
   font-size: 1.4em;
   font-weight: 600;
   margin-bottom: 20px;
+}
+
+.Subject {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  box-shadow: 2px 2px 5px 3px rgba(0, 0, 0, 0.1);
+  margin: 15px 0;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: gray;
 }
 
 .Subject h2 {

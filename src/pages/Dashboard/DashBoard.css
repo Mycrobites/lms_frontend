@@ -2,9 +2,10 @@
   margin-left: 220px;
 }
 
-/* .dashboard-items {
+.dashboard-items {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 10px;
 }
 
 .dashboard-items .Courses {
@@ -12,14 +13,30 @@
   grid-row: 2/3;
 }
 
-.dashboard-items .Subject {
-  grid-column: 2/4;
+.dashboard-items .Tasks {
+  grid-column: 1/3;
   grid-row: 3/4;
 }
-*/
+
+.dashboard-items .box1 {
+  grid-column: 3/4;
+  grid-row: 2/4;
+  height: auto;
+}
+
+.dashboard-items > div {
+  height: 450px;
+  background-color: yellow;
+}
 
 @media (max-width: 900px) {
   .Dashboard {
     margin-left: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-items {
+    display: block;
   }
 }

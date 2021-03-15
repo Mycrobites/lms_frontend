@@ -1,9 +1,8 @@
 .Leaderboard {
-  max-width: 600px;
-  height: 350px;
+  /* max-width: 600px; */
+  /* height: 350px; */
   overflow: scroll;
   padding: 15px;
-  margin-bottom: 50px;
 }
 .Leaderboard::-webkit-scrollbar {
   display: none;
@@ -36,15 +35,16 @@
   border: 0.5px solid blue;
 }
 
-table .title {
-  background-color: #f3f3f3;
-  padding: 10px;
-}
-
 table {
   width: 100%;
   border: none;
   border-collapse: collapse;
+  padding: 10px;
+  background-color: #fff;
+}
+
+table .title {
+  background-color: #f3f3f3;
   padding: 10px;
 }
 

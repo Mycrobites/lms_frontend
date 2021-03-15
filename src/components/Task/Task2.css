@@ -65,11 +65,12 @@ input[type="checkbox"] {
 }
 
 .task-title h3 {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 600;
 }
 
 .task-title p {
+  font-size: .9em;
   color: rgba(0, 0, 0, 0.5);
   font-weight: 600;
   margin: 0;

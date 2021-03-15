@@ -10,7 +10,7 @@ const SideBar = ({ active }) => {
   return (
     <div className="sidebar">
       <div className="sidebar-responsive">
-        <div id={active === "home" ? "active" : ""} className="menu">
+        <div id={active === "home" ? "active" : ""} className="menu home-menu">
           <Link to="/">
             <HomeOutlinedIcon />
           </Link>

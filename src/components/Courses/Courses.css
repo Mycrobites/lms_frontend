@@ -6,7 +6,7 @@
 }
 
 .Courses h2 {
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: 600;
 }
 
@@ -55,10 +55,6 @@
   align-items: flex-start;
   flex-direction: column;
   cursor: pointer;
-}
-
-.Course:hover {
-  box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .enrolled-on h3 {

@@ -35,7 +35,6 @@ const Course = (props) => {
       <div className="course-description">
         <p>{course_description}</p>
       </div>
-
       {/* <div className="course-progress">
         <h3>{percentage_completed}%</h3>
         <div>

@@ -1,6 +1,5 @@
 const Student = (props) => {
   const { rank, name, image, bestScore, points } = props;
-
   return (
     <tr className="Student">
       <td>{rank}</td>

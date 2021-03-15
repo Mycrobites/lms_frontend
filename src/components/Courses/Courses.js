@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Course from "./Course";
+import Loader from "../Loader/Loader";
 import axios from "../../axios/axios";
-// import { IoBookmark, IoSearch } from "react-icons/io5";
 import "./Courses.css";
 
 const Courses = () => {
@@ -25,7 +25,7 @@ const Courses = () => {
     <div className="Courses">
       <h2>My Courses</h2>
       {isLoading ? (
-        <h2>Loading...</h2>
+        <Loader />
       ) : (
         <>
           <div className="courses">

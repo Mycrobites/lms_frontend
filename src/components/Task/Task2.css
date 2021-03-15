@@ -3,7 +3,7 @@
 }
 
 .Tasks h1 {
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-weight: 600;
 }
 
@@ -91,7 +91,7 @@ input[type="checkbox"] {
 }
 
 .edit--button:hover svg {
-  color: #435772 !important;
+  color: #00 !important;
 }
 .delete--button:hover svg {
   color: red;

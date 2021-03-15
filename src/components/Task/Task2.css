@@ -1,5 +1,7 @@
 .Tasks {
   padding: 15px;
+  width: 450px;
+
 }
 
 .Tasks h1 {
@@ -35,7 +37,7 @@
 }
 
 .Task {
-  width: 400px;
+  width: 420px;
   display: grid;
   grid-template-columns: auto 1fr auto auto;
   grid-gap: 10px;
@@ -91,8 +93,53 @@ input[type="checkbox"] {
 }
 
 .edit--button:hover svg {
-  color: #00 !important;
+  color: #006EFF;
 }
 .delete--button:hover svg {
   color: red;
+}
+#hidden{
+  display: none;
+  transition: transform .5s ease-in;
+}
+#visible{
+  display: flex;
+}
+.add-task form{
+  width: 100%;
+  display: flex;
+  background: white;
+  justify-content: space-between;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+}
+
+input[type='text']{
+  border: none;
+  outline: none;
+  margin:  10px;
+
+}
+
+button[type='submit']{
+  border: none;
+  outline: none;
+  background: #006EFF;
+  color:white;
+  margin-left: 20px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  
+}
+.submit-comp{
+  display: flex;
+  justify-content: flex-end;
+  background: #006EFF;
+  border-radius: 10px;
+
+}
+.date{
+  display: flex;
+  align-items: center;
 }

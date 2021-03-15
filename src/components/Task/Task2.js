@@ -4,17 +4,37 @@ import SingleTask from "./SingleTask";
 import { IoAdd } from "react-icons/io5";
 import "./Task2.css";
 import Loader from "../Loader/Loader";
+import ClearIcon from '@material-ui/icons/Clear';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import './datePicker.css'
+
+
 
 const Task2 = () => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const[visible , setVisible]=useState(false)
+  const[newTask,setNewTask]=useState()
+  const [dueDate, setDueDate] = useState(new Date());
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
+
+  
+const handleChange = e=>{
+    setNewTask(e.target.value)
+}
+const toggleVisibility =()=>{
+  setVisible(!visible)
+}
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const { data } = await axios.get("/api/todo/rajat");
         setTasks(data);
-        console.log(data)
         setIsLoading(false);
       } catch (err) {
         console.log(err.message);
@@ -23,6 +43,8 @@ const Task2 = () => {
     fetchTasks();
   }, []);
 
+  
+    
 
 
   return (
@@ -30,11 +52,29 @@ const Task2 = () => {
     
       <div className="task-header">
         <h1>Tasks</h1>
-        <button>
-          <IoAdd />
+        <button onClick={toggleVisibility}>
+          {visible ? <ClearIcon/>:<IoAdd /> }
         </button>
       </div>
-
+  
+      
+      <div className='add-task' id={visible ? "visible" : "hidden"} >
+      <form onSubmit={handleSubmit}>
+      <input type="text" 
+      placeholder="Add New Task"
+      name="addTask"
+      value={newTask}
+      onChange={handleChange}/>
+      
+      <div className='submit-comp'>
+      <div className='date'><DatePicker selected={dueDate} onChange={date => setDueDate(date)} /></div>
+      
+      <button onClick={handleSubmit} type="submit">Add</button>
+      </div>
+      
+      </form>
+          
+      </div>
  
 
 

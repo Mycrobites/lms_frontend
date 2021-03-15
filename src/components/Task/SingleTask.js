@@ -7,10 +7,27 @@ import months from "../Courses/months";
 const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
   const [completed, setCompleted] = useState(isCompleted);
 
-  const updateTask = () => {};
+  const updateTask = async () => {
+    try{
+     await axios.put("/api/todo/edit" , {
+       "id": "hdshdbcsjdhsjcioaeuf",
+       "title": "hello world",
+       "dueDate": "2021-03-09",
+       "isComplete": false,
+       "user": 115
+     })
+    }
+    catch(err){
+      console.log(err.message)
+    }
+  };
 
   const deleteTask = async () => {
-
+    try {
+      await axios.delete(`/api/todo/edit/${id}`);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   return (

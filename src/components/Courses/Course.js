@@ -2,29 +2,41 @@ import months from "./months";
 
 const Course = (props) => {
   const {
-    cname,
-    total_lesson,
+    course_name,
+    course_image,
     date_of_enrollment,
-    // is_complete,
-    percentage_completed,
-    course_complete_percentage,
+    author,
+    author_picture,
+    course_description,
   } = props;
 
   return (
     <div className="Course">
-      <div className="title">
-        <h2>{cname}</h2>
+      <div className="course-title">
+        <img src={course_image} alt={course_name} />
+        <div>
+          <h2>{course_name}</h2>
+          <div className="enrolled-on">
+            <h3>
+              Enrolled on: {date_of_enrollment.split("-")[2]}{" "}
+              {date_of_enrollment.split("-")[1] < 10
+                ? months[date_of_enrollment.split("-")[1].split("")[1]]
+                : months[date_of_enrollment.split("-")[1]]}{" "}
+              {date_of_enrollment.split("-")[0]}
+            </h3>
+          </div>
+        </div>
       </div>
-      <div className="enrolled-on">
-        <h3>
-          Enrolled on: {date_of_enrollment.split("-")[2]}{" "}
-          {date_of_enrollment.split("-")[1] < 10
-            ? months[date_of_enrollment.split("-")[1].split("")[1]]
-            : months[date_of_enrollment.split("-")[1]]}{" "}
-          {date_of_enrollment.split("-")[0]}
-        </h3>
+      <div className="instructor">
+        <p>by</p>
+        <img src={author_picture} alt={author} />
+        <h3>{author}</h3>
       </div>
-      <div className="course-progress">
+      <div className="course-description">
+        <p>{course_description}</p>
+      </div>
+
+      {/* <div className="course-progress">
         <h3>{percentage_completed}%</h3>
         <div>
           <progress value={percentage_completed} max={100} />
@@ -32,7 +44,7 @@ const Course = (props) => {
         <h3>
           {Math.floor(course_complete_percentage)}/{total_lesson}
         </h3>
-      </div>
+      </div> */}
     </div>
   );
 };

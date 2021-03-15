@@ -11,9 +11,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const { data } = await axios.post("/api/postMyCourses/", {
-          user: "admin",
-        });
+        const { data } = await axios.get("/api/getMyCourses/rajat");
         setCourses(data.active);
         setIsLoading(false);
       } catch (err) {
@@ -35,7 +33,9 @@ const Courses = () => {
               src="https://res.cloudinary.com/diqqf3eq2/image/upload/v1586883423/person-4_t9nxjt.jpg"
               alt="..."
             />
-            <h2>{courses.length} Courses</h2>
+            <h2>
+              {courses.length} {courses.length === 1 ? "Course" : "Courses"}
+            </h2>
           </div>
           <div className="course-cards">
             {courses.map((course) => (

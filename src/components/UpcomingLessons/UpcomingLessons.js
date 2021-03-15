@@ -27,7 +27,7 @@ const UpcomingLessons = () => {
   return (
     <div className="UpcomingLessons">
       <h1>Upcoming Lessons</h1>
-      {isLoading && <h1>Loading...</h1>}
+      {isLoading && <Loader/>}
       <div className="lessons">
         {upcomingEvents.map((event) => (
           <Lesson key={event.id} {...event} />

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { IoTrash } from "react-icons/io5";
-import { GrEdit } from "react-icons/gr";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditIcon from '@material-ui/icons/Edit';
 import axios from "../../axios/axios";
 import months from "../Courses/months";
 
@@ -9,7 +9,9 @@ const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
 
   const updateTask = () => {};
 
-  const deleteTask = async () => {};
+  const deleteTask = async () => {
+
+  };
 
   return (
     <div className="Task">
@@ -29,10 +31,10 @@ const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
         </p>
       </div>
       <button onClick={updateTask} className="edit--button">
-        <GrEdit />
+        <EditIcon />
       </button>
       <button onClick={deleteTask} className="delete--button">
-        <IoTrash />
+        <DeleteOutlineIcon />
       </button>
     </div>
   );

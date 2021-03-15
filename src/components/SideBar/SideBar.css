@@ -49,6 +49,7 @@
   display: none;
 }
 
+
 @media only screen and (max-width: 900px) {
   .sidebar {
     height: 95vh;
@@ -60,6 +61,13 @@
     display: flex;
     background: transparent;
   }
+  
+  #active {
+    color: rgb(0, 110, 255);
+    background: none;
+   
+  }
+  
   .sidebar-responsive {
     width: 50px;
     display: flex;

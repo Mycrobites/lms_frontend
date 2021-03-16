@@ -2,7 +2,7 @@ const data = [
   {
     id: 1,
     rank: 1,
-    name: "Patrik Alves Devano",
+    name: "Patrik Alves Devano ",
     image: "https://avatars.githubusercontent.com/u/28497078?v=4",
     bestScore: 98,
     points: 2324,

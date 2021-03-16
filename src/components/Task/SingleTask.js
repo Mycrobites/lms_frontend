@@ -3,17 +3,23 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
 import axios from "../../axios/axios";
 import months from "../Courses/months";
+import { IoCloseOutline } from "react-icons/io5";
 
 const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
   const [completed, setCompleted] = useState(isCompleted);
+  const[showEdit,setShowEdit]=useState(false)
+  const[editTitle,setEditTitle]= useState(title)
+  const[editDate,setEditDate]= useState(dueDate)
 
-  const updateTask = async () => {
+  const updateTask = async (e) => {
+    e.preventDefault();
+    setShowEdit(!showEdit)
     try {
-      await axios.put("/api/todo/edit", {
-        id: "hdshdbcsjdhsjcioaeuf",
-        title: "hello world",
-        dueDate: "2021-03-09",
-        isComplete: false,
+      await axios.put(`/api/todo/edit/${id}`, {
+        id: id,
+        title: editTitle,
+        dueDate: editDate,
+        isComplete: completed,
         user: 115,
       });
     } catch (err) {
@@ -28,19 +34,21 @@ const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
       console.log(err.message);
     }
   };
+  const toggleEdit = ()=>{
+    setShowEdit(!showEdit)
+  }
 
   return (
     <div
-      className="Task"
-      style={{ textDexoration: isCompleted ? "line-through" : "none" }}
-    >
+      className="task-component">
+      <div className='Task'>
       <input
         type="checkbox"
         checked={completed}
         onChange={(e) => setCompleted(!completed)}
       />
       <div className="task-title">
-        <h3>{title}</h3>
+        <h3 style={{ textDexoration: isCompleted ? "line-through" : "none" }}>{title}</h3>
         <p>
           Due Date: {dueDate.split("-")[2]}{" "}
           {dueDate.split("-")[1] < 10
@@ -49,12 +57,34 @@ const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
           {dueDate.split("-")[0]}
         </p>
       </div>
-      <button onClick={updateTask} className="edit--button">
+      <button onClick={toggleEdit} className="edit--button">
         <EditIcon />
       </button>
       <button onClick={deleteTask} className="delete--button">
         <DeleteOutlineIcon />
       </button>
+      </div>
+
+      { showEdit && ( <div className='edit-task'>
+      
+      <form className='edit-task-form' onSubmit={updateTask}>
+            <input
+              type="text"
+              placeholder="Add New Task"
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+            />
+            <input
+              type="date"
+              value={editDate}
+              onChange={(e) => setEditDate(e.target.value)}
+            />
+            <button type="submit">save</button>
+            <IoCloseOutline onClick={e => setShowEdit(!showEdit)}/>
+          </form>
+    
+      </div>)}
+      
     </div>
   );
 };

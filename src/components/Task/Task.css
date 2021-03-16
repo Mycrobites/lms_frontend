@@ -39,7 +39,7 @@
   display: grid;
   grid-template-columns: auto 1fr auto auto;
   grid-gap: 10px;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   padding: 15px;
   border-radius: 15px;
@@ -106,7 +106,7 @@ input[type="checkbox"] {
   background: white;
   justify-content: space-between;
   border-radius: 10px;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
 }
 
@@ -118,7 +118,8 @@ input[type="text"] {
   padding: 10px;
   border: none;
   outline: none;
-  border-bottom: 0.05px solid lightgray;
+  border-bottom: 2px solid lightgray;
+  font-weight: 500;
 }
 
 input[type="date"] {
@@ -127,7 +128,8 @@ input[type="date"] {
   outline: none;
   cursor: pointer;
   outline: none;
-  border-bottom: 0.05px solid lightgray;
+  border-bottom: 2px solid lightgray;
+  font-weight: 500;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -141,10 +143,10 @@ input[type="date"]::placeholder {
   font-weight: 500;
 }
 
-.add-newtask input:focus {
+/* .add-newtask input:focus {
   border-color: #8c8de9;
   box-shadow: 0 0 5px rgb(156, 158, 238);
-}
+} */
 
 button[type="submit"] {
   cursor: pointer;
@@ -155,6 +157,7 @@ button[type="submit"] {
   border-radius: 5px;
   padding: 5px 10px;
   margin-bottom: 0;
+  font-weight: 500;
 }
 
 .submit-comp {
@@ -171,12 +174,13 @@ button[type="submit"] {
   background: white;
   border-radius: 10px;
   padding: 0 10px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 .edit-task-form input {
   border: none;
   outline: none;
-  border-bottom: 0.05px solid lightgray;
+  border-bottom: 2px solid lightgray;
   margin: 10px 0;
   font-weight: 500;
 }
@@ -197,7 +201,7 @@ button[type="submit"] {
 
 .Task:hover {
   cursor: pointer;
-  box-shadow: 2px 2px 10px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 6px 3px rgba(0, 0, 0, 0.1);
 }
 
 .error {
@@ -216,4 +220,20 @@ button[type="submit"] {
   margin: 0;
   font-size: 20px;
   margin-right: 10px;
+}
+
+.check-btn {
+  background: transparent;
+  padding: 0;
+  outline: none !important;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.check-btn svg {
+  color: rgb(22, 184, 22);
+  font-size: 25px;
+  margin: 0;
 }

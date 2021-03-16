@@ -1,6 +1,4 @@
 .Leaderboard {
-  /* max-width: 600px; */
-  /* height: 350px; */
   overflow: scroll;
   padding: 15px;
 }
@@ -19,6 +17,7 @@
   font-size: 1.4em;
   font-weight: 600;
   margin: 0;
+  margin-bottom: 0;
 }
 
 .header select {

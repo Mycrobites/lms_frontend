@@ -1,31 +1,9 @@
 .Courses {
-  /* max-width: 1000px; */
-  /* width: 90vw; */
   padding: 15px;
 }
 
 .Courses h2 {
   font-size: 1.4em;
-  font-weight: 600;
-}
-
-.courses {
-  display: flex;
-  align-items: center;
-  margin: 15px 0 30px 0;
-}
-
-.courses img {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: 15px;
-}
-
-.courses h2 {
-  font-size: 1em;
-  color: rgba(0, 0, 0, 0.4);
   font-weight: 600;
 }
 
@@ -36,8 +14,10 @@
 }
 
 .course-cards {
-  display: flex;
- 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-gap: 15px;
+  margin: 25px 0;
 }
 .course-cards::-webkit-scrollbar {
   display: none;
@@ -45,17 +25,15 @@
 
 .Course {
   border-radius: 10px;
-  box-shadow: 2px 2px 5px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   padding: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
   cursor: pointer;
 }
-.Course:hover{
-  box-shadow: 2px 2px 10px 6px rgba(0, 0, 0, 0.1);
+.Course:hover {
+  box-shadow: 2px 2px 6px 3px rgba(0, 0, 0, 0.1);
 }
 
 .enrolled-on h3 {
@@ -105,7 +83,6 @@
 
 .instructor {
   display: flex;
-  justify-content: center;
   align-items: center;
   margin: 10px;
 }
@@ -130,4 +107,26 @@
   margin: 0 10px;
   color: rgba(0, 0, 0, 0.5);
   font-weight: 500;
+  flex: 1;
+}
+
+.course-progress {
+  padding: 0 10px;
+}
+
+.all-courses-btn {
+  display: block;
+  margin: auto;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 5px 15px;
+  color: slateblue;
+  border-radius: 5px;
+}
+
+.all-courses-btn:hover {
+  background-color: rgba(160, 156, 156, 0.397);
 }

@@ -1,36 +1,36 @@
 import { useState, useEffect, useRef } from "react";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import EditIcon from "@material-ui/icons/Edit";
 import axios from "../../axios/axios";
 import months from "../Courses/months";
+import EditIcon from "@material-ui/icons/Edit";
 import { IoCloseOutline } from "react-icons/io5";
+import { MdCheckCircle, MdRadioButtonUnchecked } from "react-icons/md";
 
 const SingleTasks = (props) => {
-  const { id, title, dueDate, isCompleted, tasks, setTasks } = props;
-  const [completed, setCompleted] = useState(isCompleted);
+  const { id, title, dueDate, isComplete, tasks, setTasks } = props;
+  const [isCompleted, setIsCompleted] = useState(isComplete);
   const [showEdit, setShowEdit] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
   const [editDate, setEditDate] = useState(dueDate);
   const inputRef = useRef(null);
 
-  const updateTask = async (e) => {
-    e.preventDefault();
+  const updateTask = async () => {
     setShowEdit(!showEdit);
     try {
-      await axios.put(`/api/todo/edit/${id}`, {
-      ...props, isCompleted: completed,
-      });
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
-  const completeTask = async () => {
-    setCompleted(!completed);
-    try {
-      await axios.put(`/api/todo/edit/${id}`, {
-      ...props, isCompleted: completed,
-      });
+      const editedTask = {
+        id,
+        title: editTitle,
+        dueDate: editDate,
+        isComplete,
+        user: 115,
+      };
+      setTasks(
+        tasks.map((task) => {
+          if (task.id === id) return editedTask;
+          else return task;
+        })
+      );
+      await axios.put(`/api/todo/edit/${id}`, editedTask);
     } catch (err) {
       console.log(err.message);
     }
@@ -39,23 +39,39 @@ const SingleTasks = (props) => {
   const deleteTask = async () => {
     try {
       const deletedTasks = tasks.filter((task) => task.id !== id);
-      await axios.delete(`/api/todo/edit/${id}`);
       setTasks(deletedTasks);
+      await axios.delete(`/api/todo/edit/${id}`);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const completeTodo = async () => {
+    setIsCompleted(!isCompleted);
+    try {
+      const { data } = await axios.put(`/api/todo/edit/${id}`, {
+        id,
+        title,
+        dueDate,
+        isComplete: !isCompleted,
+        user: 115,
+      });
+      console.log(data);
     } catch (err) {
       console.log(err.message);
     }
   };
 
   useEffect(() => {
-    if (showEdit) {
-      inputRef.current.focus();
-    }
+    if (showEdit) inputRef.current.focus();
   }, [showEdit]);
 
   return (
     <div className="task-component">
       <div className="Task">
-        <input type="checkbox" checked={completed} onChange={completeTask} />
+        <button className="check-btn" onClick={completeTodo}>
+          {isCompleted ? <MdCheckCircle /> : <MdRadioButtonUnchecked />}
+        </button>
         <div className="task-title">
           <h3 style={{ textDexoration: isCompleted ? "line-through" : "none" }}>
             {title}

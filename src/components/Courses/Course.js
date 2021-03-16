@@ -8,6 +8,7 @@ const Course = (props) => {
     author,
     author_picture,
     course_description,
+    percentage_completed,
   } = props;
 
   return (
@@ -35,15 +36,13 @@ const Course = (props) => {
       <div className="course-description">
         <p>{course_description}</p>
       </div>
-      {/* <div className="course-progress">
-        <h3>{percentage_completed}%</h3>
+      <div className="course-progress">
+        <h3>Progress</h3>
         <div>
           <progress value={percentage_completed} max={100} />
         </div>
-        <h3>
-          {Math.floor(course_complete_percentage)}/{total_lesson}
-        </h3>
-      </div> */}
+        <h3>{percentage_completed}%</h3>
+      </div>
     </div>
   );
 };

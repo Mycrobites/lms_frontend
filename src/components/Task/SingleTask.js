@@ -5,28 +5,29 @@ import axios from "../../axios/axios";
 import months from "../Courses/months";
 import { IoCloseOutline } from "react-icons/io5";
 
-const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
+const SingleTasks = (props) => {
+
+  const { id, title, dueDate, isCompleted } = props
   const [completed, setCompleted] = useState(isCompleted);
   const[showEdit,setShowEdit]=useState(false)
   const[editTitle,setEditTitle]= useState(title)
   const[editDate,setEditDate]= useState(dueDate)
+  
+  
+ 
 
   const updateTask = async (e) => {
     e.preventDefault();
     setShowEdit(!showEdit)
     try {
       await axios.put(`/api/todo/edit/${id}`, {
-        id: id,
-        title: editTitle,
-        dueDate: editDate,
-        isComplete: completed,
-        user: 115,
+      ...props, isCompleted: completed,
       });
     } catch (err) {
       console.log(err.message);
     }
   };
-  const change= async()=>{
+  const completeTask = async()=>{
     setCompleted(!completed)
     try {
       await axios.put(`/api/todo/edit/${id}`, {
@@ -60,15 +61,15 @@ const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
       <input
         type="checkbox"
         checked={completed}
-        onChange={change}
+        onChange={completeTask}
       />
       <div className="task-title">
         <h3 style={{ textDexoration: isCompleted ? "line-through" : "none" }}>{title}</h3>
         <p>
           Due Date: {dueDate.split("-")[2]}{" "}
           {dueDate.split("-")[1] < 10
-            ? months[dueDate.split("-")[1].split("")[1]]
-            : months[dueDate.split("-")[1]]}{" "}
+            ? months[(dueDate.split("-")[1].split("")[1])-1]
+            : months[(dueDate.split("-")[1])-1]}{" "}
           {dueDate.split("-")[0]}
         </p>
       </div>

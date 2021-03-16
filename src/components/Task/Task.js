@@ -46,7 +46,7 @@ const Task = () => {
       }
     };
     fetchTasks();
-  }, []);
+  }, [tasks]);
 
   useEffect(() => {
     const error = setTimeout(() => {

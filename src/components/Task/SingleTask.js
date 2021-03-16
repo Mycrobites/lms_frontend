@@ -18,7 +18,7 @@ const SingleTasks = (props) => {
     setShowEdit(!showEdit);
     try {
       await axios.put(`/api/todo/edit/${id}`, {
-      ...props, isCompleted: completed,
+      ...props, title:editTitle,dueDate:editDate,
       });
     } catch (err) {
       console.log(err.message);

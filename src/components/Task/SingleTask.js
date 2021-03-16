@@ -26,6 +26,21 @@ const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
       console.log(err.message);
     }
   };
+  const change= async()=>{
+    setCompleted(!completed)
+    try {
+      await axios.put(`/api/todo/edit/${id}`, {
+        id: id,
+        title: editTitle,
+        dueDate: editDate,
+        isComplete: completed,
+        user: 115,
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+
+  }
 
   const deleteTask = async () => {
     try {
@@ -45,7 +60,7 @@ const SingleTasks = ({ id, title, dueDate, isCompleted }) => {
       <input
         type="checkbox"
         checked={completed}
-        onChange={(e) => setCompleted(!completed)}
+        onChange={change}
       />
       <div className="task-title">
         <h3 style={{ textDexoration: isCompleted ? "line-through" : "none" }}>{title}</h3>

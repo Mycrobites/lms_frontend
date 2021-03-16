@@ -2,6 +2,7 @@
   margin-left: 220px;
 }
 
+
 .dashboard-items {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -26,7 +27,7 @@
 
 .dashboard-items > div {
   height: 450px;
-  background-color: rgb(166, 237, 255);
+  background-color: rgb(245, 254, 255);
 }
 
 @media (max-width: 900px) {

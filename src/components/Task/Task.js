@@ -4,6 +4,7 @@ import SingleTask from "./SingleTask";
 import Loader from "../Loader/Loader";
 import { IoAdd, IoCloseOutline } from "react-icons/io5";
 import "./Task.css";
+import uuid from 'react-uuid'
 
 const Task = () => {
   const [tasks, setTasks] = useState([]);
@@ -15,6 +16,19 @@ const Task = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //post call to api here
+    try{
+      await axios.post("/api/todo/create",{
+        id: uuid(),
+        title: tasks,
+        dueDate: dueDate,
+        isComplete: false,
+        user: 115,
+      })
+
+    }
+    catch(err){
+      console.log(err.message)
+    }
     setNewTask("");
     setDueDate(new Date());
   };

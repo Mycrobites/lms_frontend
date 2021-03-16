@@ -11,15 +11,15 @@ const UserDetail = ({ name }) => {
         <h6>{name}</h6>
       </div>
       <div className="profile-options">
-        <a href="">
+        <a href="/">
           <AccountCircleOutlinedIcon />
           Your profile
         </a>
-        <a href="">
+        <a href="/">
           <SettingsOutlinedIcon />
           Settings
         </a>
-        <a href="">
+        <a href="/">
           <PowerSettingsNewOutlinedIcon />
           Sign out
         </a>

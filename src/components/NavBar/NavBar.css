@@ -110,7 +110,7 @@
 .user-detail{
   position: absolute;
   top: 85%;
-  right: 5%;
+  right: 20px;
   width: 200px;
   height: object-fit;
   background: white;

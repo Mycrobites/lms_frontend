@@ -2,35 +2,37 @@ import { useState, useEffect } from "react";
 import axios from "../../axios/axios";
 import SingleTask from "./SingleTask";
 import Loader from "../Loader/Loader";
-import { IoAdd, IoCloseOutline } from "react-icons/io5";
+import { IoAdd, IoCloseOutline, IoWarningOutline } from "react-icons/io5";
 import "./Task.css";
-import uuid from 'react-uuid'
 
 const Task = () => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showInput, setShowInput] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [newTask, setNewTask] = useState("");
-  const [dueDate, setDueDate] = useState(new Date());
+  const [dueDate, setDueDate] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //post call to api here
-    try{
-      await axios.post("/api/todo/create",{
-        id: uuid(),
-        title: tasks,
-        dueDate: dueDate,
-        isComplete: false,
-        user: 115,
-      })
-
+    try {
+      if (newTask.length > 0 && dueDate) {
+        const { data } = await axios.post("/api/todo/create", {
+          title: newTask,
+          dueDate: dueDate,
+          isComplete: false,
+          user: 115,
+        });
+        setTasks([...tasks, data]);
+        setNewTask("");
+        setDueDate("");
+        setShowInput(false);
+      } else {
+        setIsError(true);
+      }
+    } catch (err) {
+      console.log(err.message);
     }
-    catch(err){
-      console.log(err.message)
-    }
-    setNewTask("");
-    setDueDate(new Date());
   };
 
   useEffect(() => {
@@ -45,6 +47,13 @@ const Task = () => {
     };
     fetchTasks();
   }, []);
+
+  useEffect(() => {
+    const error = setTimeout(() => {
+      setIsError(false);
+    }, 3000);
+    return () => clearTimeout(error, 3000);
+  }, [isError]);
 
   return (
     <div className="Tasks">
@@ -68,6 +77,12 @@ const Task = () => {
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
             />
+            {isError && (
+              <div className="error">
+                <IoWarningOutline />
+                <h3>All fields must be filled</h3>
+              </div>
+            )}
             <button type="submit">Add</button>
           </form>
         </div>
@@ -75,7 +90,12 @@ const Task = () => {
       {isLoading && <Loader />}
       <div className="tasks">
         {tasks.map((task) => (
-          <SingleTask key={task.id} {...task} />
+          <SingleTask
+            key={task.id}
+            {...task}
+            tasks={tasks}
+            setTasks={setTasks}
+          />
         ))}
       </div>
     </div>

@@ -4,15 +4,14 @@ import DashBoard from "./pages/Dashboard/DashBoard";
 import Enrollment from "./pages/Enrollments/Enrollment";
 import Achievement from "./pages/Achievements/Achievement";
 import Forum from "./pages/Forum/Forum";
-import NavBar from './components/NavBar/NavBar'
-import SideBar from './components/SideBar/SideBar'
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import NavBar from "./components/NavBar/NavBar";
 
 const App = () => {
   return (
     <Router>
       <div className="App">
         <NavBar />
-        <SideBar active={"home"} />
         <Switch>
           <Route exact path="/">
             <Home />
@@ -28,6 +27,9 @@ const App = () => {
           </Route>
           <Route exact path="/forum">
             <Forum />
+          </Route>
+          <Route path="*">
+            <ErrorPage />
           </Route>
         </Switch>
       </div>

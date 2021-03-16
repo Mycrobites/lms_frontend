@@ -18,11 +18,7 @@ const SingleTasks = (props) => {
     setShowEdit(!showEdit);
     try {
       await axios.put(`/api/todo/edit/${id}`, {
-        id: id,
-        title: editTitle,
-        dueDate: editDate,
-        isComplete: completed,
-        user: 115,
+      ...props, isCompleted: completed,
       });
     } catch (err) {
       console.log(err.message);
@@ -33,11 +29,7 @@ const SingleTasks = (props) => {
     setCompleted(!completed);
     try {
       await axios.put(`/api/todo/edit/${id}`, {
-        id: id,
-        title: editTitle,
-        dueDate: editDate,
-        isComplete: completed,
-        user: 115,
+      ...props, isCompleted: completed,
       });
     } catch (err) {
       console.log(err.message);

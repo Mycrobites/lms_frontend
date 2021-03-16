@@ -19,6 +19,7 @@
   height: 50px;
   width: 50px;
   font-weight: 550;
+  border-radius: 50%;
 }
 
 .react-calendar__month-view__weekdays__weekday {
@@ -44,6 +45,7 @@
 .react-calendar__tile,
 .react-calendar__month-view__days__day {
   font-size: 0.9em;
+  
 }
 .react-calendar {
   max-width: 100%;
@@ -186,4 +188,10 @@
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
   border-radius: 999px;
+}
+
+.react-calendar__tile.react-calendar__month-view__days__day{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }

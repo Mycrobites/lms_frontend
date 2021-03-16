@@ -59,6 +59,7 @@ table th {
 table td {
   margin: 5px 0;
   padding: 10px;
+  text-align: start;
 }
 
 table tr {

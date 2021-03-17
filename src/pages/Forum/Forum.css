@@ -1,4 +1,11 @@
 .Forum {
   display: grid;
   place-items: center;
+  margin-left: 220px;
+}
+
+@media (max-width: 768px) {
+  .Forum {
+    margin-left: 70px;
+  }
 }

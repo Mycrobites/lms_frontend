@@ -1,4 +1,4 @@
-import months from "./months";
+import {months} from "../../assets/months/months";
 
 const Lesson = ({ timeStamp, topic, link }) => {
   const date = new Date(timeStamp);

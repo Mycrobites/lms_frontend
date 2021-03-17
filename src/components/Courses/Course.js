@@ -1,4 +1,4 @@
-import months from "./months";
+import months from "../../assets/months/months";
 
 const Course = (props) => {
   const {

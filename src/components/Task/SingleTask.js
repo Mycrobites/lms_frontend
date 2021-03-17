@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import axios from "../../axios/axios";
-import months from "../Courses/months";
-import EditIcon from "@material-ui/icons/Edit";
+import months from "../../assets/months/months";
 import { IoCloseOutline } from "react-icons/io5";
 import { MdCheckCircle, MdRadioButtonUnchecked } from "react-icons/md";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 const SingleTasks = (props) => {
   const { id, title, dueDate, isComplete, tasks, setTasks } = props;
@@ -49,14 +49,13 @@ const SingleTasks = (props) => {
   const completeTodo = async () => {
     setIsCompleted(!isCompleted);
     try {
-      const { data } = await axios.put(`/api/todo/edit/${id}`, {
+      await axios.put(`/api/todo/edit/${id}`, {
         id,
         title,
         dueDate,
         isComplete: !isCompleted,
         user: 115,
       });
-      console.log(data);
     } catch (err) {
       console.log(err.message);
     }

@@ -6,7 +6,7 @@ import Achievement from "./pages/Achievements/Achievement";
 import Forum from "./pages/Forum/Forum";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import NavBar from "./components/NavBar/NavBar";
-import Profile from "./components/ProfileComponent/Profile";
+// import Profile from "./components/ProfileComponent/Profile";
 
 const App = () => {
   return (

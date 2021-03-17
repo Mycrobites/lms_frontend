@@ -1,9 +1,14 @@
+import {useContext} from 'react'
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import PowerSettingsNewOutlinedIcon from "@material-ui/icons/PowerSettingsNewOutlined";
 import "./NavBar.css";
+import { ProfileContext } from '../../Context/ProfileContext';
 
 const UserDetail = ({ name }) => {
+
+//const{showProfileCard} = useContext(ProfileContext)
+
   return (
     <div className="user-detail">
       <div className="user-login">

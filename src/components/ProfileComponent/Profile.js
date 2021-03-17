@@ -1,11 +1,14 @@
-import React from "react";
+import React,{useContext} from "react";
 import "./Profile.css";
 import { IoClose } from "react-icons/io5";
+import { ProfileContext } from "../../Context/ProfileContext";
 
 const Profile = () => {
+  //const{hideProfileCard}=useContext(ProfileContext)
+
   return (
     <div className="profile-card">
-      <button className="profile-close">
+      <button  className="profile-close">
         <IoClose />
       </button>
 

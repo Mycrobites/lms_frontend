@@ -7,13 +7,18 @@ import Forum from "./pages/Forum/Forum";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import NavBar from "./components/NavBar/NavBar";
 import Profile from "./components/ProfileComponent/Profile";
+import React ,{useContext} from 'react'
+import { ProfileContext } from "./Context/ProfileContext";
 
 const App = () => {
+  //const{showProfile} = useContext(ProfileContext)
+
   return (
+   
     <Router>
       <div className="App">
         <NavBar />
-        {/*<Profile/>*/}
+        {/*<Profile>*/}
         <Switch>
           <Route exact path="/">
             <Home />
@@ -36,6 +41,7 @@ const App = () => {
         </Switch>
       </div>
     </Router>
+   
   );
 };
 

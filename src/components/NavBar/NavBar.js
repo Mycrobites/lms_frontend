@@ -37,7 +37,9 @@ const NavBar = () => {
         <button onClick={showUserBar}>
           {showUser ? <ExpandLessOutlinedIcon /> : <KeyboardArrowDownIcon />}
         </button>
-        {showUser && <UserDetail name={"Brad Stevens"} />}
+        {showUser && (
+          <UserDetail setShowUser={setShowUser} name={"Brad Stevens"} />
+        )}
         {showNotification && (
           <Notification setShowNotification={setShowNotification} />
         )}

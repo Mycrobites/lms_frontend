@@ -23,7 +23,7 @@
 
 .menu a {
   padding: 15px 10px;
-  font-size: 0.95em;
+  font-size: 1.15em;
   text-decoration: none;
   color: inherit;
   font-weight: 700;
@@ -47,13 +47,12 @@
 .sidebar-responsive {
   width: 50px;
   display: none;
-
 }
-
 
 @media only screen and (max-width: 900px) {
   .sidebar {
-    height: 95vh;
+    height: 100vh;
+    overflow: hidden;
     width: 50px;
     position: fixed;
     left: 0%;
@@ -62,13 +61,12 @@
     display: flex;
     background: transparent;
   }
-  
+
   #active {
     color: rgb(0, 110, 255);
     background: none;
-   
   }
-  
+
   .sidebar-responsive {
     width: 50px;
     display: flex;

@@ -1,22 +1,13 @@
 import { useState } from "react";
-import Answer from "./Answer";
-import { RiMessage2Fill } from "react-icons/ri";
+import Comment from "./Comment";
+import PostComment from "./PostComment";
 import months from "../../assets/months/months";
+import { RiMessage2Fill } from "react-icons/ri";
 
 const SinglePost = (props) => {
-  const {
-    // id,
-    title,
-    desc,
-    username,
-    // profession,
-    time,
-    // user,
-    user_profile_pic,
-    comments,
-  } = props;
-
+  const { title, desc, username, time, user_profile_pic, comments } = props;
   const [showComments, setShowComments] = useState(false);
+  const [showPostComment, setShowPostComment] = useState(false);
 
   return (
     <div className="Post">
@@ -44,26 +35,36 @@ const SinglePost = (props) => {
           <p>{desc}</p>
         </div>
         <div className="answers">
-          <button onClick={() => setShowComments(!showComments)}>
+          <button
+            onClick={() => {
+              if (setShowPostComment) setShowPostComment(false);
+              setShowComments(!showComments);
+            }}
+          >
             <RiMessage2Fill /> {comments.length} Answers
           </button>
-          <button>Answer</button>
+          <button
+            onClick={() => {
+              if (setShowComments) setShowComments(false);
+              setShowPostComment(!showPostComment);
+            }}
+          >
+            Answer
+          </button>
         </div>
-      {showComments && (
-        <div className="comments">
-          {comments.map((comment) => (
-            <Answer key={comment.id} {...comment} />
-          ))}
-        </div>
-      )}
+        {showComments && (
+          <div className="comments">
+            {comments.map((comment) => (
+              <Comment key={comment.id} {...comment} />
+            ))}
+          </div>
+        )}
+        {showPostComment && (
+          <PostComment setShowPostComment={setShowPostComment} postData={props} />
+        )}
       </div>
     </div>
   );
 };
 
 export default SinglePost;
-
-// <div className="user-name">
-//   <h2>{user}</h2>
-//   <h3>{profession}</h3>
-// </div>

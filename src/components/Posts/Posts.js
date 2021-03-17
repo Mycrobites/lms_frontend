@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../axios/axios";
 import SinglePost from "./SinglePost";
+import Loader from "../Loader/Loader";
 import "./Posts.css";
 
 const Posts = () => {
@@ -21,13 +22,22 @@ const Posts = () => {
   }, []);
 
   return (
-    <div className="Posts">
-      <div>
-        {posts.map((post) => (
-          <SinglePost key={post.id} {...post} />
-        ))}
-      </div>
-    </div>
+    <>
+      {isLoading ? (
+        <div className="post-loader">
+          <Loader />
+        </div>
+      ) : (
+        <div className="Posts">
+          <h1>Questions</h1>
+          <div>
+            {posts.map((post) => (
+              <SinglePost key={post.id} {...post} />
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

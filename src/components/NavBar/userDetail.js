@@ -2,8 +2,13 @@ import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined"
 import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import PowerSettingsNewOutlinedIcon from "@material-ui/icons/PowerSettingsNewOutlined";
 import "./NavBar.css";
+import { Link } from "react-router-dom";
 
-const UserDetail = ({ name }) => {
+const UserDetail = ({ name, setShowUser }) => {
+  const hideUserTab = () => {
+    setShowUser(false);
+  };
+
   return (
     <div className="user-detail">
       <div className="user-login">
@@ -11,18 +16,18 @@ const UserDetail = ({ name }) => {
         <h6>{name}</h6>
       </div>
       <div className="profile-options">
-        <a href="/">
+        <Link to="/profile" onClick={hideUserTab}>
           <AccountCircleOutlinedIcon />
           Your profile
-        </a>
-        <a href="/">
+        </Link>
+        <Link to="#" onClick={hideUserTab}>
           <SettingsOutlinedIcon />
           Settings
-        </a>
-        <a href="/">
+        </Link>
+        <Link to="#" onClick={hideUserTab}>
           <PowerSettingsNewOutlinedIcon />
           Sign out
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -6,14 +6,13 @@ import Achievement from "./pages/Achievements/Achievement";
 import Forum from "./pages/Forum/Forum";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import NavBar from "./components/NavBar/NavBar";
-// import Profile from "./components/ProfileComponent/Profile";
+import ProfilePage from "./pages/Profile/ProfilePage";
 
 const App = () => {
   return (
     <Router>
       <div className="App">
         <NavBar />
-        {/*<Profile/>*/}
         <Switch>
           <Route exact path="/">
             <Home />
@@ -29,6 +28,9 @@ const App = () => {
           </Route>
           <Route exact path="/forum">
             <Forum />
+          </Route>
+          <Route exact path="/profile">
+            <ProfilePage />
           </Route>
           <Route path="*">
             <ErrorPage />

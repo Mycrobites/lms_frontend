@@ -4,7 +4,7 @@ const Lesson = ({ timeStamp, topic, link }) => {
   const date = new Date(timeStamp);
 
   return (
-    <div className="Lesson">
+    <div className="single-lesson">
       <div className="time">
         <h2>
           {months[date.getMonth()]} {date.getDate()}

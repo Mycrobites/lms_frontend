@@ -1,14 +1,10 @@
 import React from "react";
 import "./Profile.css";
-import { IoClose } from "react-icons/io5";
+import { FiEdit } from "react-icons/fi";
 
 const Profile = () => {
   return (
     <div className="profile-card">
-      <button className="profile-close">
-        <IoClose />
-      </button>
-
       <div className="profile-image">
         <img
           src="https://res.cloudinary.com/diqqf3eq2/image/upload/v1586883417/person-3_ipa0mj.jpg"
@@ -21,6 +17,9 @@ const Profile = () => {
         <div className="profile-name">
           <h1>Brad Stevens</h1>
           <p>Std 9</p>
+          <button className="profile-edit-button">
+            <FiEdit />
+          </button>
         </div>
 
         <div className="student-detail">

@@ -5,6 +5,7 @@ import Loader from "../Loader/Loader";
 import './courses.css'
 
 const Courses = () =>{
+    const [data, setData] = useState();
     const [activeCourses, setActiveCourses] = useState([])
     const [completedCourses, setCompletedCourses] = useState([])
 
@@ -14,7 +15,7 @@ const Courses = () =>{
         const getCourses = async () => {
           try {
             const { data } = await axios.get("https://lms-seg.herokuapp.com/api/getMyCourses/rajat");
-            console.log(data)
+            setData(data);
             setActiveCourses(data.active);
             setCompletedCourses(data.completed);
             setIsLoading(false);
@@ -26,8 +27,8 @@ const Courses = () =>{
     }, []);
 
     return(
-        <div className="heading">
-            <h1>Active Courses</h1>
+        <div >
+            
             {loading ? 
             (
                 <Loader/>
@@ -35,14 +36,24 @@ const Courses = () =>{
             :
             (   
                 <>
+                <div className="heading">Welcome! Rajat</div>
+                <div className="heading"> Statistics </div>
+                <div className="statistics">
+                    <div className="card">{data.act_count} <br/>Active</div>
+                    <div className="card">{data.comp_count} <br/>Complete</div>
+                </div>
+                <div className="heading"> Active Courses</div>
                 <div className="activeCourses">
+                
                     {activeCourses.map((course) => 
                         <div>
                             <SingleCourse key={course.sno} {...course}/>
                         </div>
                     )}
                 </div>
+                <div className="heading">Completed Courses</div>
                 <div className="activeCourses">
+                
                     {completedCourses.map((course) => 
                         <div>
                             <SingleCourse key={course.sno} {...course}/>

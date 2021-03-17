@@ -4,8 +4,8 @@
     grid-gap: 15px;
 }
 
-.heading h1{
-    font-size: 30px;
+.heading{
+    font-size: 20px;
     font-weight: 700;
 }
 .author{
@@ -14,6 +14,23 @@
     font-size: 15px;
     font-weight: 600;
     color: orange;
+}
+
+.card{
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    background-color: antiquewhite;
+}
+
+.statistics{
+    display: flex;
+    
+    /* grid-template-columns: repeat(10, 1fr); */
 }
 
 .card-body{

@@ -1,13 +1,16 @@
-import {useContext} from 'react'
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import PowerSettingsNewOutlinedIcon from "@material-ui/icons/PowerSettingsNewOutlined";
 import "./NavBar.css";
-import { ProfileContext } from '../../Context/ProfileContext';
+import {Link} from 'react-router-dom'
 
-const UserDetail = ({ name }) => {
 
-//const{showProfileCard} = useContext(ProfileContext)
+const UserDetail = ({ name,setShowUser }) => {
+
+  const hideUserTab = () =>{
+  setShowUser(false)
+}
+
 
   return (
     <div className="user-detail">
@@ -16,18 +19,18 @@ const UserDetail = ({ name }) => {
         <h6>{name}</h6>
       </div>
       <div className="profile-options">
-        <a href="/">
+        <Link to="/profile" onClick={hideUserTab}>
           <AccountCircleOutlinedIcon />
           Your profile
-        </a>
-        <a href="/">
+        </Link>
+        <Link to="#" onClick={hideUserTab}>
           <SettingsOutlinedIcon />
           Settings
-        </a>
-        <a href="/">
+        </Link>
+        <Link to="#" onClick={hideUserTab}>
           <PowerSettingsNewOutlinedIcon />
           Sign out
-        </a>
+        </Link>
       </div>
     </div>
   );

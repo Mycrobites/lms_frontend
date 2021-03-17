@@ -6,19 +6,19 @@ import Achievement from "./pages/Achievements/Achievement";
 import Forum from "./pages/Forum/Forum";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import NavBar from "./components/NavBar/NavBar";
-import Profile from "./components/ProfileComponent/Profile";
-import React ,{useContext} from 'react'
-import { ProfileContext } from "./Context/ProfileContext";
+
+import React from 'react'
+import ProfilePage from "./pages/Profile/ProfilePage";
+
 
 const App = () => {
-  //const{showProfile} = useContext(ProfileContext)
+
 
   return (
    
     <Router>
       <div className="App">
         <NavBar />
-        {/*<Profile>*/}
         <Switch>
           <Route exact path="/">
             <Home />
@@ -35,6 +35,9 @@ const App = () => {
           <Route exact path="/forum">
             <Forum />
           </Route>
+          <Route exact path="/profile">
+          <ProfilePage />
+        </Route>
           <Route path="*">
             <ErrorPage />
           </Route>

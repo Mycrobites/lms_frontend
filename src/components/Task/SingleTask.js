@@ -73,7 +73,7 @@ const SingleTasks = (props) => {
           {isCompleted ? <MdCheckCircle /> : <MdRadioButtonUnchecked />}
         </button>
         <div className="task-title">
-          <h3 style={{ textDexoration: isCompleted ? "line-through" : "none" }}>
+          <h3 style={{ textDecoration: isCompleted ? "line-through" : "none" }}>
             {title}
           </h3>
           <p>

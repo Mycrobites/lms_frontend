@@ -39,7 +39,7 @@ const Courses = () =>{
     };
 
     return(
-        <div >
+        <div className='enrolled-course'>
             
             {loading ? 
             (

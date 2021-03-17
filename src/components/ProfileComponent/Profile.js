@@ -1,5 +1,6 @@
 import React from "react";
 import "./Profile.css";
+import {FiEdit} from 'react-icons/fi'
 
 
 
@@ -10,6 +11,7 @@ const Profile = () => {
     <div className="profile-card">
     
       <div className="profile-image">
+      
         <img
           src="https://res.cloudinary.com/diqqf3eq2/image/upload/v1586883417/person-3_ipa0mj.jpg"
           alt="profile"
@@ -21,8 +23,9 @@ const Profile = () => {
         <div className="profile-name">
           <h1>Brad Stevens</h1>
           <p>Std 9</p>
+          <button className='profile-edit-button'><FiEdit/></button>
         </div>
-
+        
         <div className="student-detail">
           <div>
             <p>Birthday</p>

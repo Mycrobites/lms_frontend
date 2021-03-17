@@ -1,83 +1,82 @@
-.activeCourses{   
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 15px;
+.activeCourses {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 15px;
 }
 
-.heading{
-    font-size: 20px;
-    font-weight: 700;
+.heading {
+	font-size: 20px;
+	font-weight: 700;
 }
-.author{
-    display: flex;
-    flex-wrap: inherit;
-    font-size: 15px;
-    font-weight: 600;
-    color: orange;
-}
-
-.card{
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    padding: 20px;
-    margin: 10px;
-    font-weight: 600;
-    font-size: 20px;
-    background-color: antiquewhite;
+.author {
+	display: flex;
+	flex-wrap: inherit;
+	font-size: 15px;
+	font-weight: 600;
+	color: orange;
 }
 
-.statistics{
-    display: flex;
-    
-    /* grid-template-columns: repeat(10, 1fr); */
+.card {
+	border-radius: 10px;
+	box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	padding: 20px;
+	margin: 10px;
+	font-weight: 600;
+	font-size: 20px;
+	background-color: antiquewhite;
 }
 
-.card-body{
-  border-radius: 10px;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  cursor: pointer;
-  height: 400px;
-  width: 300px;
-  align-items: center;
+.statistics {
+	display: flex;
+
+	/* grid-template-columns: repeat(10, 1fr); */
 }
 
-.card-body h2{
-    font-size: 20px;
-    font-weight: 600;
+.card-body {
+	border-radius: 10px;
+	box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	display: grid;
+	grid-template-rows: auto auto 1fr auto;
+	cursor: pointer;
+	height: 400px;
+	width: 300px;
+	align-items: center;
 }
 
-.lessons{
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    font-weight: 600;
-    font-size: 15px;
-    padding: 8px;
+.card-body h2 {
+	font-size: 20px;
+	font-weight: 600;
 }
 
-.content{
-    padding: 8px;
-    color: grey;
-}
-.text{
-    padding: 8px;
-}
-
-button{
-    border-radius: 5px;
-    font-weight: bold;
-    background-color: antiquewhite;
-    color: #6a1b9a;
-    border: none;
-    padding: 8px 8px;
+.lessons {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	font-weight: 600;
+	font-size: 15px;
+	padding: 8px;
 }
 
-button:hover{
-    background-color: #6a1b9a;
-    color: white;
+.content {
+	padding: 8px;
+	color: grey;
+}
+.text {
+	padding: 8px;
 }
 
+button {
+	border-radius: 5px;
+	font-weight: bold;
+	background-color: antiquewhite;
+	color: #6a1b9a;
+	border: none;
+	padding: 8px 8px;
+}
+
+button:hover {
+	background-color: #6a1b9a;
+	color: white;
+}

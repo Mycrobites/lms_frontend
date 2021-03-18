@@ -5,7 +5,8 @@ import months from "../../assets/months/months";
 import { RiMessage2Fill } from "react-icons/ri";
 
 const SinglePost = (props) => {
-  const { title, desc, username, time, user_profile_pic, comments } = props;
+  const [postData, setPostData] = useState(props);
+  const { title, desc, username, time, user_profile_pic, comments } = postData;
   const [showComments, setShowComments] = useState(false);
   const [showPostComment, setShowPostComment] = useState(false);
 
@@ -60,7 +61,11 @@ const SinglePost = (props) => {
           </div>
         )}
         {showPostComment && (
-          <PostComment setShowPostComment={setShowPostComment} postData={props} />
+          <PostComment
+            setShowPostComment={setShowPostComment}
+            postData={postData}
+            setPostData={setPostData}
+          />
         )}
       </div>
     </div>

@@ -186,3 +186,22 @@
   background-color: #006eff;
   color: #fff;
 }
+
+.upvotes {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.upvotes p {
+  margin-bottom: 0;
+  color: #006eff;
+  font-size: 0.95em;
+  font-weight: 500;
+}
+
+.upvotes svg {
+  color: #006eff;
+  margin-right: 5px;
+}

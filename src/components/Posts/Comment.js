@@ -1,8 +1,9 @@
 import React from "react";
 import months from "../../assets/months/months";
+import { AiOutlineCaretUp } from "react-icons/ai";
 
 const Comment = (props) => {
-  const { text, time, user, user_profile_pic } = props;
+  const { text, time, user, user_profile_pic, upvote } = props;
 
   return (
     <div className="Comment">
@@ -27,6 +28,10 @@ const Comment = (props) => {
         </div>
         <div className="comment-desc">
           <p>{text}</p>
+        </div>
+        <div className="upvotes">
+          <AiOutlineCaretUp />
+          <p>Upvotes ({upvote})</p>
         </div>
       </div>
     </div>

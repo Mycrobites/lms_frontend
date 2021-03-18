@@ -1,23 +1,52 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import "./Profile.css";
 import { FiEdit } from "react-icons/fi";
+import axios from '../../axios/axios'
+import Loader from "../Loader/Loader";
 
 const Profile = () => {
+
+  const[loading,setLoading]=useState(true)
+  const [showEdit,setShowEdit] = useState(false)
+  const [studentDetails,setStudentDetails] = useState({})
+  const [userInfo,setUserInfo] = useState({})
+
+  useEffect(()=>{
+    const getStudentsDetails = async()=>{
+      try{
+        const {data} = await axios.get("/api/getUserDetails/user1")
+        setStudentDetails(data?.student_details)
+        setUserInfo(data?.user_info)
+        setLoading(false)
+      }catch(err){
+        console.log(err.message)
+      }
+      
+    }
+    getStudentsDetails()
+  },[])
+
+const{Class,address,category,dob,father_email,father_name,father_phone,gender,mother_email,mother_name,mother_phone,phone_no,pin_code,profile_pic,school_address,school_name,state} = studentDetails
+const{first_name,last_name,email,username}= userInfo;
+
   return (
-    <div className="profile-card">
+    <>
+    { loading ? <Loader/> :
+      <div className="profile-card">
+    
       <div className="profile-image">
         <img
-          src="https://res.cloudinary.com/diqqf3eq2/image/upload/v1586883417/person-3_ipa0mj.jpg"
-          alt="profile"
+          src={profile_pic}
+          alt=""
         />
-        <h6>Brad Stevens</h6>
-        <p>Std 9</p>
+        <h6>{username}</h6>
+        <p>{`Std ${Class}`}</p>
       </div>
       <div className="profile-details">
         <div className="profile-name">
-          <h1>Brad Stevens</h1>
-          <p>Std 9</p>
-          <button className="profile-edit-button">
+          <h1>{`${first_name} ${last_name}`}</h1>
+          <p>{`Std ${Class}`}</p>
+          <button onClick={e => setShowEdit(true)} className="profile-edit-button">
             <FiEdit />
           </button>
         </div>
@@ -26,67 +55,128 @@ const Profile = () => {
           <div>
             <p>Birthday</p>
             <p>
-              <strong>2 April</strong>
+              <strong>{dob}</strong>
             </p>
           </div>
 
           <div>
             <p>Class</p>
             <p>
-              <strong>Std 9</strong>
+              <strong>{`Std ${Class}`}</strong>
             </p>
           </div>
 
           <div>
             <p>Gender</p>
             <p>
-              <strong>Male</strong>
+              <strong>{gender}</strong>
             </p>
           </div>
 
           <div>
             <p>Category</p>
             <p>
-              <strong>General</strong>
+              <strong>{category}</strong>
             </p>
           </div>
 
           <div>
             <p>Phone</p>
             <p>
-              <strong>+91 xxxxxxxxxx</strong>
+              <strong>{`+91 ${phone_no}`}</strong>
             </p>
+          </div>
+          <div>
+          <p>Email</p>
+          <p>
+            <strong>{email}</strong>
+          </p>
+        </div>
+
+          <div>
+          <p>Father Name</p>
+          <p>
+            <strong>{father_name}</strong>
+          </p>
+          </div>
+
+          <div>
+          <p>Father Email</p>
+          <p>
+            <strong>{father_email}</strong>
+          </p>
+          </div>
+
+          <div>
+          <p>Father Phone</p>
+          <p>
+            <strong>{`+91 ${father_phone}`}</strong>
+          </p>
+          </div>
+
+          <div>
+          <p>Mother Name</p>
+          <p>
+            <strong>{mother_name}</strong>
+          </p>
+          </div>
+
+          <div>
+          <p>Mother Email</p>
+          <p>
+            <strong>{mother_email}</strong>
+          </p>
+          </div>
+
+          <div>
+          <p>Mother Phone</p>
+          <p>
+            <strong>{`+91 ${mother_phone}`}</strong>
+          </p>
           </div>
 
           <div>
             <p>Address</p>
             <p>
-              <strong>South Delhi</strong>
+              <strong>{address}</strong>
             </p>
           </div>
 
           <div>
             <p>State</p>
             <p>
-              <strong>Delhi</strong>
+              <strong>{state}</strong>
             </p>
           </div>
 
           <div>
             <p>Pincode</p>
             <p>
-              <strong>100013</strong>
+              <strong>{pin_code}</strong>
             </p>
           </div>
+
           <div>
             <p>School</p>
             <p>
-              <strong>DPS RKpuram</strong>
+              <strong>{school_name}</strong>
             </p>
           </div>
-        </div>
+
+       
+
+        <div>
+        <p>School Address</p>
+        <p>
+          <strong>{school_address}</strong>
+        </p>
+       </div>
+
       </div>
     </div>
+    </div> }
+    
+    </>
   );
 };
 

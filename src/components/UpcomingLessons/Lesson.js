@@ -1,4 +1,4 @@
-import {months} from "../../assets/months/months";
+import { months } from "../../assets/months/months";
 
 const Lesson = ({ timeStamp, topic, link }) => {
   const date = new Date(timeStamp);
@@ -21,9 +21,11 @@ const Lesson = ({ timeStamp, topic, link }) => {
       <div className="title">
         <h2>{topic}</h2>
       </div>
-      <a href={link} target="_blank" rel="noreferrer">
-        Join here
-      </a>
+      <div className="meeting-link">
+        <a href={link} target="_blank" rel="noreferrer">
+          Join here
+        </a>
+      </div>
     </div>
   );
 };

@@ -5,23 +5,35 @@ import axios from "../../axios/axios";
 import { useHistory } from "react-router-dom";
 import "./Courses.css";
 
+const getCoursesFromLocalStorage = () => {
+  const course = localStorage.getItem("courses");
+  if (course) {
+    return JSON.parse(course);
+  } else {
+    return null;
+  }
+};
+
 const Courses = () => {
-  const [courses, setCourses] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [courses, setCourses] = useState(getCoursesFromLocalStorage);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
     const fetchCourses = async () => {
+      if (!courses) setIsLoading(true);
       try {
         const { data } = await axios.get("/api/getMyCourses/rajat");
-        setCourses(data.active.filter((course, index) => index < 2));
-        setIsLoading(false);
+        const courseData = data.active.filter((course, index) => index < 2);
+        setCourses(courseData);
+        localStorage.setItem("courses", JSON.stringify(courseData));
       } catch (err) {
         console.log(err.message);
       }
+      setIsLoading(false);
     };
     fetchCourses();
-  }, []);
+  }, [courses]);
 
   return (
     <div className="Courses">
@@ -31,7 +43,7 @@ const Courses = () => {
       ) : (
         <>
           <div className="course-cards">
-            {courses.map((course) => (
+            {courses?.map((course) => (
               <Course key={course.sno} {...course} />
             ))}
           </div>

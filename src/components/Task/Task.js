@@ -5,34 +5,49 @@ import Loader from "../Loader/Loader";
 import { IoAdd, IoCloseOutline, IoWarningOutline } from "react-icons/io5";
 import "./Task.css";
 
+const getTasksFromLocalStorage = () => {
+  const task = localStorage.getItem("tasks");
+  if (task) {
+    return JSON.parse(task);
+  } else {
+    return null;
+  }
+};
+
 const Task = () => {
-  const [tasks, setTasks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [tasks, setTasks] = useState(getTasksFromLocalStorage);
+  const [isLoading, setIsLoading] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [isError, setIsError] = useState(false);
   const [newTask, setNewTask] = useState("");
   const [dueDate, setDueDate] = useState("");
 
-  const handleSubmit = async (e) => {
+  const addTodo = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      if (newTask.length > 0 && dueDate) {
-        const { data } = await axios.post("/api/todo/create", {
-          title: newTask,
-          dueDate: dueDate,
-          isComplete: false,
-          user: 115,
-        });
-        setTasks([...tasks, data]);
-        setNewTask("");
-        setDueDate("");
-        setShowInput(false);
+      if (tasks.length === 10) {
+        alert("You can't add more than 10 tasks");
       } else {
-        setIsError(true);
+        if (newTask.length > 0 && dueDate) {
+          const { data } = await axios.post("/api/todo/create", {
+            title: newTask,
+            dueDate: dueDate,
+            isComplete: false,
+            user: 115,
+          });
+          setTasks([...tasks, data]);
+          setNewTask("");
+          setDueDate("");
+          setShowInput(false);
+        } else {
+          setIsError(true);
+        }
       }
     } catch (err) {
       console.log(err.message);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -40,13 +55,13 @@ const Task = () => {
       try {
         const { data } = await axios.get("/api/todo/rajat");
         setTasks(data);
-        setIsLoading(false);
+        localStorage.setItem("tasks", JSON.stringify(data));
       } catch (err) {
         console.log(err.message);
       }
     };
     fetchTasks();
-  }, [tasks]);
+  }, []);
 
   useEffect(() => {
     const error = setTimeout(() => {
@@ -57,46 +72,53 @@ const Task = () => {
 
   return (
     <div className="Tasks">
+      {isLoading && (
+        <div className="loading-div">
+          <Loader />
+        </div>
+      )}
       <div className="task-header">
         <h1>Tasks</h1>
         <button onClick={() => setShowInput(!showInput)}>
           {showInput ? <IoCloseOutline /> : <IoAdd />}
         </button>
       </div>
-      {showInput && (
-        <div className="add-newtask">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Add New Task"
-              value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
+      <div className="Tasks-main-div">
+        {showInput && (
+          <div className="add-newtask">
+            <form onSubmit={addTodo}>
+              <input
+                type="text"
+                placeholder="Add New Task"
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+              />
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+              />
+              {isError && (
+                <div className="error">
+                  <IoWarningOutline />
+                  <h3>All fields must be filled</h3>
+                </div>
+              )}
+              <button type="submit">Add</button>
+            </form>
+          </div>
+        )}
+        {/* {isLoading && <Loader />} */}
+        <div className="tasks">
+          {tasks?.map((task) => (
+            <SingleTask
+              key={task.id}
+              {...task}
+              tasks={tasks}
+              setTasks={setTasks}
             />
-            <input
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-            />
-            {isError && (
-              <div className="error">
-                <IoWarningOutline />
-                <h3>All fields must be filled</h3>
-              </div>
-            )}
-            <button type="submit">Add</button>
-          </form>
+          ))}
         </div>
-      )}
-      {isLoading && <Loader />}
-      <div className="tasks">
-        {tasks.map((task) => (
-          <SingleTask
-            key={task.id}
-            {...task}
-            tasks={tasks}
-            setTasks={setTasks}
-          />
-        ))}
       </div>
     </div>
   );

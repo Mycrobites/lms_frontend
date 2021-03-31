@@ -1,26 +1,40 @@
 .Leaderboard {
-  overflow: scroll;
   padding: 15px;
 }
-.Leaderboard::-webkit-scrollbar {
-  display: none;
+.leaderboard-main-div {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 10px;
 }
 
-.header {
+.leaderboard-students {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 290px;
+  padding: 5px 0;
+  background-color: #fff;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.leaderboard-students::-webkit-scrollbar {
+  width: 0;
+}
+
+.Leaderboard .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.header h2 {
+.Leaderboard .header h2 {
   font-size: 1.4em;
   font-weight: 600;
   margin: 0;
   margin-bottom: 0;
 }
 
-.header select {
+.Leaderboard .header select {
   width: 100px;
   outline: none;
   cursor: pointer;
@@ -30,64 +44,61 @@
   font-weight: 600;
   margin: 0;
 }
-.header select:focus {
+.Leaderboard .header select:focus {
   border: 0.5px solid blue;
 }
 
-table {
+.Leaderboard .Student {
   width: 100%;
-  border: none;
-  border-collapse: collapse;
-  padding: 10px;
+  align-items: center;
+}
+
+.Leaderboard .title {
+  display: flex;
+  align-items: center;
+  background-color: #f3f3f3;
+  padding: 10px 10px 10px 15px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.Leaderboard .title h2:first-child,
+.Leaderboard .title h2:last-child {
+  flex: 1;
+}
+.Leaderboard .title h2:nth-child(2) {
+  flex: 3;
+}
+
+.Leaderboard .Student {
+  display: flex;
+  align-items: center;
   background-color: #fff;
 }
 
-table .title {
-  background-color: #f3f3f3;
-  padding: 10px;
-}
-
-table th {
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
+.Leaderboard .Student h3:first-child,
+.Leaderboard .Student h3:last-child {
+  flex: 1;
   text-align: center;
   padding: 10px;
 }
-
-table td {
-  margin: 5px 0;
-  padding: 10px;
-  text-align: start;
+.Leaderboard .Student .name {
+  flex: 3;
+  padding: 10px 0;
 }
-
-table tr {
-  border: none;
-  padding: 10px;
-}
-
-.Student {
-  width: 100%;
-  align-items: center;
-}
-
-.Student img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
-}
-
-.Student .name {
+.Leaderboard .Student .name {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
 }
+.Leaderboard .Student .name h3 {
+  text-align: left;
+  margin-left: 5px;
+}
 
-.Student td,
-.name h3 {
-  font-size: 13px;
+.Leaderboard .Student h3 {
+  font-size: 15px;
   font-weight: 600;
   color: rgba(0, 0, 0, 0.5);
-  text-align: center;
+  margin-bottom: 0;
 }

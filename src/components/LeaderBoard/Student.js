@@ -1,15 +1,18 @@
+import { Avatar } from "@material-ui/core";
+
 const Student = (props) => {
-  const { rank, name, image, bestScore, points } = props;
+  const { rank, name, profile, score } = props;
   return (
-    <tr className="Student">
-      <td>{rank}</td>
-      <td className="name">
-        <img src={image} alt={name} />
+    <div className="Student">
+      <h3>{rank}</h3>
+      <div className="name">
+        <div className="leaderboard-profile">
+          {profile ? <Avatar src={profile} /> : <Avatar />}
+        </div>
         <h3>{name}</h3>
-      </td>
-      <td>{bestScore}</td>
-      <td>{points}</td>
-    </tr>
+      </div>
+      <h3>{score}</h3>
+    </div>
   );
 };
 

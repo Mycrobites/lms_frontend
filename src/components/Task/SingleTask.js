@@ -12,6 +12,7 @@ const SingleTasks = (props) => {
   const [showEdit, setShowEdit] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
   const [editDate, setEditDate] = useState(dueDate);
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef(null);
 
   const updateTask = async () => {
@@ -24,12 +25,12 @@ const SingleTasks = (props) => {
         isComplete,
         user: 115,
       };
-      setTasks(
-        tasks.map((task) => {
-          if (task.id === id) return editedTask;
-          else return task;
-        })
-      );
+      const updatedTasks = tasks.map((task) => {
+        if (task.id === id) return editedTask;
+        else return task;
+      });
+      setTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
       await axios.put(`/api/todo/edit/${id}`, editedTask);
     } catch (err) {
       console.log(err.message);
@@ -39,6 +40,7 @@ const SingleTasks = (props) => {
   const deleteTask = async () => {
     try {
       const deletedTasks = tasks.filter((task) => task.id !== id);
+      localStorage.setItem("tasks", JSON.stringify(deletedTasks));
       setTasks(deletedTasks);
       await axios.delete(`/api/todo/edit/${id}`);
     } catch (err) {
@@ -48,14 +50,20 @@ const SingleTasks = (props) => {
 
   const completeTodo = async () => {
     setIsCompleted(!isCompleted);
+    const completedTask = {
+      id,
+      title,
+      dueDate,
+      isComplete: !isCompleted,
+      user: 115,
+    };
+    const completedTasks = tasks.map((task) => {
+      if (task.id === id) return completedTask;
+      else return task;
+    });
+    localStorage.setItem("tasks", JSON.stringify(completedTasks));
     try {
-      await axios.put(`/api/todo/edit/${id}`, {
-        id,
-        title,
-        dueDate,
-        isComplete: !isCompleted,
-        user: 115,
-      });
+      await axios.put(`/api/todo/edit/${id}`, completedTask);
     } catch (err) {
       console.log(err.message);
     }
@@ -91,7 +99,6 @@ const SingleTasks = (props) => {
           <DeleteOutlineIcon />
         </button>
       </div>
-
       {showEdit && (
         <div className="edit-task">
           <form className="edit-task-form" onSubmit={updateTask}>

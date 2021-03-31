@@ -1,36 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Student from "./Student.js";
-import students from "./data";
+import axios from "../../axios/axios";
 import "./LeaderBoard.css";
 
+const getLeaderboardFromLocalStorage = () => {
+  const leaderboard = localStorage.getItem("leaderboard");
+  if (leaderboard) {
+    return JSON.parse(leaderboard);
+  } else {
+    return null;
+  }
+};
+
 const LeaderBoard = () => {
-  const [subject, setSubject] = useState("");
+  const [students, setStudents] = useState(getLeaderboardFromLocalStorage);
+
+  useEffect(() => {
+    const fetchLeadeboard = async () => {
+      try {
+        const { data } = await axios.get("/api/leaderboard/");
+        setStudents(data);
+        localStorage.setItem("leaderboard", JSON.stringify(data));
+        console.log(data);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    fetchLeadeboard();
+  }, []);
 
   return (
     <div className="Leaderboard">
       <div className="header">
         <h2>Leaderboard</h2>
-        <select value={subject} onChange={(e) => setSubject(e.target.value)}>
-          <option>English</option>
-          <option>Algebra</option>
-          <option>Geometry</option>
-        </select>
       </div>
-      <table>
-        <thead>
-          <tr className="title">
-            <th>Rank</th>
-            <th>Name</th>
-            <th>Best Score</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((student) => (
-            <Student key={student.id} {...student} />
+      <div className="leaderboard-main-div">
+        <div className="title">
+          <h2>Rank</h2>
+          <h2>Name</h2>
+          <h2>Points</h2>
+        </div>
+        <div className="leaderboard-students">
+          {students?.map((student, index) => (
+            <Student key={index} {...student} rank={index + 1} />
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 };

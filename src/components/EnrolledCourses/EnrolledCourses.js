@@ -54,34 +54,6 @@ const Courses = () => {
               Complete
             </div>
           </div>
-          {/* <Tabs>
-            <div>
-              <Tab>
-                <button onClick={handleClick}>Active</button>
-              </Tab>
-              <Tab>
-                <button>Completed</button>
-              </Tab>
-            </div>
-            <Panel>
-              <div className="activeCourses">
-                {activeCourses.map((course) => (
-                  <div>
-                    <SingleCourse key={course.sno} {...course} />
-                  </div>
-                ))}
-              </div>
-            </Panel>
-            <Panel className="activeCourses">
-              <div className="activeCourses">
-                {completedCourses.map((course) => (
-                  <div>
-                    <SingleCourse key={course.sno} {...course} />
-                  </div>
-                ))}
-              </div>
-            </Panel>
-          </Tabs> */}
 
           <Tabs>
             <Tab onClick={handleClick} active={active === 0} id={0}>

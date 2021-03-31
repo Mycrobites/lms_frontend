@@ -48,7 +48,7 @@ const Profile = () => {
   return (
     <>
       {loading ? (
-        <Loader />
+        <div className='profile-loader'><Loader /></div>
       ) : (
         <div className="profile-card">
           <div className="profile-image">

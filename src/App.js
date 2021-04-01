@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch ,useLocation } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import DashBoard from "./pages/Dashboard/DashBoard";
 import Enrollment from "./pages/Enrollments/Enrollment";
@@ -7,8 +7,11 @@ import Forum from "./pages/Forum/Forum";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import NavBar from "./components/NavBar/NavBar";
 import ProfilePage from "./pages/Profile/ProfilePage";
+import SignUp from "./pages/SignupPage/SignUp";
+import Login from "./pages/LoginPage/Login";
 
 const App = () => {
+ 
   return (
     <Router>
       <div className="App">
@@ -31,6 +34,12 @@ const App = () => {
           </Route>
           <Route exact path="/profile">
             <ProfilePage />
+          </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/signup">
+            <SignUp />
           </Route>
           <Route path="*">
             <ErrorPage />

@@ -1,4 +1,4 @@
-.login-page {
+.signup-page {
 	width: 100%;
 	height: 100vh;
 	display: flex;
@@ -7,12 +7,13 @@
 	background: rgb(0, 140, 255);
 }
 
-.login-page form {
+.signup-page form {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
 	width: 90%;
 	max-width: 400px;
+	height: object-fit;
 	min-height: 500px;
 	padding: 20px;
 	border-radius: 20px;
@@ -20,7 +21,7 @@
 	background: rgb(255, 255, 255);
 }
 
-.login-page input {
+.signup-page input {
 	padding: 10px;
 	border: none;
 	border: 1px solid lightgray;
@@ -29,7 +30,7 @@
 	outline: none;
 }
 
-.login-page input:focus {
+.signup-page input:focus {
 	color: black;
 }
 
@@ -49,7 +50,7 @@ input::placeholder {
 	padding: 0 10px;
 }
 
-.login-page button {
+.signup-page button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -64,18 +65,18 @@ input::placeholder {
 	font-weight: 700;
 }
 
-.login-page button:hover {
+.signup-page button:hover {
 	background: white;
 	color: black;
 	border: 1px solid black;
 	border-radius: 0px;
 }
-.login-redirect {
+.signup-redirect {
 	width: 100%;
 	text-align: center;
 }
 
-.login-redirect a {
+.signup-redirect a {
 	text-decoration: none;
 	color: rgb(0, 140, 255);
 	margin: 0 10px;

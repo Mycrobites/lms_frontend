@@ -11,7 +11,11 @@ import SignUp from "./pages/SignupPage/SignUp";
 import Login from "./pages/LoginPage/Login";
 
 const App = () => {
- 
+  // const location = useLocation();
+  // console.log(location);
+  // we cannot use useLocation and Browser router both in a single component
+  //so i think we should render the navbar in every page
+  //but the css is so messed up when i tried last time
   return (
     <Router>
       <div className="App">

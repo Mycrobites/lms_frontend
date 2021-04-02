@@ -4,7 +4,7 @@ import "./ErrorPage.css";
 const Enrollment = () => {
   return (
     <div className="errorPage">
-      <SideBar />
+      <SideBar active="" />
       404 Error Page
     </div>
   );

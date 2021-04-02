@@ -23,20 +23,20 @@ const Profile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [postData,setPostData]= useState(getProfile)
 
- 
+  const getStudentsDetails = async () => {
+    try {
+      const { data } = await axios.get("/api/getUserDetails/user1");
+      setStudentDetails(data?.student_details);
+      setUserInfo(data?.user_info);
+      setLoading(false);
+
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   
   useEffect(() => {
-    const getStudentsDetails = async () => {
-      try {
-        const { data } = await axios.get("/api/getUserDetails/user1");
-        setStudentDetails(data?.student_details);
-        setUserInfo(data?.user_info);
-        setLoading(false);
-
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
+    
     getStudentsDetails();
 
   }, []);
@@ -64,7 +64,6 @@ const Profile = () => {
         "school_address": studentDetails?.school_address,
         "school_state": "NA",
         "school_pin_code": "NA",
-        "profile_pic" : studentDetails?.profile_pic,
         "user":121
     })
     localStorage.setItem("user-profile" , JSON.stringify(postData))
@@ -101,6 +100,7 @@ const Profile = () => {
     catch(err){
       console.log(err.message)
     }
+    getStudentsDetails()
     setShowEdit(!showEdit)
 
   }
@@ -180,7 +180,7 @@ console.log(postData)
 
               <div>
                 <p>Mother Name</p>
-                <input type='text' value={postData.mother_name} onChange={e => setPostData({...postData, "mother_phone": e.target.value})} name="mother_phone"/>
+                <input type='text' value={postData.mother_name} onChange={e => setPostData({...postData, "mother_name": e.target.value})} name="mother_name"/>
               </div>
 
               <div>

@@ -10,6 +10,8 @@ const SinglePost = (props) => {
   const [showComments, setShowComments] = useState(false);
   const [showPostComment, setShowPostComment] = useState(false);
 
+  const now = new Date(time);
+
   return (
     <div className="Post">
       <div className="user-profile">
@@ -20,13 +22,9 @@ const SinglePost = (props) => {
           <div className="post-date">
             <p>Asked on: </p>
             <p>
-              {time.split("-")[0]}{" "}
-              {time.split("-")[1] < 10
-                ? months[time.split("-")[1].split("")[1] - 1]
-                : months[time.split("-")[1] - 1]}{" "}
-              {time.split("-")[2].split(" ")[0]}
+              {now.getDate()} {months[now.getMonth()]} {now.getFullYear()}{" "}
+              {now.getHours()}:{now.getMinutes()}
             </p>
-            <p>{time.split("-")[2].split(" ")[1]}</p>
           </div>
           <div className="post-title">
             <h2>{title}</h2>

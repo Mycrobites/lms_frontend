@@ -288,3 +288,25 @@
   color: #006eff;
   margin-right: 5px;
 }
+
+.Posts .loading-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 999;
+}
+
+.post-upload-question {
+  color: red;
+  display: flex;
+  align-items: center;
+}
+
+.post-upload-question svg {
+  margin-right: 5px;
+}

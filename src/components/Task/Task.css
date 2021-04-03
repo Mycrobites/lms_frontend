@@ -30,6 +30,7 @@
   background: transparent;
   margin-top: -7px;
   border-radius: 50%;
+  margin: 0;
   margin-left: 5px;
   padding: 5px;
   transition: all 0.2s linear;
@@ -249,7 +250,7 @@ button[type="submit"] {
   margin: 0;
 }
 
-.loading-div {
+.Tasks .loading-div {
   position: fixed;
   top: 0;
   left: 0;

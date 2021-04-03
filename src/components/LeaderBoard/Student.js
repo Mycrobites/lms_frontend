@@ -7,7 +7,7 @@ const Student = (props) => {
       <h3>{rank}</h3>
       <div className="name">
         <div className="leaderboard-profile">
-          {profile ? <Avatar src={profile} /> : <Avatar />}
+          {!profile ? <Avatar /> : <Avatar src={profile} />}
         </div>
         <h3>{name}</h3>
       </div>

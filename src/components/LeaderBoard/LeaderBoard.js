@@ -16,17 +16,22 @@ const LeaderBoard = () => {
   const [students, setStudents] = useState(getLeaderboardFromLocalStorage);
 
   useEffect(() => {
+    let isUnmounted = false;
     const fetchLeadeboard = async () => {
       try {
         const { data } = await axios.get("/api/leaderboard/");
-        setStudents(data);
-        localStorage.setItem("leaderboard", JSON.stringify(data));
-        console.log(data);
+        if (!isUnmounted) {
+          setStudents(data);
+          localStorage.setItem("leaderboard", JSON.stringify(data));
+        }
       } catch (err) {
         console.log(err.message);
       }
     };
     fetchLeadeboard();
+    return () => {
+      isUnmounted = true;
+    };
   }, []);
 
   return (

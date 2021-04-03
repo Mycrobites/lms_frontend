@@ -1,20 +1,19 @@
-import React, { useState } from "react";
-import { useHistory , Link} from "react-router-dom";
-import "./Signup.css";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import "./Login.css";
 
-const SignUp = () => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const history = useHistory()
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push("/dashboard")
+    history.push("/");
   };
 
   return (
-    <div className="signup-page">
+    <div className="login-page">
       <form onSubmit={handleSubmit}>
         <div className="username">
           <label>
@@ -47,33 +46,10 @@ const SignUp = () => {
             />
           </label>
         </div>
-
-
-        <div className="confirm-password">
-          <label>
-            <p>confirm password</p>
-
-            <input
-              required
-              type="password"
-              value={confirmPassword}
-              name="currentPassword"
-              placeholder="Confirm password..."
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-              }}
-            />
-          </label>
-        </div>
-
-        <button type="submit">Sign up</button>
-        <p className='login-redirect'>Already have a account ? <Link to='/login'>login here</Link> </p>
+        <button type="submit">Log in</button>
       </form>
-
-      
     </div>
   );
 };
 
-export default SignUp;
-
+export default Login;

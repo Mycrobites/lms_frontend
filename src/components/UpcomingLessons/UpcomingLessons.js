@@ -20,21 +20,27 @@ const UpcomingLessons = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    let isUnmounted = false;
     const fetchUpcomingEvents = async () => {
       if (!upcomingEvents) setIsLoading(true);
       try {
         const { data } = await axios.get("/api/upcomingEvents/rajat");
-        const sortedData = data
-          .sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp))
-          .reverse();
-        localStorage.setItem("upcoming-lessons", JSON.stringify(sortedData));
-        setUpcomingEvents(sortedData);
+        if (!isUnmounted) {
+          const sortedData = data
+            .sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp))
+            .reverse();
+          localStorage.setItem("upcoming-lessons", JSON.stringify(sortedData));
+          setUpcomingEvents(sortedData);
+        }
       } catch (err) {
         console.log(err.message);
       }
       setIsLoading(false);
     };
     fetchUpcomingEvents();
+    return () => {
+      isUnmounted = true;
+    };
   }, [upcomingEvents]);
 
   return (

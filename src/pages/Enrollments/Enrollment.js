@@ -1,15 +1,13 @@
 import SideBar from "../../components/SideBar/SideBar";
+import EnrolledCourses from "../../components/EnrolledCourses/EnrolledCourse";
 import "./Enrollment.css";
-import Courses from '../../components/EnrolledCourses/EnrolledCourses'
-
 
 const Enrollment = () => {
   return (
     <div className="enrollment">
-   
       <SideBar active="enrollment" />
       <div className="enrollment-items">
-        <Courses />
+        <EnrolledCourses />
       </div>
     </div>
   );

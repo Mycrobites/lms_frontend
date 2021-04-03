@@ -7,7 +7,6 @@ import Forum from "./pages/Forum/Forum";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import NavBar from "./components/NavBar/NavBar";
 import ProfilePage from "./pages/Profile/ProfilePage";
-import SignUp from "./pages/SignupPage/SignUp";
 import Login from "./pages/LoginPage/Login";
 
 const App = () => {
@@ -36,9 +35,6 @@ const App = () => {
           </Route>
           <Route exact path="/login">
             <Login />
-          </Route>
-          <Route exact path="/signup">
-            <SignUp />
           </Route>
           <Route path="*">
             <ErrorPage />

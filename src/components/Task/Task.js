@@ -51,16 +51,22 @@ const Task = () => {
   };
 
   useEffect(() => {
+    let isUnmounted = false;
     const fetchTasks = async () => {
       try {
         const { data } = await axios.get("/api/todo/rajat");
-        setTasks(data);
-        localStorage.setItem("tasks", JSON.stringify(data));
+        if (!isUnmounted) {
+          setTasks(data);
+          localStorage.setItem("tasks", JSON.stringify(data));
+        }
       } catch (err) {
         console.log(err.message);
       }
     };
     fetchTasks();
+    return () => {
+      isUnmounted = true;
+    };
   }, []);
 
   useEffect(() => {

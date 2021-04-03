@@ -20,19 +20,25 @@ const Courses = () => {
   const history = useHistory();
 
   useEffect(() => {
+    let isUnmounted = false;
     const fetchCourses = async () => {
       if (!courses) setIsLoading(true);
       try {
         const { data } = await axios.get("/api/getMyCourses/rajat");
-        const courseData = data.active.filter((course, index) => index < 2);
-        setCourses(courseData);
-        localStorage.setItem("courses", JSON.stringify(courseData));
+        if (!isUnmounted) {
+          const courseData = data.active.filter((course, index) => index < 2);
+          setCourses(courseData);
+          localStorage.setItem("courses", JSON.stringify(courseData));
+        }
       } catch (err) {
         console.log(err.message);
       }
       setIsLoading(false);
     };
     fetchCourses();
+    return () => {
+      isUnmounted = true;
+    };
   }, [courses]);
 
   return (

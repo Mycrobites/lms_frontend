@@ -5,16 +5,11 @@ import Courses from "../../components/Courses/Courses";
 import LeaderBoard from "../../components/LeaderBoard/LeaderBoard";
 import HomeWork from "../../components/Homework/HomeWork";
 import Task from "../../components/Task/Task";
-// import Task from "../../components/Task/Task";
-// import Tasks from "../../components/Tasks/Task";
 import "./DashBoard.css";
-
-// import SingleTasks from "../../components/Task/SingleTask";
 
 const DashBoard = () => {
   return (
     <div className="Dashboard">
-
       <SideBar active="dashboard" />
       <div className="dashboard-items">
         <UpcomingLessons />

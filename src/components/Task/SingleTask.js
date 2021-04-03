@@ -12,7 +12,6 @@ const SingleTasks = (props) => {
   const [showEdit, setShowEdit] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
   const [editDate, setEditDate] = useState(dueDate);
-  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef(null);
 
   const updateTask = async () => {
@@ -71,7 +70,6 @@ const SingleTasks = (props) => {
 
   useEffect(() => {
     if (showEdit) inputRef.current.focus();
-    // else inputRef.current.blur();
   }, [showEdit]);
 
   return (

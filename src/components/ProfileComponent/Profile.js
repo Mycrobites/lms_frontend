@@ -22,6 +22,7 @@ const Profile = () => {
   const [studentDetails, setStudentDetails] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [postData,setPostData]= useState(getProfile)
+  const [editLoading,setEditLoading] = useState(false)
 
   const getStudentsDetails = async () => {
     try {
@@ -93,6 +94,8 @@ const Profile = () => {
 
   const handleEditProfile = async()=>{
 
+    setEditLoading(true)
+
     try{
       await axios.put(`/api/editUserDetails/${username}` , postData)
 
@@ -101,7 +104,9 @@ const Profile = () => {
       console.log(err.message)
     }
     getStudentsDetails()
+    setEditLoading(false)
     setShowEdit(!showEdit)
+    
 
   }
 
@@ -132,11 +137,13 @@ console.log(postData)
              
             </div>
 
+            {editLoading && <div className='edit-loader'><Loader/></div>}
+
 
 
             {showEdit ? 
             
-              <div className="student-detail-edit">
+              <div className="student-detail edit">
               <div>
                 <p>Birthday</p>
                <input type='text'  value={postData.dob} onChange={e => setPostData({...postData, "dob": e.target.value})} name="dob"/>

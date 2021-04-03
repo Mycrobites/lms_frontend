@@ -10,13 +10,13 @@ const SideBar = ({ active }) => {
   return (
     <div className="sidebar">
       <div className="sidebar-responsive">
-        <div id={active === "home" ? "active" : ""} className="menu home-menu">
+      { /* <div id={active === "home" ? "active" : ""} className="menu home-menu">
           <Link to="/">
             <HomeOutlinedIcon />
           </Link>
-        </div>
+  </div>*/}
         <div id={active === "dashboard" ? "active" : ""} className="menu">
-          <Link to="/dashboard">
+          <Link to="/">
             <DashboardOutlinedIcon />
           </Link>
         </div>
@@ -26,11 +26,11 @@ const SideBar = ({ active }) => {
           </Link>
         </div>
 
-        <div id={active === "achievement" ? "active" : ""} className="menu">
+       {/* <div id={active === "achievement" ? "active" : ""} className="menu">
           <Link to="/achievement">
             <EmojiEventsOutlinedIcon />
           </Link>
-        </div>
+</div>*/}
 
         <div id={active === "forum" ? "active" : ""} className="menu">
           <Link to="/forum">
@@ -40,15 +40,15 @@ const SideBar = ({ active }) => {
       </div>
 
       <div className="sidebar-menu">
-        <div id={active === "home" ? "active" : ""} className="menu">
+      { /* <div id={active === "home" ? "active" : ""} className="menu">
           <Link to="/">
             <HomeOutlinedIcon />
             Home
           </Link>
-        </div>
+</div> */}
 
         <div id={active === "dashboard" ? "active" : ""} className="menu">
-          <Link to="/dashboard">
+          <Link to="/">
             <DashboardOutlinedIcon />
             Dashboard
           </Link>
@@ -61,12 +61,12 @@ const SideBar = ({ active }) => {
           </Link>
         </div>
 
-        <div id={active === "achievement" ? "active" : ""} className="menu">
+     {  /* <div id={active === "achievement" ? "active" : ""} className="menu">
           <Link to="/achievement">
             <EmojiEventsOutlinedIcon />
             Achievements
           </Link>
-        </div>
+</div>*/}
 
         <div id={active === "forum" ? "active" : ""} className="forum menu">
           <Link to="/forum">

@@ -15,18 +15,18 @@ const App = () => {
       <div className="App">
         <NavBar />
         <Switch>
-          <Route exact path="/">
+         {/* <Route exact path="/">
             <Home />
-          </Route>
-          <Route exact path="/dashboard">
+             </Route>*/}
+          <Route exact path="/">
             <DashBoard />
           </Route>
           <Route exact path="/enrollment">
             <Enrollment />
           </Route>
-          <Route exact path="/achievement">
+          {/*<Route exact path="/achievement">
             <Achievement />
-          </Route>
+            </Route>*/}
           <Route exact path="/forum">
             <Forum />
           </Route>

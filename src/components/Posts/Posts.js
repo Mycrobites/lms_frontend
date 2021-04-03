@@ -137,7 +137,7 @@ const Posts = () => {
             </div>
           )}
           <div>
-            {posts.map((post) => (
+            {posts?.map((post) => (
               <SinglePost key={post.id} {...post} />
             ))}
           </div>

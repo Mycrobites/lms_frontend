@@ -14,12 +14,13 @@
 }
 
 .sidebar-menu {
-  height: 400px;
+  height: 250px;
   padding: 0 10px;
   width: 100%;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
+  margin-top: 30px;
 }
 
 .menu a {

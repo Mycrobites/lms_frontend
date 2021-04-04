@@ -16,7 +16,7 @@ const SideBar = ({ active }) => {
           </Link>
         </div> */}
         <div id={active === "dashboard" ? "active" : ""} className="menu">
-          <Link to="/dashboard">
+          <Link to="/">
             <DashboardOutlinedIcon />
           </Link>
         </div>
@@ -45,7 +45,7 @@ const SideBar = ({ active }) => {
           </Link>
         </div> */}
         <div id={active === "dashboard" ? "active" : ""} className="menu">
-          <Link to="/dashboard">
+          <Link to="/">
             <DashboardOutlinedIcon />
             Dashboard
           </Link>

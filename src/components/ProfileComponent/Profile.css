@@ -19,8 +19,19 @@
 
 	margin: 0 30px;
 	margin-top: 50px;
-	border-radius: 20px;
-	box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	border: 0.5px solid lightgray;
+}
+.edit-loader {
+	z-index: 99;
+	width: 100vw;
+	height: 100vh;
+	display: grid;
+	place-items: center;
+	background-color: rgba(255, 255, 255, 0.4);
+	position: fixed;
+	top: 0%;
+	left: 0%;
 }
 
 .profile-details {
@@ -44,8 +55,13 @@
 	font-size: 0.9em;
 }
 .student-detail {
+	position: relative;
 	display: grid;
-	grid-template-columns: minmax(150px, 1.33fr) minmax(150px, 2.33fr);
+	grid-template-columns: minmax(100px, 1.33fr) minmax(100px, 1.33fr) minmax(
+			100px,
+			1.33fr
+		);
+	margin-bottom: 50px;
 }
 .profile-name h1 {
 	font-size: 1.5em;
@@ -71,7 +87,26 @@
 	font-weight: 500;
 	color: rgb(100, 100, 100);
 }
-
+.edit button {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100px;
+	height: 50px;
+	padding: 10px;
+	background: rgb(0, 140, 255);
+	border: none;
+	outline: none;
+	cursor: pointer;
+	color: white;
+	font-weight: 500;
+}
+.edit button:hover {
+	color: black;
+	background: white;
+	border: 1px solid black;
+}
 .profile-loader {
 	position: absolute;
 	top: 50%;
@@ -82,7 +117,7 @@
 
 .profile-edit-button {
 	position: absolute;
-	top: 5%;
+	top: 25%;
 	right: 3%;
 	display: flex;
 	justify-content: center;
@@ -105,19 +140,30 @@
 	}
 }
 
+@media only screen and (max-width: 1200px) {
+	.student-detail {
+		display: grid;
+		grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr);
+	}
+}
+
 @media only screen and (max-width: 600px) {
 	.profile-card {
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: center;
 	}
+	.student-detail {
+		display: grid;
+		grid-template-columns: minmax(150px, 1.33fr);
+	}
 
 	.student-detail div {
 		display: grid;
 		flex-direction: row;
-		margin: 10px;
+		margin: 15px;
 	}
 	.student-detail div > * {
-		margin: 0 20px;
+		margin: 10px 20px;
 	}
 }

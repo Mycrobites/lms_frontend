@@ -11,7 +11,6 @@ const UserDetail = ({ name, setShowUser }) => {
   useEffect(() => {
     const handler = (e) => {
       if (!userDetailRef?.current?.contains(e.target)) {
-        console.log(e.target);
         setShowUser(false);
       }
     };

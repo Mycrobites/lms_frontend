@@ -17,9 +17,9 @@ const EnrolledCourse = () => {
   const [allCourses, setAllCourses] = useState(
     getEnrolledCoursesFromLocalStorage
   );
-  const [activeCourses, setActiveCourses] = useState(allCourses.active);
+  const [activeCourses, setActiveCourses] = useState(allCourses?.active);
   const [completedCourses, setCompletedCourses] = useState(
-    allCourses.completed
+    allCourses?.completed
   );
   const [isLoading, setIsLoading] = useState(false);
   const [active, setActive] = useState("active");
@@ -79,13 +79,13 @@ const EnrolledCourse = () => {
       <div className="course-cards">
         {active === "active" ? (
           <div className="active-courses">
-            {activeCourses.map((course) => (
-              <SingleCourse key={course.sno} {...course} />
+            {activeCourses?.map((course) => (
+              <SingleCourse key={course?.sno} {...course} />
             ))}
           </div>
         ) : (
           <div className="completed-courses">
-            {completedCourses.map((course) => (
+            {completedCourses?.map((course) => (
               <SingleCourse key={course.sno} {...course} />
             ))}
           </div>

@@ -19,7 +19,8 @@ const Profile = () => {
   const [studentDetails, setStudentDetails] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [postData, setPostData] = useState(getProfile);
-  
+  const [editLoading, setEditLoading] = useState(false);
+
   const getStudentsDetails = async () => {
     try {
       if (!postData) setLoading(true);
@@ -34,7 +35,7 @@ const Profile = () => {
 
   useEffect(() => {
     getStudentsDetails();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -86,12 +87,15 @@ const Profile = () => {
   const { first_name, last_name, email, username } = userInfo;
 
   const handleEditProfile = async () => {
+    setEditLoading(true);
+
     try {
       await axios.put(`/api/editUserDetails/${username}`, postData);
     } catch (err) {
       console.log(err.message);
     }
     getStudentsDetails();
+    setEditLoading(false);
     setShowEdit(!showEdit);
   };
 
@@ -124,8 +128,14 @@ const Profile = () => {
               )}
             </div>
 
+            {editLoading && (
+              <div className="edit-loader">
+                <Loader />
+              </div>
+            )}
+
             {showEdit ? (
-              <div className="student-detail-edit">
+              <div className="student-detail edit">
                 <div>
                   <p>Birthday</p>
                   <input

@@ -64,13 +64,15 @@ const EnrolledCourse = () => {
             className={`card ${active === "active" && "active"}`}
             onClick={() => setActive("active")}
           >
-            {allCourses.act_count}&nbsp; Active Courses
+            <span>{allCourses.act_count}</span>
+            Active Courses
           </div>
           <div
             className={`card ${active === "completed" && "active"}`}
             onClick={() => setActive("completed")}
           >
-            {allCourses.comp_count}&nbsp; Completed Courses
+            <span>{allCourses.comp_count}</span>
+            Completed Courses
           </div>
         </div>
       </div>

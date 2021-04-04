@@ -5,6 +5,7 @@ import Loader from "../Loader/Loader";
 import { IoCloseOutline } from "react-icons/io5";
 import { AiOutlineWarning } from "react-icons/ai";
 import "./Posts.css";
+import Pagination from "./Pagination";
 
 const getPostsFromLoacalStorage = () => {
   const posts = localStorage.getItem("posts");
@@ -15,6 +16,8 @@ const getPostsFromLoacalStorage = () => {
   }
 };
 
+const POSTS_PER_PAGE = 10;
+
 const Posts = () => {
   const [posts, setPosts] = useState(getPostsFromLoacalStorage);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +25,9 @@ const Posts = () => {
   const [postTitle, setPostTitle] = useState("");
   const [postDesc, setPostDesc] = useState("");
   const [error, setError] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
+  const [addingPost, setAddingPost] = useState(false);
 
   const getPosts = async () => {
     try {
@@ -38,7 +44,7 @@ const Posts = () => {
     e.preventDefault();
     setError(false);
     if (!postTitle || !postDesc) return setError(true);
-    setIsLoading(true);
+    setAddingPost(true);
     try {
       const newPost = {
         title: postTitle,
@@ -50,8 +56,8 @@ const Posts = () => {
     } catch (err) {
       console.log(err.message);
     }
-    setShowAddPost(false)
-    setIsLoading(false);
+    setShowAddPost(false);
+    setAddingPost(false);
   };
 
   useEffect(() => {
@@ -61,19 +67,29 @@ const Posts = () => {
         if (!posts) setIsLoading(true);
         const { data } = await axios.get("/api/forum/getPosts");
         if (!isUnmounted) {
-          setPosts(data.reverse());
-          localStorage.setItem("posts", JSON.stringify(data.reverse()));
+          setPosts(data);
+          console.log(data.reverse());
+          localStorage.setItem("posts", JSON.stringify(data));
         }
       } catch (err) {
         console.log(err.message);
       }
       setIsLoading(false);
     };
+    setTotalPages(Math.ceil(posts?.length / POSTS_PER_PAGE));
     fetchPosts();
     return () => {
       isUnmounted = true;
     };
-  }, [posts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const selectedPosts = posts?.slice(startIndex, startIndex + POSTS_PER_PAGE);
+
+  const handlePages = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -94,20 +110,20 @@ const Posts = () => {
               Ask Question
             </button>
           </div>
+          {addingPost && (
+            <div className="loading-div">
+              <Loader />
+            </div>
+          )}
           {showAddPost && (
             <div className="add-post" onSubmit={addPost}>
-              {isLoading && (
-                <div className="loading-div">
-                  <Loader />
-                </div>
-              )}
               <div className="add-post-title">
                 <h1>Ask Question</h1>
                 <button onClick={() => setShowAddPost(false)}>
                   <IoCloseOutline />
                 </button>
               </div>
-              <form className="add-post-form">
+              <form className="add-post-form" onSubmit={addPost}>
                 <label>
                   <p>Title</p>
                   <input
@@ -137,10 +153,17 @@ const Posts = () => {
             </div>
           )}
           <div>
-            {posts.map((post) => (
+            {selectedPosts?.map((post) => (
               <SinglePost key={post.id} {...post} />
             ))}
           </div>
+          {posts?.length > 10 && (
+            <Pagination
+              totalPages={totalPages}
+              handlePages={handlePages}
+              currentPage={currentPage}
+            />
+          )}
         </div>
       )}
     </>

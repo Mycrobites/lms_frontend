@@ -13,6 +13,7 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import NavBar from "./components/NavBar/NavBar";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import Login from "./pages/LoginPage/Login";
+import CoursePage from "./pages/CoursePage/CoursePage"
 
 const App = () => {
   return (
@@ -42,9 +43,13 @@ const App = () => {
           <Route exact path="/login">
             <Login />
           </Route>
+          <Route exact path="/course/:id">
+            <CoursePage/>
+          </Route>
           <Route path="*">
             <ErrorPage />
           </Route>
+          
         </Switch>
       </div>
     </Router>

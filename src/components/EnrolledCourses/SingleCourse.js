@@ -1,6 +1,15 @@
+import { useHistory } from 'react-router-dom'
+
 const SingleCourse = (props) => {
+
+  const history = useHistory();
+
+  const handleClick = () =>{
+    history.push(`/course/${props.course}`)
+  }
+
   return (
-    <div className="single-course-card">
+    <div className="single-course-card" >
       <div className="single-course-image">
         <img src={props.course_image} alt={props.course_name} />
       </div>
@@ -16,7 +25,7 @@ const SingleCourse = (props) => {
         <div>
           <div className="lessons">
             <div className="content">Lessons: {props.total_lesson}</div>
-            <button className="enrollment-course-btn"> Start </button>
+            <button className="enrollment-course-btn" onClick={handleClick}> Start </button>
           </div>
         </div>
       ) : (
@@ -24,7 +33,7 @@ const SingleCourse = (props) => {
           <div className="content">
             Completed: {props.percentage_completed}%
           </div>
-          <button className="enrollment-course-btn">Resume</button>
+          <button className="enrollment-course-btn" onClick={handleClick}>Resume</button>
         </div>
       )}
     </div>

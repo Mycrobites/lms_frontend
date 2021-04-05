@@ -1,0 +1,13 @@
+.course-page {
+    margin-left: 220px;
+    display: grid;
+    background-color: #fff5f5;
+    min-height: 100vh;
+    height: auto;
+  }
+  @media (max-width: 900px) {
+    .course-page{
+      margin-left: 50px;
+    }
+  }
+  

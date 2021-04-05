@@ -21,49 +21,20 @@ const Profile = () => {
   const [postData, setPostData] = useState(getProfile);
   const [editLoading, setEditLoading] = useState(false);
 
-  const getStudentsDetails = async () => {
-    try {
-      if (!postData) setLoading(true);
-      const { data } = await axios.get("/api/getUserDetails/user1");
-      setStudentDetails(data?.student_details);
-      setUserInfo(data?.user_info);
-    } catch (err) {
-      console.log(err.message);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const getStudentsDetails = async () => {
+      try {
+        if (!postData) setLoading(true);
+        const { data } = await axios.get("/api/getUserDetails/user1");
+        setStudentDetails(data?.student_details);
+        setUserInfo(data?.user_info);
+      } catch (err) {
+        console.log(err.message);
+      }
+      setLoading(false);
+    };
     getStudentsDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    setPostData({
-      dob: studentDetails?.dob,
-      Class: studentDetails?.Class,
-      gender: studentDetails?.gender,
-      category: studentDetails?.category,
-      phone_no: studentDetails?.phone_no,
-      address: studentDetails?.address,
-      state: studentDetails?.state,
-      pin_code: studentDetails?.pin_code,
-      father_name: studentDetails?.father_name,
-      father_email: studentDetails?.father_email,
-      father_phone: studentDetails?.father_phone,
-      father_profession: "NA",
-      mother_name: studentDetails?.mother_name,
-      mother_email: studentDetails?.mother_email,
-      mother_phone: studentDetails?.mother_phone,
-      mother_profession: "NA",
-      school_name: studentDetails?.school_name,
-      school_address: studentDetails?.school_address,
-      school_state: "NA",
-      school_pin_code: "NA",
-      user: 121,
-    });
-    localStorage.setItem("user-profile", JSON.stringify(postData));
-  }, [userInfo, studentDetails, postData]);
+  }, [postData]);
 
   const {
     Class,
@@ -88,18 +59,40 @@ const Profile = () => {
 
   const handleEditProfile = async () => {
     setEditLoading(true);
-
+    setPostData({
+      dob: studentDetails?.dob,
+      Class: studentDetails?.Class,
+      gender: studentDetails?.gender,
+      category: studentDetails?.category,
+      phone_no: studentDetails?.phone_no,
+      address: studentDetails?.address,
+      state: studentDetails?.state,
+      pin_code: studentDetails?.pin_code,
+      father_name: studentDetails?.father_name,
+      father_email: studentDetails?.father_email,
+      father_phone: studentDetails?.father_phone,
+      father_profession: "NA",
+      mother_name: studentDetails?.mother_name,
+      mother_email: studentDetails?.mother_email,
+      mother_phone: studentDetails?.mother_phone,
+      mother_profession: "NA",
+      school_name: studentDetails?.school_name,
+      school_address: studentDetails?.school_address,
+      school_state: "NA",
+      school_pin_code: "NA",
+      user: 121,
+    });
+    localStorage.setItem("user-profile", JSON.stringify(postData));
     try {
       await axios.put(`/api/editUserDetails/${username}`, postData);
     } catch (err) {
       console.log(err.message);
     }
-    getStudentsDetails();
     setEditLoading(false);
     setShowEdit(!showEdit);
   };
 
-  console.log(postData);
+  // console.log(postData);
 
   return (
     <>
@@ -112,12 +105,12 @@ const Profile = () => {
           <div className="profile-image">
             <img src={profile_pic} alt="" />
             <h6>{username}</h6>
-            <p>{`Std ${Class}`}</p>
+            <p>Std {Class}</p>
           </div>
           <div className="profile-details">
             <div className="profile-name">
-              <h1>{`${first_name} ${last_name}`}</h1>
-              <p>{`Std ${Class}`}</p>
+              <h1>{first_name} {last_name}</h1>
+              <p>Std{Class}</p>
               {!showEdit && (
                 <button
                   onClick={(e) => setShowEdit(true)}
@@ -330,7 +323,8 @@ const Profile = () => {
                     name="school_address"
                   />
                 </div>
-                <div>
+                <div className="button-group">
+                  <button onClick={() => setShowEdit(false)}>cancel</button>
                   <button onClick={handleEditProfile}>save</button>
                 </div>
               </div>
@@ -346,7 +340,7 @@ const Profile = () => {
                 <div>
                   <p>Class</p>
                   <p>
-                    <strong>{`Std ${Class}`}</strong>
+                    <strong>Std {Class}</strong>
                   </p>
                 </div>
 
@@ -367,7 +361,7 @@ const Profile = () => {
                 <div>
                   <p>Phone</p>
                   <p>
-                    <strong>{`+91 ${phone_no}`}</strong>
+                    <strong>+91 {phone_no}</strong>
                   </p>
                 </div>
                 <div>
@@ -394,7 +388,7 @@ const Profile = () => {
                 <div>
                   <p>Father Phone</p>
                   <p>
-                    <strong>{`+91 ${father_phone}`}</strong>
+                    <strong>+91 {father_phone}</strong>
                   </p>
                 </div>
 
@@ -415,7 +409,7 @@ const Profile = () => {
                 <div>
                   <p>Mother Phone</p>
                   <p>
-                    <strong>{`+91 ${mother_phone}`}</strong>
+                    <strong>+91 {mother_phone}</strong>
                   </p>
                 </div>
 

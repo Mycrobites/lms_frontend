@@ -110,7 +110,7 @@
 .user-detail {
   position: absolute;
   top: 85%;
-  right: 20px;
+  right: 0;
   width: 200px;
   height: object-fit;
   background: white;
@@ -158,10 +158,13 @@
   width: 400px;
   height: 300px;
   background: white;
-  border: 0.5px solid black;
   position: absolute;
-  top: 100%;
+  top: 85%;
   right: 0;
+  border: none;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .notification-header {
@@ -169,10 +172,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  border: 0.05px solid lightgray;
+  border-bottom: 0.05px solid lightgray;
 }
 
 .notification-header h4 {
   font-size: 1em;
   font-weight: 650;
+  margin-bottom: 0;
 }

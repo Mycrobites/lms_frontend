@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Loader from "../Loader/Loader";
 import Lesson from "./Lesson";
 import axios from "../../axios/axios";
@@ -18,14 +18,16 @@ const UpcomingLessons = () => {
     getUpcomingLessonsFromLocalStorage
   );
   const [isLoading, setIsLoading] = useState(false);
+  const mountedRef = useRef(true);
+
 
   useEffect(() => {
-    let isUnmounted = false;
+    // let isUnmounted = false;
     const fetchUpcomingEvents = async () => {
       if (!upcomingEvents) setIsLoading(true);
       try {
         const { data } = await axios.get("/api/upcomingEvents/rajat");
-        if (!isUnmounted) {
+        if (mountedRef.current) {
           const sortedData = data
             .sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp))
             .reverse();
@@ -38,8 +40,8 @@ const UpcomingLessons = () => {
       setIsLoading(false);
     };
     fetchUpcomingEvents();
-    return () => {
-      isUnmounted = true;
+    return function cleanup() {
+      mountedRef.current = false;
     };
   }, [upcomingEvents]);
 

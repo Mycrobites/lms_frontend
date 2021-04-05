@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "../../axios/axios";
 import SinglePost from "./SinglePost";
 import Loader from "../Loader/Loader";
@@ -28,6 +28,7 @@ const Posts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
   const [addingPost, setAddingPost] = useState(false);
+  const mountedRef = useRef(true);
 
   const getPosts = async () => {
     try {
@@ -61,12 +62,12 @@ const Posts = () => {
   };
 
   useEffect(() => {
-    let isUnmounted = false;
+    // let isUnmounted = false;
     const fetchPosts = async () => {
       try {
         if (!posts) setIsLoading(true);
         const { data } = await axios.get("/api/forum/getPosts");
-        if (!isUnmounted) {
+        if (mountedRef.current) {
           setPosts(data);
           console.log(data.reverse());
           localStorage.setItem("posts", JSON.stringify(data));
@@ -78,8 +79,8 @@ const Posts = () => {
     };
     setTotalPages(Math.ceil(posts?.length / POSTS_PER_PAGE));
     fetchPosts();
-    return () => {
-      isUnmounted = true;
+    return function cleanup(){
+      mountedRef.current = false
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

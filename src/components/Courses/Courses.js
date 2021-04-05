@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Course from "./Course";
 import Loader from "../Loader/Loader";
 import axios from "../../axios/axios";
@@ -18,14 +18,15 @@ const Courses = () => {
   const [courses, setCourses] = useState(getCoursesFromLocalStorage);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+  const mountedRef = useRef(true);
 
   useEffect(() => {
-    let isUnmounted = false;
+    // let isUnmounted = false;
     const fetchCourses = async () => {
       if (!courses) setIsLoading(true);
       try {
         const { data } = await axios.get("/api/getMyCourses/rajat");
-        if (!isUnmounted) {
+        if (mountedRef.current) {
           const courseData = data.active.filter((course, index) => index < 2);
           setCourses(courseData);
           localStorage.setItem("courses", JSON.stringify(courseData));
@@ -36,8 +37,8 @@ const Courses = () => {
       setIsLoading(false);
     };
     fetchCourses();
-    return () => {
-      isUnmounted = true;
+    return function cleanup() {
+      mountedRef.current = false;
     };
   }, [courses]);
 

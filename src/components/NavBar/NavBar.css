@@ -23,6 +23,7 @@
   width: 200px;
   height: 50px;
   object-fit: contain;
+  cursor: pointer;
 }
 .user {
   display: flex;
@@ -34,9 +35,8 @@
   margin: 0 10px;
 }
 .user button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  place-items: center;
   border: none;
   outline: none;
   background: inherit;
@@ -59,18 +59,13 @@
 
 #notification span {
   position: absolute;
-  top: 0%;
-  left: 0%;
+  top: 10%;
+  left: 12%;
   color: white;
-  background: rgb(0, 110, 255);
-  width: 15px;
-  height: 15px;
-  font-size: 0.8em;
-  font-weight: 700;
+  background: rgb(33, 126, 248);
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 @media only screen and (max-width: 650px) {
@@ -178,5 +173,22 @@
 .notification-header h4 {
   font-size: 1em;
   font-weight: 650;
+  margin-bottom: 0;
+}
+
+.notification-body {
+  margin-top: 10px;
+}
+
+.notification {
+  padding: 5px 15px;
+}
+
+.notification h3 {
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+.notification p {
+  font-size: 0.7em;
   margin-bottom: 0;
 }

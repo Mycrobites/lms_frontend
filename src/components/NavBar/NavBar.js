@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, useHistory } from "react-router-dom";
+import axios from "../../axios/axios";
 import Avatar from "@material-ui/core/Avatar";
 import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
@@ -9,10 +10,24 @@ import Notification from "./Notification";
 import logo from "../../assets/images/Artboard 1.png";
 import "./NavBar.css";
 
+const getNotificationsFromLocalStorage = () => {
+  const nots = localStorage.getItem("notifications");
+  if (nots) {
+    return JSON.parse(nots);
+  } else {
+    return null;
+  }
+};
+
 const NavBar = () => {
   const [showUser, setShowUser] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [notifications, setNotifications] = useState(
+    getNotificationsFromLocalStorage
+  );
+
   const location = useLocation();
+  const history = useHistory();
 
   const showNotificationBar = () => {
     setShowNotification(true);
@@ -24,20 +39,34 @@ const NavBar = () => {
     setShowNotification(false);
   };
 
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const { data } = await axios.get("/api/fetchNotification/rajat");
+        setNotifications(data);
+        // console.log(data);
+        localStorage.setItem("notifications", JSON.stringify(data));
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    fetchNotifications();
+  }, []);
+
   return (
     <>
       {location.pathname !== "/login" ? (
         <div className="navbar">
           <div className="logo">
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="logo" onClick={() => history.push("/")} />
           </div>
           <div className="user">
             <button id="notification" onClick={showNotificationBar}>
-              <span>1</span>
+              {notifications?.length > 0 && <span></span>}
               <NotificationsOutlinedIcon />
             </button>
             <h4 id="user-name">Rajat</h4>
-            <Avatar src="https://res.cloudinary.com/diqqf3eq2/image/upload/v1586883417/person-3_ipa0mj.jpg" />
+            <Avatar />
             <button onClick={showUserBar}>
               {showUser ? (
                 <ExpandLessOutlinedIcon />
@@ -49,7 +78,10 @@ const NavBar = () => {
               <UserDetail setShowUser={setShowUser} name={"Rajat"} />
             )}
             {showNotification && (
-              <Notification setShowNotification={setShowNotification} />
+              <Notification
+                setShowNotification={setShowNotification}
+                notifications={notifications}
+              />
             )}
           </div>
         </div>

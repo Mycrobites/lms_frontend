@@ -1,3 +1,4 @@
+import Avatar from "antd/lib/avatar/avatar";
 import months from "../../assets/months/months";
 
 const Course = (props) => {
@@ -30,7 +31,7 @@ const Course = (props) => {
       </div>
       <div className="instructor">
         <p>by</p>
-        <img src={author_picture} alt={author} />
+        {author_picture ? <Avatar src={author_picture} /> : <Avatar />}
         <h3>{author}</h3>
       </div>
       <div className="course-description">

@@ -79,8 +79,8 @@ const Posts = () => {
     };
     setTotalPages(Math.ceil(posts?.length / POSTS_PER_PAGE));
     fetchPosts();
-    return function cleanup(){
-      mountedRef.current = false
+    return function cleanup() {
+      mountedRef.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

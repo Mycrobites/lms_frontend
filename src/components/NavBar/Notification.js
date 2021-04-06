@@ -1,13 +1,44 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import "./NavBar.css";
+import axios from "../../axios/axios";
+import Loader from "../Loader/Loader";
+import SingleNotification from "./SingleNotification";
 
-const Notification = ({ setShowNotification, notifications }) => {
+const Notification = ({ setShowNotification }) => {
+  const getNotification = () => {
+    const data = localStorage.getItem("user-notification");
+    if (data) {
+      return JSON.parse(data);
+    } else {
+      return null;
+    }
+  };
+
+  const [notificationDetails, setNotificationDetails] = useState(
+    getNotification
+  );
+  const [loading, setLoading] = useState(false);
   const notificationRef = useRef();
-  console.log(notifications);
-  console.log(notifications?.time?.split("T"));
-  console.log(notifications?.time);
-  const now = new Date(notifications.time);
+
+  useEffect(() => {
+    const fetchNotification = async () => {
+      if (!notificationDetails) {
+        setLoading(true);
+      }
+      try {
+        const { data } = await axios.get("/api/fetchNotification/rajat");
+        setNotificationDetails(data);
+        setLoading(false);
+        console.log(data);
+        localStorage.setItem("user-notification", JSON.stringify(data));
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    fetchNotification();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const handler = (e) => {
@@ -28,12 +59,14 @@ const Notification = ({ setShowNotification, notifications }) => {
         </button>
       </div>
       <div className="notification-body">
-        {notifications.map((notification) => (
-          <div className="notification" key={notification.id}>
-            <h3>{notification.title}</h3>
-            <p>{notification.message}</p>
-            {/* <h4>{now.()}</h4> */}
-          </div>
+        {notificationDetails?.map((notification, idx) => (
+          <SingleNotification
+            key={idx}
+            id={notification?.id}
+            time={notification?.time}
+            message={notification?.message}
+            title={notification?.title}
+          />
         ))}
       </div>
     </div>

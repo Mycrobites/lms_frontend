@@ -2,16 +2,15 @@ import { useState, useEffect } from "react";
 import SingleCourse from "./SingleCourse";
 import Loader from "../../components/Loader/Loader";
 import axios from "../../axios/axios";
+import Carousel from "react-elastic-carousel";
 import "./EnrolledCourse.css";
-import Carousel from 'react-elastic-carousel';
 
-const breakPoints =[
-  {width:1 , itemsToShow:1},
-  {width:500 , itemsToShow:2},
-  {width:900 , itemsToShow:3},
-  {width:1100 , itemsToShow:4},
-
-]
+const breakPoints = [
+  { width: 1, itemsToShow: 1 },
+  { width: 500, itemsToShow: 2 },
+  { width: 900, itemsToShow: 3 },
+  { width: 1100, itemsToShow: 4 },
+];
 
 const getEnrolledCoursesFromLocalStorage = () => {
   const enrolledCourses = localStorage.getItem("enrolled-courses");
@@ -85,32 +84,26 @@ const EnrolledCourse = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="course-cards">
-      
         {active === "active" ? (
           <div className="active-courses">
-          <Carousel breakPoints={breakPoints}>
-         
-            {activeCourses?.map((course) => (
-              <SingleCourse key={course?.sno} {...course} />
-            ))}
-          
+            <Carousel breakPoints={breakPoints}>
+              {activeCourses?.map((course) => (
+                <SingleCourse key={course?.sno} {...course} />
+              ))}
             </Carousel>
           </div>
         ) : (
           <div className="completed-courses">
-          <Carousel breakPoints={breakPoints}>
-            {completedCourses?.map((course) => (
-              <SingleCourse key={course?.sno} {...course} />
-            ))}
+            <Carousel breakPoints={breakPoints}>
+              {completedCourses?.map((course) => (
+                <SingleCourse key={course?.sno} {...course} />
+              ))}
             </Carousel>
           </div>
         )}
-        
       </div>
-    
-      
     </div>
   );
 };

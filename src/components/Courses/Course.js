@@ -1,4 +1,4 @@
-import Avatar from "antd/lib/avatar/avatar";
+import { Avatar } from "@material-ui/core";
 import months from "../../assets/months/months";
 
 const Course = (props) => {

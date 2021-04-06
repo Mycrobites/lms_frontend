@@ -98,6 +98,12 @@
   margin: 0;
   font-size: 1.1em;
 }
+.instructor p {
+  margin-right: 10px;
+}
+.instructor h3 {
+  margin-left: 10px;
+}
 
 .course-description p {
   margin: 0 10px;
@@ -114,7 +120,7 @@
   display: block;
   margin: auto;
   cursor: pointer;
-  outline: none;
+  outline: none !important;
   border: none;
   font-weight: 500;
   font-size: 18px;

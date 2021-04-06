@@ -10,7 +10,8 @@ const SingleCourse = (props) => {
       </div>
       <h2 className="single-course-title">{props.course_name}</h2>
       <div className="single-course-author">
-        <img src={props.author_picture} alt={props.author} />
+
+        <img src={props.author_picture} alt="" />
         <h2>{props.author}</h2>
       </div>
       <progress value={props.percentage_completed} max="100">

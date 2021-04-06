@@ -46,7 +46,7 @@ const NavBar = () => {
               )}
             </button>
             {showUser && (
-              <UserDetail setShowUser={setShowUser} name={"Brad Stevens"} />
+              <UserDetail setShowUser={setShowUser} name={"Rajat"} />
             )}
             {showNotification && (
               <Notification setShowNotification={setShowNotification} />

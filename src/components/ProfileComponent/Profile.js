@@ -14,7 +14,7 @@ const getProfile = () => {
 };
 
 const Profile = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
   const [studentDetails, setStudentDetails] = useState({});
   const [userInfo, setUserInfo] = useState({});

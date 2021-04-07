@@ -7,7 +7,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
 import UserDetail from "./userDetail";
 import Notification from "./Notification";
-import logo from "../../assets/images/Artboard 1.png";
+import logo from "../../assets/images/logo.png";
 import "./NavBar.css";
 
 const getNotificationsFromLocalStorage = () => {

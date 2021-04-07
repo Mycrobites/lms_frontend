@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Loader from "../Loader/Loader";
 import axios from "../../axios/axios";
-import { FiEdit3 } from "react-icons/fi";
+import { MdEdit } from "react-icons/md";
 import "./Profile.css";
 
 const getProfile = () => {
@@ -109,14 +109,16 @@ const Profile = () => {
           </div>
           <div className="profile-details">
             <div className="profile-name">
-              <h1>{first_name} {last_name}</h1>
+              <h1>
+                {first_name} {last_name}
+              </h1>
               <p>Std{Class}</p>
               {!showEdit && (
                 <button
                   onClick={(e) => setShowEdit(true)}
                   className="profile-edit-button"
                 >
-                  <FiEdit3 />
+                  <MdEdit />
                 </button>
               )}
             </div>

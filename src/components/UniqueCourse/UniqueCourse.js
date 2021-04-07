@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../axios/axios";
 import Loader from "../Loader/Loader";
+import CourseContent from "./CourseContent";
+import MediaPlayer from "./MediaPlayer";
 import "./UniqueCourse.css";
 
 const UniqueCourse = () => {
@@ -33,15 +35,39 @@ const UniqueCourse = () => {
 
   return (
     <>
-      {isLoading ? (
+      { isLoading ? (
         <div className="post-loader">
-          <Loader />
+          <Loader/>
         </div>
       ) : (
         <div className="course">
-          <div className="header">{CourseDetails?.course_name}</div>
+          <CourseContent/>
+          <MediaPlayer/>
+          <div className='course-overview'>
+
+          <div className='course-about'>
+          <h2>About this course</h2>
+
+          <p>Learn to build Responsive WordPress websites
+          from scratch with complete In-Depth Guide to WordPress
+          for Beginners</p>
+          </div>
+
+          <div className='course-details'>
+          
+          <p>Lecture : 120</p>
+          <p>Total Video : 35 hours</p>
+          </div>
+          
+         
+          
+          
+          </div>
+          
         </div>
+        
       )}
+      
     </>
   );
 };

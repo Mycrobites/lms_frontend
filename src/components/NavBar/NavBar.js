@@ -36,7 +36,7 @@ const NavBar = () => {
     const{data}= await axios.post("/api/notifSeen" , {
       "user": 114
     })
-    console.log(data)
+    
   };
 
   const showUserBar = () => {
@@ -52,7 +52,7 @@ const NavBar = () => {
       try {
         const { data } = await axios.get("/api/fetchNotification/rajat");
         setNotifications(data);
-        // console.log(data);
+        
         setLoading(false)
         localStorage.setItem("notifications", JSON.stringify(data));
       } catch (err) {

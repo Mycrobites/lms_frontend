@@ -5,40 +5,10 @@ import axios from "../../axios/axios";
 import Loader from "../Loader/Loader";
 import SingleNotification from "./SingleNotification";
 
-const Notification = ({ setShowNotification }) => {
-  const getNotification = () => {
-    const data = localStorage.getItem("user-notification");
-    if (data) {
-      return JSON.parse(data);
-    } else {
-      return null;
-    }
-  };
+const Notification = ({ setShowNotification , notifications ,loading }) => {
 
-  const [notificationDetails, setNotificationDetails] = useState(
-    getNotification
-  );
-  const [loading, setLoading] = useState(false);
+  
   const notificationRef = useRef();
-
-  useEffect(() => {
-    const fetchNotification = async () => {
-      if (!notificationDetails) {
-        setLoading(true);
-      }
-      try {
-        const { data } = await axios.get("/api/fetchNotification/rajat");
-        setNotificationDetails(data);
-        setLoading(false);
-        console.log(data);
-        localStorage.setItem("user-notification", JSON.stringify(data));
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-    fetchNotification();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const handler = (e) => {
@@ -59,7 +29,8 @@ const Notification = ({ setShowNotification }) => {
         </button>
       </div>
       <div className="notification-body">
-        {notificationDetails?.map((notification, idx) => (
+   
+        {loading ? <div className='notification-loader'><Loader/></div> : notifications?.map((notification, idx) => (
           <SingleNotification
             key={idx}
             id={notification?.id}

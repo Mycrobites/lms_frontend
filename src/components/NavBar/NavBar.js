@@ -22,6 +22,7 @@ const getNotificationsFromLocalStorage = () => {
 const NavBar = () => {
   const [showUser, setShowUser] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [notifications, setNotifications] = useState(
     getNotificationsFromLocalStorage
   );
@@ -29,9 +30,13 @@ const NavBar = () => {
   const location = useLocation();
   const history = useHistory();
 
-  const showNotificationBar = () => {
+  const showNotificationBar = async() => {
     setShowNotification(true);
     setShowUser(false);
+    const{data}= await axios.post("/api/notifSeen" , {
+      "user": 114
+    })
+    console.log(data)
   };
 
   const showUserBar = () => {
@@ -41,10 +46,14 @@ const NavBar = () => {
 
   useEffect(() => {
     const fetchNotifications = async () => {
+      if(!notifications){
+        setLoading(true)
+      }
       try {
         const { data } = await axios.get("/api/fetchNotification/rajat");
         setNotifications(data);
         // console.log(data);
+        setLoading(false)
         localStorage.setItem("notifications", JSON.stringify(data));
       } catch (err) {
         console.log(err.message);
@@ -62,7 +71,7 @@ const NavBar = () => {
           </div>
           <div className="user">
             <button id="notification" onClick={showNotificationBar}>
-              {notifications?.length > 0 && <span></span>}
+              {notifications?.length > 0 && <span>{notifications.length}</span>}
               <NotificationsOutlinedIcon />
             </button>
             <h4 id="user-name">Rajat</h4>
@@ -81,6 +90,7 @@ const NavBar = () => {
               <Notification
                 setShowNotification={setShowNotification}
                 notifications={notifications}
+                loading={loading}
               />
             )}
           </div>

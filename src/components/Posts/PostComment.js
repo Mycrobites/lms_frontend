@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "../../axios/axios";
 import { IoWarningOutline } from "react-icons/io5";
+import { CKEditor } from "@ckeditor/ckeditor5-react"
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 
 const PostComment = ({ setShowPostComment, postData, setPostData }) => {
   const [comment, setComment] = useState("");
@@ -56,11 +58,25 @@ const PostComment = ({ setShowPostComment, postData, setPostData }) => {
         />
       </div>
       <div className="post-comment-body">
-        <textarea
-          placeholder="Leave an answer..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
+          <CKEditor
+              editor={ClassicEditor}
+              data= {comment}
+              onReady={(editor) => {
+                  console.log("Editor is ready to use!", editor);
+                  editor.editing.view.change(writer => {
+                      writer.setStyle(
+                        "height",
+                        "100px",
+                        editor.editing.view.document.getRoot()
+                      );
+                    });
+              }}
+              onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setComment(data)
+                  console.log(comment)
+              }}
+          />                                   
         {isError && (
           <div className="error">
             <IoWarningOutline />

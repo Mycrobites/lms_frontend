@@ -6,6 +6,8 @@ import { IoCloseOutline } from "react-icons/io5";
 import { AiOutlineWarning } from "react-icons/ai";
 import "./Posts.css";
 import Pagination from "./Pagination";
+import { CKEditor } from "@ckeditor/ckeditor5-react"
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 
 const getPostsFromLoacalStorage = () => {
   const posts = localStorage.getItem("posts");
@@ -52,7 +54,8 @@ const Posts = () => {
         desc: postDesc,
         userid: 114,
       };
-      await axios.post("/api/forum/createPosts", newPost);
+      const data = await axios.post("/api/forum/createPosts", newPost);
+      console.log(data)
       getPosts();
     } catch (err) {
       console.log(err.message);
@@ -127,21 +130,45 @@ const Posts = () => {
               <form className="add-post-form" onSubmit={addPost}>
                 <label>
                   <p>Title</p>
-                  <input
-                    typr="text"
-                    placeholder="title..."
-                    value={postTitle}
-                    onChange={(e) => setPostTitle(e.target.value)}
-                  />
+                        <CKEditor
+                          editor={ClassicEditor}
+                          data= {postTitle}
+                          onReady={(editor) => {
+                              console.log("Editor is ready to use!", editor);
+                              editor.editing.view.change(writer => {
+                                  writer.setStyle(
+                                    "height",
+                                    "80px",
+                                    editor.editing.view.document.getRoot()
+                                  );
+                                });
+                          }}
+                          onChange={(event, editor) => {
+                              const data = editor.getData();
+                              setPostTitle(data)
+                          }}
+                      />
                 </label>
                 <label>
                   <p>Description</p>
-                  <textarea
-                    typr="text"
-                    placeholder="description..."
-                    value={postDesc}
-                    onChange={(e) => setPostDesc(e.target.value)}
-                  />
+                        <CKEditor
+                          editor={ClassicEditor}
+                          data= {postDesc}
+                          onReady={(editor) => {
+                              console.log("Editor is ready to use!", editor);
+                              editor.editing.view.change(writer => {
+                                  writer.setStyle(
+                                    "height",
+                                    "130px",
+                                    editor.editing.view.document.getRoot()
+                                  );
+                                });
+                          }}
+                          onChange={(event, editor) => {
+                              const data = editor.getData();
+                              setPostDesc(data)
+                          }}
+                      />
                 </label>
                 {error && (
                   <p className="post-upload-question">

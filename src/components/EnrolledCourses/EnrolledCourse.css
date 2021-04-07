@@ -87,9 +87,6 @@
 .rec-pagination button {
   display: none;
 }
-.rec-pagination button:hover {
-  background-color: #006eff;
-}
 .single-course-image {
   width: 100%;
   height: 50%;

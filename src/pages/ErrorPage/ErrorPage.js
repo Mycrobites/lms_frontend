@@ -1,11 +1,14 @@
-import SideBar from "../../components/SideBar/SideBar";
+import { useHistory } from "react-router-dom";
+import errorImage from "../../assets/images/errorpage.svg";
 import "./ErrorPage.css";
 
 const Enrollment = () => {
+  const history = useHistory();
   return (
     <div className="errorPage">
-      <SideBar active="" />
-      404 Error Page
+      <img src={errorImage} alt="404" />
+      <h2>This page could not be found!</h2>
+      <button onClick={() => history.push("/")}>Home Page</button>
     </div>
   );
 };

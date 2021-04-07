@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import "./NavBar.css";
-import axios from "../../axios/axios";
+// import axios from "../../axios/axios";
 import Loader from "../Loader/Loader";
 import SingleNotification from "./SingleNotification";
 
-const Notification = ({ setShowNotification , notifications ,loading }) => {
-
-  
+const Notification = ({ setShowNotification, notifications, loading }) => {
   const notificationRef = useRef();
 
   useEffect(() => {
@@ -29,16 +27,21 @@ const Notification = ({ setShowNotification , notifications ,loading }) => {
         </button>
       </div>
       <div className="notification-body">
-   
-        {loading ? <div className='notification-loader'><Loader/></div> : notifications?.map((notification, idx) => (
-          <SingleNotification
-            key={idx}
-            id={notification?.id}
-            time={notification?.time}
-            message={notification?.message}
-            title={notification?.title}
-          />
-        ))}
+        {loading ? (
+          <div className="notification-loader">
+            <Loader />
+          </div>
+        ) : (
+          notifications?.map((notification, idx) => (
+            <SingleNotification
+              key={idx}
+              id={notification?.id}
+              time={notification?.time}
+              message={notification?.message}
+              title={notification?.title}
+            />
+          ))
+        )}
       </div>
     </div>
   );

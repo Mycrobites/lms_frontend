@@ -11,10 +11,14 @@ const SingleNotification = ({ id, time, title, message }) => {
         <p>{message}</p>
       </div>
       <div className="notification-time">
-        <h3>{`${date.toDateString().split(" ")[1]} ${
-          date.toDateString().split(" ")[2]
-        }`}</h3>
-        <p>{date.toString().split(" ")[4]}</p>
+        <h3>
+          {date.toDateString().split(" ")[1]}{" "}
+          {date.toDateString().split(" ")[2]}
+        </h3>
+        <p>
+          {date.toString().split(" ")[4].split(":")[0]}:
+          {date.toString().split(" ")[4].split(":")[1]}
+        </p>
       </div>
     </div>
   );

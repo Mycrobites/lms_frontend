@@ -30,13 +30,12 @@ const NavBar = () => {
   const location = useLocation();
   const history = useHistory();
 
-  const showNotificationBar = async() => {
+  const showNotificationBar = async () => {
     setShowNotification(true);
     setShowUser(false);
-    const{data}= await axios.post("/api/notifSeen" , {
-      "user": 114
-    })
-    
+    await axios.post("/api/notifSeen", {
+      user: 114,
+    });
   };
 
   const showUserBar = () => {
@@ -46,21 +45,21 @@ const NavBar = () => {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      if(!notifications){
-        setLoading(true)
+      if (!notifications) {
+        setLoading(true);
       }
       try {
         const { data } = await axios.get("/api/fetchNotification/rajat");
         setNotifications(data);
-        
-        setLoading(false)
+
+        setLoading(false);
         localStorage.setItem("notifications", JSON.stringify(data));
       } catch (err) {
         console.log(err.message);
       }
     };
     fetchNotifications();
-  }, []);
+  }, [notifications]);
 
   return (
     <>

@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../axios/axios";
 import Loader from "../Loader/Loader";
+import AboutCourse from "./AboutCourse";
 import CourseContent from "./CourseContent";
+import CourseContentResponsive from "./CourseContentResponsive";
 import MediaPlayer from "./MediaPlayer";
 import "./UniqueCourse.css";
 
@@ -11,6 +13,7 @@ const UniqueCourse = () => {
   const mountedRef = useRef(true);
   const [CourseDetails, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [overView ,setOverview] = useState("course_content")
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -42,43 +45,28 @@ const UniqueCourse = () => {
       : 
         <div className="course">
           <h2 className='course-title'>{CourseDetails?.course_name}</h2>
-          <CourseContent CourseDetails={CourseDetails}/>
+          <div className='unresponsive'>
+          <CourseContent lessons={CourseDetails?.lessons}/>
+          </div>
           <MediaPlayer/>
-          <div className='course-overview'>
-
-          <div className='course-about'>
-          <h2>About this course</h2>
-
-          <p>{CourseDetails?.course_description}</p>
+          <div className='unresponsive'>
+          <AboutCourse CourseDetails={CourseDetails} />
+          </div>
+          <div className='responsive-overview'>
+          
+          <div className='overview-headers'>
+          <button onClick={()=> setOverview("about")}>About</button>
+          <button onClick={()=> setOverview("course_content")}>Course</button>
           </div>
 
-          <div className='course-details'>
+          <div className='overview-body'>
           
-          <p>Lecture : {CourseDetails?.totallesson}</p>
-          <p>Total Video : 35 hours</p>
+         {overView === "course_content" ? <CourseContentResponsive lessons={CourseDetails?.lessons} /> : <AboutCourse CourseDetails={CourseDetails}/>  }
+          
+          
           </div>
-
-      
-
-            {CourseDetails?.concepts !== "" &&
-            <div className='course-concepts'>
-            <h5>Concepts you'll learn</h5>
-  
-            {CourseDetails?.concepts.map((concept) =>(
-              <p>★ {concept}</p>
-            ))}
-  
-            </div>}
           
-         
-            {CourseDetails?.goals !== "" && 
-            <div className='course-goals'>
-            <h5>Course goals</h5>
-  
-            {CourseDetails?.goals.map((goal) =>(
-              <p>★ {goal}</p>
-            ))}
-            </div>}
+          
           
           </div>
           

@@ -18,18 +18,14 @@
 }
 
 .media-player {
-	width: 70%;
 	height: auto;
 	background: black;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	height: object-fit;
 }
-.react-player {
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
-}
+
 .course-content {
 	width: 25%;
 	min-width: 250px;
@@ -66,7 +62,7 @@
 }
 
 .lesson_name h5 {
-	font-size: 1.2em;
+	font-size: 1em;
 	font-weight: 600;
 }
 
@@ -93,7 +89,6 @@
 	margin-bottom: 0;
 	color: white;
 	background: rgb(0, 157, 255);
-	width: 70%;
 }
 
 .lesson_name button {
@@ -114,6 +109,8 @@
 	align-items: center;
 	cursor: pointer;
 	padding: 10px;
+	font-size: 0.9em;
+	font-weight: 500;
 }
 .single-lesson-content:hover {
 	background: #f7f7f7;
@@ -129,7 +126,6 @@
 }
 
 .course-overview {
-	width: 70%;
 	padding: 20px;
 	color: rgb(90, 90, 90);
 }
@@ -152,4 +148,54 @@
 .course-overview div {
 	padding: 10px;
 	border-bottom: 1px solid lightgray;
+}
+
+.course-content-responsive .single-course-content .lesson_name {
+	padding-left: 30px;
+}
+.course-content-responsive .course-content-header {
+	padding-left: 30px;
+}
+.overview-headers {
+	display: flex;
+	padding-left: 30px;
+	height: 50px;
+	background: #f4f4f4;
+}
+
+.responsive-overview {
+	display: none;
+}
+
+.overview-headers button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	border: none;
+	outline: none;
+	background: inherit;
+	width: 100px;
+}
+.overview-headers button:focus {
+	border-bottom: 5px solid gray;
+}
+
+@media only screen and (max-width: 900px) {
+	.responsive-overview {
+		display: block;
+	}
+	.unresponsive {
+		display: none;
+	}
+	.lesson_name {
+		padding: 10px;
+		border: 1px solid rgb(255, 255, 255);
+		border-radius: 5px;
+		font-size: 0.8em;
+	}
+	.single-lesson-content {
+		font-size: 0.8em;
+		font-weight: 500;
+	}
 }

@@ -59,7 +59,7 @@ const NavBar = () => {
       }
     };
     fetchNotifications();
-  }, [notifications]);
+  }, []);
 
   return (
     <>

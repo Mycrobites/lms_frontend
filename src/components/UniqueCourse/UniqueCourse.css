@@ -58,10 +58,11 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background: #f7f7f7;
+	background: #f4f4f4;
 	cursor: pointer;
 	padding: 15px 10px;
-	border: 1px solid rgb(214, 214, 214);
+	border: 1px solid rgb(255, 255, 255);
+	border-radius: 5px;
 }
 
 .lesson_name h5 {

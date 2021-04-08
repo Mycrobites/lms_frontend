@@ -3,6 +3,7 @@ import Comment from "./Comment";
 import PostComment from "./PostComment";
 import months from "../../assets/months/months";
 import { RiMessage2Fill } from "react-icons/ri";
+import {FacebookShareButton, FacebookIcon} from "react-share";
 
 const SinglePost = (props) => {
   const [postData, setPostData] = useState(props);
@@ -42,14 +43,23 @@ const SinglePost = (props) => {
           >
             <RiMessage2Fill /> {comments.length} Answers
           </button>
-          <button
-            onClick={() => {
-              if (setShowComments) setShowComments(false);
-              setShowPostComment(!showPostComment);
-            }}
-          >
-            Answer
-          </button>
+          <div className="share">
+            <FacebookShareButton 
+                  url={"https://www.youtube.com/"}
+                  quote={desc}
+                  hashtag="#ProgressiveMinds"
+                  >
+                  <FacebookIcon size={36} />
+            </FacebookShareButton>
+            <button
+              onClick={() => {
+                if (setShowComments) setShowComments(false);
+                setShowPostComment(!showPostComment);
+              }}
+            >
+              Answer
+            </button>
+          </div>
         </div>
         {showComments && (
           <div className="comments">

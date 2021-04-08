@@ -213,6 +213,10 @@
   border: none;
 }
 
+.share{
+  display: flex;
+}
+
 .Comment,
 .postComment {
   display: flex;

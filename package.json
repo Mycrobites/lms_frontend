@@ -24,6 +24,7 @@
     "react-router-dom": "^5.2.0",
     "react-scheduler-calendar": "^0.5.3-1",
     "react-scripts": "4.0.3",
+    "react-share": "^4.4.0",
     "react-uuid": "^1.0.2",
     "recharts": "^2.0.8",
     "styled-components": "^5.2.1",

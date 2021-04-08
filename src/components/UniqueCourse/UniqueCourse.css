@@ -85,6 +85,16 @@
 	margin-bottom: 0;
 }
 
+.course-title {
+	font-size: 1.2em;
+	font-weight: 650;
+	padding: 10px;
+	margin-bottom: 0;
+	color: white;
+	background: rgb(0, 157, 255);
+	width: 70%;
+}
+
 .lesson_name button {
 	display: flex;
 	justify-content: center;

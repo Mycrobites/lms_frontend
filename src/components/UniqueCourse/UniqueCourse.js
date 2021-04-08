@@ -35,12 +35,13 @@ const UniqueCourse = () => {
 
   return (
     <>
-      { isLoading ? (
+      { isLoading ? 
         <div className="post-loader">
           <Loader/>
         </div>
-      ) : (
+      : 
         <div className="course">
+          <h2 className='course-title'>{CourseDetails?.course_name}</h2>
           <CourseContent CourseDetails={CourseDetails}/>
           <MediaPlayer/>
           <div className='course-overview'>
@@ -83,7 +84,7 @@ const UniqueCourse = () => {
           
         </div>
         
-      )}
+      }
       
     </>
   );

@@ -76,18 +76,7 @@
 	padding: 10px;
 	font-size: 1.2em;
 	font-weight: 400;
-}
-
-.course-content-header button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 10px;
-	font-size: 1.2em;
-	font-weight: 400;
-	border: none;
-	background: inherit;
-	outline: none;
+	height: 50px;
 }
 
 .course-content-header h4 {
@@ -136,6 +125,13 @@
 .course-overview h2 {
 	font-size: 1.6em;
 	font-weight: 600;
+}
+.course-overview h5 {
+	font-size: 1.2em;
+	font-weight: 600;
+	color: rgb(70, 70, 70);
+	margin-top: 10px;
+	margin-bottom: 20px;
 }
 .course-overview p {
 	font-size: 0.95em;

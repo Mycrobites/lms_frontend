@@ -41,26 +41,43 @@ const UniqueCourse = () => {
         </div>
       ) : (
         <div className="course">
-          <CourseContent/>
+          <CourseContent CourseDetails={CourseDetails}/>
           <MediaPlayer/>
           <div className='course-overview'>
 
           <div className='course-about'>
           <h2>About this course</h2>
 
-          <p>Learn to build Responsive WordPress websites
-          from scratch with complete In-Depth Guide to WordPress
-          for Beginners</p>
+          <p>{CourseDetails?.course_description}</p>
           </div>
 
           <div className='course-details'>
           
-          <p>Lecture : 120</p>
+          <p>Lecture : {CourseDetails?.totallesson}</p>
           <p>Total Video : 35 hours</p>
           </div>
+
+      
+
+            {CourseDetails?.concepts !== "" &&
+            <div className='course-concepts'>
+            <h5>Concepts you'll learn</h5>
+  
+            {CourseDetails?.concepts.map((concept) =>(
+              <p>★ {concept}</p>
+            ))}
+  
+            </div>}
           
          
-          
+            {CourseDetails?.goals !== "" && 
+            <div className='course-goals'>
+            <h5>Course goals</h5>
+  
+            {CourseDetails?.goals.map((goal) =>(
+              <p>★ {goal}</p>
+            ))}
+            </div>}
           
           </div>
           

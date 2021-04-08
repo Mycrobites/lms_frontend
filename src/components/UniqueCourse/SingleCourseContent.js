@@ -7,14 +7,12 @@ import "./UniqueCourse.css";
 const SingleCourseContent = () => {
   const [showContent, setShowContent] = useState(false);
 
-  const handleClick = () => {
-    setShowContent(!showContent);
-  };
+
   return (
     <div className="single-course-content">
-      <div onClick={handleClick} className="lesson_name">
+      <div onClick={()=>setShowContent(!showContent)} className="lesson_name">
         <h5>Lession 1 : Basics of HTML 5</h5>
-        <button onClick={handleClick}>
+        <button>
           {!showContent ? <ExpandMoreIcon /> : <ExpandLessIcon />}
         </button>
       </div>
@@ -24,7 +22,7 @@ const SingleCourseContent = () => {
             <div className="lesson-left">
               <label>
                 <input type="checkbox" />
-                Forms
+                Lesson 1
               </label>
             </div>
             <p>15 min</p>
@@ -33,7 +31,7 @@ const SingleCourseContent = () => {
             <div className="lesson-left">
               <label>
                 <input type="checkbox" />
-                Forms
+                Lesson 1
               </label>
             </div>
             <p>15 min</p>
@@ -42,7 +40,7 @@ const SingleCourseContent = () => {
             <div className="lesson-left">
               <label>
                 <input type="checkbox" />
-                Forms
+                Lesson 1
               </label>
             </div>
             <p>15 min</p>

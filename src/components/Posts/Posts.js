@@ -6,8 +6,8 @@ import { IoCloseOutline } from "react-icons/io5";
 import { AiOutlineWarning } from "react-icons/ai";
 import "./Posts.css";
 import Pagination from "./Pagination";
-import { CKEditor } from "@ckeditor/ckeditor5-react"
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const getPostsFromLoacalStorage = () => {
   const posts = localStorage.getItem("posts");
@@ -55,7 +55,7 @@ const Posts = () => {
         userid: 114,
       };
       const data = await axios.post("/api/forum/createPosts", newPost);
-      console.log(data)
+      console.log(data);
       getPosts();
     } catch (err) {
       console.log(err.message);
@@ -130,45 +130,45 @@ const Posts = () => {
               <form className="add-post-form" onSubmit={addPost}>
                 <label>
                   <p>Title</p>
-                        <CKEditor
-                          editor={ClassicEditor}
-                          data= {postTitle}
-                          onReady={(editor) => {
-                              console.log("Editor is ready to use!", editor);
-                              editor.editing.view.change(writer => {
-                                  writer.setStyle(
-                                    "height",
-                                    "80px",
-                                    editor.editing.view.document.getRoot()
-                                  );
-                                });
-                          }}
-                          onChange={(event, editor) => {
-                              const data = editor.getData();
-                              setPostTitle(data)
-                          }}
-                      />
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={postTitle}
+                    onReady={(editor) => {
+                      console.log("Editor is ready to use!", editor);
+                      editor.editing.view.change((writer) => {
+                        writer.setStyle(
+                          "height",
+                          "80px",
+                          editor.editing.view.document.getRoot()
+                        );
+                      });
+                    }}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setPostTitle(data);
+                    }}
+                  />
                 </label>
                 <label>
                   <p>Description</p>
-                        <CKEditor
-                          editor={ClassicEditor}
-                          data= {postDesc}
-                          onReady={(editor) => {
-                              console.log("Editor is ready to use!", editor);
-                              editor.editing.view.change(writer => {
-                                  writer.setStyle(
-                                    "height",
-                                    "130px",
-                                    editor.editing.view.document.getRoot()
-                                  );
-                                });
-                          }}
-                          onChange={(event, editor) => {
-                              const data = editor.getData();
-                              setPostDesc(data)
-                          }}
-                      />
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={postDesc}
+                    onReady={(editor) => {
+                      console.log("Editor is ready to use!", editor);
+                      editor.editing.view.change((writer) => {
+                        writer.setStyle(
+                          "height",
+                          "130px",
+                          editor.editing.view.document.getRoot()
+                        );
+                      });
+                    }}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setPostDesc(data);
+                    }}
+                  />
                 </label>
                 {error && (
                   <p className="post-upload-question">

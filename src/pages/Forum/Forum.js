@@ -1,5 +1,5 @@
 import SideBar from "../../components/SideBar/SideBar";
-import Posts from "../../components/Posts/Posts";
+import Posts from "../../components/Posts2/Posts";
 import "./Forum.css";
 
 const Forum = () => {

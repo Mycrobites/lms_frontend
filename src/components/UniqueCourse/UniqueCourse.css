@@ -17,20 +17,10 @@
 	transform: translate(-50%, -50%);
 }
 
-.media-player {
-	height: auto;
-	background: black;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: object-fit;
-}
-
 .course-content {
 	width: 25%;
 	min-width: 250px;
 	margin-top: 14vh;
-
 	height: calc(100vh - 100px);
 	overflow-y: scroll;
 	position: fixed;
@@ -180,6 +170,43 @@
 .overview-headers button:focus {
 	border-bottom: 5px solid gray;
 }
+.default-lesson {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+}
+.default-lesson img {
+	width: 100%;
+	height: auto;
+	max-height: 350px;
+	object-fit: contain;
+}
+.all-course-content {
+	width: 100%;
+	min-height: 350px;
+	height: object-fit;
+	background: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+}
+
+.media-player {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.react-player {
+	width: 100%;
+	height: auto;
+	object-fit: contain;
+}
 
 @media only screen and (max-width: 900px) {
 	.responsive-overview {
@@ -197,5 +224,9 @@
 	.single-lesson-content {
 		font-size: 0.8em;
 		font-weight: 500;
+	}
+	.all-course-content {
+		width: 100%;
+		min-height: 25vh;
 	}
 }

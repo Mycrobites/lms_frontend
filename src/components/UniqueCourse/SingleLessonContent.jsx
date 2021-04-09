@@ -8,10 +8,11 @@ const SingleLessonContent = ({singleContent , id}) => {
 
     const handleLessonClick=()=>{
         if(singleContent?.media_type ==="video"){
-           changeMediaType(singleContent?.media_type)
+           
            changeVideoUrl(singleContent?.link )
            
         }
+        changeMediaType(singleContent?.media_type)
     }
 
     return (

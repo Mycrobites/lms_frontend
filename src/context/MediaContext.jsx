@@ -1,4 +1,4 @@
-import React,{createContext,useState} from 'react'
+import React,{createContext,useState,useEffect} from 'react'
 
 export const MediaContext = createContext()
 
@@ -16,6 +16,12 @@ const MediaContextProvider = (props) => {
         setMediaType(media)
     }
 
+
+    useEffect(()=>{
+    console.log(mediaType)
+    },[mediaType])
+
+    
     return (
       <MediaContext.Provider value={{videoUrl , mediaType, changeVideoUrl, changeMediaType}}>
       {props.children}

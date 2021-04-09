@@ -1,11 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef , useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../axios/axios";
+import { MediaContext } from "../../context/MediaContext";
 import Loader from "../Loader/Loader";
 import AboutCourse from "./AboutCourse";
+import Assignment from "./Assignment";
 import CourseContent from "./CourseContent";
 import CourseContentResponsive from "./CourseContentResponsive";
+import DefaultLesson from "./DefaultLesson";
 import MediaPlayer from "./MediaPlayer";
+import PdfDocument from "./PdfDocument";
+import Quiz from "./Quiz";
+import Text from "./Text";
 import "./UniqueCourse.css";
 
 const UniqueCourse = () => {
@@ -14,6 +20,7 @@ const UniqueCourse = () => {
   const [CourseDetails, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [overView ,setOverview] = useState("course_content")
+  const {mediaType} = useContext(MediaContext)
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -36,6 +43,24 @@ const UniqueCourse = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [CourseDetails]);
 
+  const toggleComponent = ()=>{
+     
+    switch(mediaType){
+      case "video":
+        return <MediaPlayer/>
+      case "pdf":
+        return <PdfDocument/>
+      case "text":
+        return <Text/>
+      case "assignment":
+        return <Assignment/>
+      case "quiz":
+        return <Quiz/>
+      default :
+        return <DefaultLesson src={CourseDetails?.image} name={CourseDetails?.course_name}/>
+    }
+  }
+
   return (
     <>
       { isLoading ? 
@@ -48,7 +73,11 @@ const UniqueCourse = () => {
           <div className='unresponsive'>
           <CourseContent lessons={CourseDetails?.lessons}/>
           </div>
-          <MediaPlayer/>
+          
+          <div className='all-course-content'>
+          {toggleComponent()}
+          </div>
+          
           <div className='unresponsive'>
           <AboutCourse CourseDetails={CourseDetails} />
           </div>

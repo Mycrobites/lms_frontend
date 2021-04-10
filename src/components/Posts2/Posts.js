@@ -4,6 +4,24 @@ import axios from "../../axios/axios";
 import { AiOutlineWarning } from "react-icons/ai";
 import { IoCloseOutline } from "react-icons/io5";
 import "./Posts.css";
+import React from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+const getCookie = (name) => {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
 
 const Posts = () => {
   const [showAddPost, setShowAddPost] = useState(false);
@@ -12,17 +30,30 @@ const Posts = () => {
   const [error, setError] = useState(false);
   const [posts, setPosts] = useState(null);
 
+  const csrftoken = getCookie('csrftoken');
+
   const addPost = async (e) => {
     e.preventDefault();
     setError(false);
     if (!title || !desc) return setError(true);
     // setAddingPost(true);
+    const formData = new FormData();
+    formData.append(
+      "title",
+      title
+    );
+    formData.append(
+      "desc",
+      desc
+    );
+    formData.append("userid", 114)
     try {
       const newPost = {
         title,
         desc,
         userid: 114,
       };
+      console.log(formData);
       const data = await axios.post("/api/forum/createPosts", newPost);
       console.log(data);
       setTitle("");
@@ -73,19 +104,41 @@ const Posts = () => {
                 onChange={(e) => setTitle(e.target.value)}
               />
               <label>Description</label>
-              <textarea
-                placeholder="Description..."
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
+              <CKEditor
+                editor={ClassicEditor}
+                config={{
+                  ckfinder: {
+                    uploadUrl: "http://lms-seg.herokuapp.com/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
+                      options: {
+                      resourceType: "Images",
+                    },
+                    credentials: 'include',
+                    headers: {
+                      'X-CSRF-TOKEN': csrftoken,
+                      'csrftoken': csrftoken,
+                      'csrfmiddlewaretoken': csrftoken
+                    },
+                  }
+                }}
+                // data="<p>Hello from CKEditor 5!</p>"
+                onReady={editor => {
+
+                  console.log('Editor is ready to use!', editor);
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  console.log(data);
+                  setDesc(data);
+                  // console.log( { event, editor, data } );
+                }}
+                onBlur={(event, editor) => {
+                  console.log('Blur.', editor);
+                }}
+                onFocus={(event, editor) => {
+                  console.log('Focus.', editor);
+                }}
               />
-              <label>Add Image (optional)</label>
-              <input type="file" accept="image/png" />
-              {error && (
-                <p className="post-upload-question">
-                  <AiOutlineWarning />
-                  Please fill all the fields!
-                </p>
-              )}
+             
               <div className="add-post-buttons">
                 <button onClick={() => setShowAddPost(false)} type="button">
                   Cancel

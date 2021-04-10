@@ -1,4 +1,5 @@
 import { useState } from "react";
+import parse from "react-html-parser";
 import Comment from "./Comment";
 import PostComment from "./PostComment";
 import Loader from "../Loader/Loader";
@@ -50,8 +51,8 @@ const SinglePost = (props) => {
           Asked on {now.getDate()} {months[now.getMonth()]} {now.getFullYear()}{" "}
           {props.time.split(" ")[1]} by {user}
         </h3>
-        <h1 className="title">{title}</h1>
-        <p className="desc">{desc}</p>
+        <h1 className="title">{parse(title)}</h1>
+        <p className="desc">{parse(desc)}</p>
         <div className="answer-btn-div">
           <button className="answers" onClick={getAnswers}>
             <RiMessage2Fill /> Answers

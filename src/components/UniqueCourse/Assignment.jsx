@@ -5,6 +5,9 @@ const Assignment = () => {
     return (
         <div className='lesson-assignment'>
             This is assignment
+
+            <input type='file' />
+            <button>Upload</button>
         </div>
     )
 }

@@ -1,9 +1,10 @@
 import React from 'react'
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
-const Text = () => {
+const Text = ({text}) => {
     return (
         <div className='lesson-text'>
-            This is text
+            {ReactHtmlParser(text)}
         </div>
     )
 }

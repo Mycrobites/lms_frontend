@@ -8,6 +8,7 @@ import Assignment from "./Assignment";
 import CourseContent from "./CourseContent";
 import CourseContentResponsive from "./CourseContentResponsive";
 import DefaultLesson from "./DefaultLesson";
+import Homework from "./Homework";
 import MediaPlayer from "./MediaPlayer";
 import PdfDocument from "./PdfDocument";
 import Quiz from "./Quiz";
@@ -20,7 +21,7 @@ const UniqueCourse = () => {
   const [CourseDetails, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [overView ,setOverview] = useState("course_content")
-  const {mediaType} = useContext(MediaContext)
+  const {mediaType , mediaId , text} = useContext(MediaContext)
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -51,11 +52,13 @@ const UniqueCourse = () => {
       case "pdf":
         return <PdfDocument/>
       case "text":
-        return <Text/>
+        return <Text text={text}/>
       case "assignment":
         return <Assignment/>
       case "quiz":
         return <Quiz/>
+      case "homework":
+        return <Homework id ={mediaId}/>
       default :
         return <DefaultLesson src={CourseDetails?.image} name={CourseDetails?.course_name}/>
     }

@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import SinglePost from "./SinglePost";
 import axios from "../../axios/axios";
 import { AiOutlineWarning } from "react-icons/ai";
-import { IoCloseOutline } from "react-icons/io5";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "./Posts.css";
+import Loader from "../Loader/Loader";
 
 const Posts = () => {
   const [showAddPost, setShowAddPost] = useState(false);
@@ -11,6 +13,7 @@ const Posts = () => {
   const [desc, setDesc] = useState("");
   const [error, setError] = useState(false);
   const [posts, setPosts] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const addPost = async (e) => {
     e.preventDefault();
@@ -40,6 +43,7 @@ const Posts = () => {
       try {
         const { data } = await axios.get("/api/forum/getPosts");
         setPosts(data);
+        setLoading(false);
         console.log(data);
       } catch (err) {
         console.log(err.message);
@@ -65,7 +69,7 @@ const Posts = () => {
         {showAddPost && (
           <div className="post-post">
             <form onSubmit={addPost}>
-              <label>Title</label>
+              {/* <label>Title</label>
               <input
                 type="text"
                 placeholder="title..."
@@ -79,7 +83,49 @@ const Posts = () => {
                 onChange={(e) => setDesc(e.target.value)}
               />
               <label>Add Image (optional)</label>
-              <input type="file" accept="image/png" />
+              <input type="file" accept="image/png" /> */}
+              <label>
+                <p>Title</p>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={title}
+                  onReady={(editor) => {
+                    console.log("Editor is ready to use!", editor);
+                    editor.editing.view.change((writer) => {
+                      writer.setStyle(
+                        "height",
+                        "80px",
+                        editor.editing.view.document.getRoot()
+                      );
+                    });
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setTitle(data);
+                  }}
+                />
+              </label>
+              <label>
+                <p>Description</p>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={desc}
+                  onReady={(editor) => {
+                    console.log("Editor is ready to use!", editor);
+                    editor.editing.view.change((writer) => {
+                      writer.setStyle(
+                        "height",
+                        "130px",
+                        editor.editing.view.document.getRoot()
+                      );
+                    });
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setDesc(data);
+                  }}
+                />
+              </label>
               {error && (
                 <p className="post-upload-question">
                   <AiOutlineWarning />
@@ -97,6 +143,11 @@ const Posts = () => {
         )}
       </div>
       <div className="all-posts">
+        {loading && (
+          <div className="forum-loader">
+            <Loader />
+          </div>
+        )}
         {posts?.map((post) => (
           <SinglePost key={post.id} {...post} />
         ))}

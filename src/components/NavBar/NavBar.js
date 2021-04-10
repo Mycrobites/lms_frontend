@@ -51,7 +51,6 @@ const NavBar = () => {
       try {
         const { data } = await axios.get("/api/fetchNotification/rajat");
         setNotifications(data);
-
         setLoading(false);
         localStorage.setItem("notifications", JSON.stringify(data));
       } catch (err) {
@@ -59,7 +58,7 @@ const NavBar = () => {
       }
     };
     fetchNotifications();
-  }, []);
+  }, [notifications]);
 
   return (
     <>

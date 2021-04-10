@@ -1,9 +1,10 @@
 import React from "react";
 import SingleCourseContent from "./SingleCourseContent";
+import "./UniqueCourse.css";
 
-const CourseContent = ({ lessons }) => {
+const CourseContentResponsive = ({ lessons }) => {
   return (
-    <div className="course-content">
+    <div className="course-content-responsive">
       <div className="course-content-header">
         <h4>Course content</h4>
       </div>
@@ -14,4 +15,4 @@ const CourseContent = ({ lessons }) => {
   );
 };
 
-export default CourseContent;
+export default CourseContentResponsive;

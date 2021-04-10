@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef , useContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../axios/axios";
 import { MediaContext } from "../../context/MediaContext";
@@ -19,8 +19,8 @@ const UniqueCourse = () => {
   const mountedRef = useRef(true);
   const [CourseDetails, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [overView ,setOverview] = useState("course_content")
-  const {mediaType} = useContext(MediaContext)
+  const [overView, setOverview] = useState("course_content");
+  const { mediaType } = useContext(MediaContext);
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -40,69 +40,67 @@ const UniqueCourse = () => {
     return function callback() {
       mountedRef.current = false;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [CourseDetails]);
 
-  const toggleComponent = ()=>{
-     
-    switch(mediaType){
+  const toggleComponent = () => {
+    switch (mediaType) {
       case "video":
-        return <MediaPlayer/>
+        return <MediaPlayer />;
       case "pdf":
-        return <PdfDocument/>
+        return <PdfDocument />;
       case "text":
-        return <Text/>
+        return <Text />;
       case "assignment":
-        return <Assignment/>
+        return <Assignment />;
       case "quiz":
-        return <Quiz/>
-      default :
-        return <DefaultLesson src={CourseDetails?.image} name={CourseDetails?.course_name}/>
+        return <Quiz />;
+      default:
+        return (
+          <DefaultLesson
+            src={CourseDetails?.image}
+            name={CourseDetails?.course_name}
+          />
+        );
     }
-  }
+  };
 
   return (
     <>
-      { isLoading ? 
+      {isLoading ? (
         <div className="post-loader">
-          <Loader/>
+          <Loader />
         </div>
-      : 
+      ) : (
         <div className="course">
-          <h2 className='course-title'>{CourseDetails?.course_name}</h2>
-          <div className='unresponsive'>
-          <CourseContent lessons={CourseDetails?.lessons}/>
-          </div>
-          
-          <div className='all-course-content'>
-          {toggleComponent()}
-          </div>
-          
-          <div className='unresponsive'>
-          <AboutCourse CourseDetails={CourseDetails} />
-          </div>
-          <div className='responsive-overview'>
-          
-          <div className='overview-headers'>
-          <button onClick={()=> setOverview("about")}>About</button>
-          <button onClick={()=> setOverview("course_content")}>Course</button>
+          <h2 className="course-title">{CourseDetails?.course_name}</h2>
+          <div className="unresponsive">
+            <CourseContent lessons={CourseDetails?.lessons} />
           </div>
 
-          <div className='overview-body'>
-          
-         {overView === "course_content" ? <CourseContentResponsive lessons={CourseDetails?.lessons} /> : <AboutCourse CourseDetails={CourseDetails}/>  }
-          
-          
+          <div className="all-course-content">{toggleComponent()}</div>
+
+          <div className="unresponsive">
+            <AboutCourse CourseDetails={CourseDetails} />
           </div>
-          
-          
-          
+          <div className="responsive-overview">
+            <div className="overview-headers">
+              <button onClick={() => setOverview("about")}>About</button>
+              <button onClick={() => setOverview("course_content")}>
+                Course
+              </button>
+            </div>
+
+            <div className="overview-body">
+              {overView === "course_content" ? (
+                <CourseContentResponsive lessons={CourseDetails?.lessons} />
+              ) : (
+                <AboutCourse CourseDetails={CourseDetails} />
+              )}
+            </div>
           </div>
-          
         </div>
-        
-      }
-      
+      )}
     </>
   );
 };

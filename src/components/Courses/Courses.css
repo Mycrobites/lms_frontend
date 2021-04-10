@@ -29,33 +29,33 @@
   cursor: pointer;
 }
 
-.Course h2 {
+.Course .Course h2 {
   margin-bottom: 0;
 }
-.enrolled-on h3 {
+.Course .enrolled-on h3 {
   font-size: 0.9em;
   color: rgba(0, 0, 0, 0.5);
   font-weight: 600;
   margin-top: 5px;
 }
 
-.course-title {
+.Course .course-name {
   display: flex;
   align-items: center;
 }
 
-.course-title img {
+.Course .course-name {
   width: 50px;
   margin-right: 10px;
 }
 
-.course-title h2 {
+.Course .course-name h2 {
   font-size: 1.15em;
   font-weight: 700;
   margin-top: 5px;
 }
 
-.course-progress {
+.Course .course-progress {
   width: 100%;
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -65,12 +65,12 @@
   height: 30px;
 }
 
-.course-progress h3 {
+.Course .course-progress h3 {
   font-size: 16px;
   font-weight: 700;
 }
 
-.course-progress progress {
+.Course .course-progress progress {
   height: 20px;
   width: 80%;
   align-self: center;
@@ -83,7 +83,7 @@
   margin: 10px;
 }
 
-.instructor img {
+.Course .instructor img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -91,32 +91,32 @@
   margin: 0 5px;
 }
 
-.instructor p,
-.instructor h3 {
+.Course .instructor p,
+.Course .instructor h3 {
   color: rgba(0, 0, 0, 0.5);
   font-weight: 600;
   margin: 0;
   font-size: 1.1em;
 }
-.instructor p {
+.Course .instructor p {
   margin-right: 10px;
 }
-.instructor h3 {
+.Course .instructor h3 {
   margin-left: 10px;
 }
 
-.course-description p {
+.Course .course-description p {
   margin: 0 10px;
   color: rgba(0, 0, 0, 0.5);
   font-weight: 500;
   flex: 1;
 }
 
-.course-progress {
+.Course .course-progress {
   padding: 0 10px;
 }
 
-.all-courses-btn {
+.Course .all-courses-btn {
   display: block;
   margin: auto;
   cursor: pointer;
@@ -129,12 +129,12 @@
   border-radius: 5px;
 }
 
-.all-courses-btn:hover {
+.Course .all-courses-btn:hover {
   background-color: rgba(160, 156, 156, 0.397);
 }
 
 @media (max-width: 380px) {
-  .course-cards {
+  .Course .course-cards {
     display: block;
   }
 }

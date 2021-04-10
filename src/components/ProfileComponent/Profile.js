@@ -80,9 +80,11 @@ const Profile = () => {
       school_address: studentDetails?.school_address,
       school_state: "NA",
       school_pin_code: "NA",
+      profile_pic: studentDetails?.profile_pic,
       user: 121,
     });
     localStorage.setItem("user-profile", JSON.stringify(postData));
+    console.log(postData);
     try {
       await axios.put(`/api/editUserDetails/${username}`, postData);
     } catch (err) {
@@ -93,6 +95,7 @@ const Profile = () => {
   };
 
   // console.log(postData);
+  console.log(studentDetails?.profile_pic);
 
   return (
     <>

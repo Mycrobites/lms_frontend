@@ -3,43 +3,45 @@ import axios from "../../axios/axios";
 import { Avatar } from "@material-ui/core";
 import { IoWarningOutline } from "react-icons/io5";
 
-const PostComment = ({ setShowPostComment }) => {
+const PostComment = ({ setShowPostComment, comments, setComments, postid }) => {
   const [comment, setComment] = useState("");
   const [isError, setIsError] = useState(false);
 
-  //   const postComment = async () => {
-  //     try {
-  //       if (comment) {
-  //         const newComment = {
-  //           text: comment,
-  //           userid: 114,
-  //           postid: postData.id,
-  //         };
-  //         const { data } = await axios.post(
-  //           "/api/forum/createComments",
-  //           newComment
-  //         );
-  //         setPostData({
-  //           ...postData,
-  //           comments: [
-  //             ...postData.comments,
-  //             {
-  //               ...data,
-  //               user: "Rajat Shrivastava",
-  //               user_profile_pic:
-  //                 "https://lms-seg.herokuapp.com/media/profile/defaultuser.jpg",
-  //             },
-  //           ],
-  //         });
-  //         setShowPostComment(false);
-  //         console.log(postData);
-  //       } else {
-  //         setIsError(true);
-  //       }
-  //     } catch (err) {
-  //       console.log(err.message);
-  //     }
-  //   };
+  // console.log(comments);
+
+  const postComment = async () => {
+    try {
+      if (comment) {
+        const newComment = {
+          text: comment,
+          userid: 114,
+          postid: postid,
+        };
+        const { data } = await axios.post(
+          "/api/forum/createComments",
+          newComment
+        );
+        // setComments({
+        //   ...comments,
+        //   comments: [
+        //     ...comments.comments,
+        //     {
+        //       ...data,
+        //       user: "Rajat Shrivastava",
+        //       user_profile_pic:
+        //         "https://lms-seg.herokuapp.com/media/profile/defaultuser.jpg",
+        //     },
+        //   ],
+        // });
+        setShowPostComment(false);
+        // console.log(commentData);
+      } else {
+        setIsError(true);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   useEffect(() => {
     const error = setTimeout(() => {
@@ -55,7 +57,11 @@ const PostComment = ({ setShowPostComment }) => {
       </div>
       <div className="post-comment-body">
         <form className="post-comment-form">
-          <textarea type="text" placeholder="Leave a comment" />
+          <textarea
+            placeholder="Leave a comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
         </form>
         {isError && (
           <div className="error">
@@ -65,7 +71,7 @@ const PostComment = ({ setShowPostComment }) => {
         )}
         <div className="post-comment-buttons">
           <button onClick={() => setShowPostComment(false)}>Cancel</button>
-          <button>Submit</button>
+          <button onClick={postComment}>Submit</button>
         </div>
       </div>
     </div>

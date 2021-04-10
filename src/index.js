@@ -5,9 +5,7 @@ import App from "./App";
 import "./index.css";
 import MediaContextProvider from "./context/MediaContext";
 
-
 ReactDOM.render(
- 
   <React.StrictMode>
     <MediaContextProvider>
       <App />

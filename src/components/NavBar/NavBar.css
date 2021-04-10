@@ -169,7 +169,7 @@
   width: 75%;
   max-width: 400px;
   background: white;
-  height: 320px;
+  height: 200px;
   position: absolute;
   top: 85%;
   right: 0.25%;
@@ -195,7 +195,7 @@
   margin-bottom: 0;
 }
 .notification-body {
-  height: 50vh;
+  /* height: 50vh; */
   padding: 0 5px;
   overflow-y: scroll;
   position: relative;

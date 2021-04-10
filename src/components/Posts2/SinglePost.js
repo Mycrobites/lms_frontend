@@ -26,24 +26,20 @@ const SinglePost = (props) => {
   const [showComments, setShowComments] = useState(false);
   const [showPostComment, setShowPostComment] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [noCommentsError, setNoCommentsError] = useState(false);
   const now = new Date(time);
   const classes = useStyles();
-
-  console.log(noCommentsError);
 
   const getAnswers = async () => {
     setShowComments(!showComments);
     setShowPostComment(false);
     setLoading(true);
-    console.log(loading);
+    // console.log(loading);
     try {
       const { data } = await axios.get(`/api/forum/getComments/${id}`);
       setComments(data);
       console.log(data);
     } catch (err) {
       console.log(err.message);
-      setNoCommentsError(true);
     }
     setLoading(false);
   };

@@ -14,7 +14,7 @@ const Course = (props) => {
 
   return (
     <div className="Course">
-      <div className="course-name">
+      <div className="course-heading">
         <img src={course_image} alt={course_name} />
         <div>
           <h2>{course_name}</h2>

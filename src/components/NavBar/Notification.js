@@ -41,7 +41,6 @@ const Notification = ({ setShowNotification, notifications, loading }) => {
               title={notification?.title}
             />
           ))
-          
         )}
       </div>
     </div>

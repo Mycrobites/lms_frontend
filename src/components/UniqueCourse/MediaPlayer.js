@@ -14,6 +14,7 @@ const MediaPlayer = () => {
         controls
         onEnded={() => console.log("video ended")}
         url={videoUrl}
+       
       />
     </div>
   );

@@ -168,8 +168,9 @@
 .user-notification {
   width: 75%;
   max-width: 400px;
+  /* height: 300px; */
+  height: fit-content;
   background: white;
-  height: 200px;
   position: absolute;
   top: 85%;
   right: 0.25%;
@@ -195,7 +196,7 @@
   margin-bottom: 0;
 }
 .notification-body {
-  /* height: 50vh; */
+  height: 40vh;
   padding: 0 5px;
   overflow-y: scroll;
   position: relative;

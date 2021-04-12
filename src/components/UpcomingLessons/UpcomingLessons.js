@@ -43,7 +43,7 @@ const UpcomingLessons = ({user}) => {
     return function cleanup() {
       mountedRef.current = false;
     };
-  }, [upcomingEvents]);
+  }, [upcomingEvents, user?.username]);
 
   return (
     <div className="UpcomingLessons">

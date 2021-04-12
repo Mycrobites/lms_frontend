@@ -1,4 +1,4 @@
-import { useState, useEffect ,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import axios from "../../axios/axios";
 import Avatar from "@material-ui/core/Avatar";
@@ -21,14 +21,14 @@ const getNotificationsFromLocalStorage = () => {
 };
 
 const NavBar = () => {
-  const[unseenCount , setUnseenCount] = useState(0) ;
+  const [unseenCount, setUnseenCount] = useState(0);
   const [showUser, setShowUser] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [loading, setLoading] = useState(false);
   const [notifications, setNotifications] = useState(
     getNotificationsFromLocalStorage
   );
-  const{userDetails} = useContext(UserContext)
+  const { userDetails } = useContext(UserContext);
 
   const location = useLocation();
   const history = useHistory();
@@ -46,15 +46,15 @@ const NavBar = () => {
     setShowNotification(false);
   };
 
-
-
   useEffect(() => {
     const fetchNotifications = async () => {
       if (!notifications) {
         setLoading(true);
       }
       try {
-        const { data } = await axios.get(`/api/fetchNotification/${userDetails?.user?.username}`);
+        const { data } = await axios.get(
+          `/api/fetchNotification/${userDetails?.user?.username}`
+        );
         setNotifications(data);
         setLoading(false);
         localStorage.setItem("notifications", JSON.stringify(data));
@@ -64,16 +64,15 @@ const NavBar = () => {
     };
     fetchNotifications();
 
-    const unseenNotifications = notifications?.filter(notif => !notif?.is_seen.includes(userDetails?.user?.pk))
-    unseenNotifications?.length > 0 ? setUnseenCount(unseenNotifications?.length) : setUnseenCount(0)
-    
-
+    // if (Array.isArray(notifications)) {
+    //   unseenNotifications?.length > 0
+    //     ? setUnseenCount(unseenNotifications?.length)
+    //     : setUnseenCount(0);
+    //   const unseenNotifications = notifications?.filter(
+    //     (notif) => !notif?.is_seen.includes(userDetails?.user?.pk)
+    //   );
+    // }
   }, [notifications]);
-
-  useEffect(()=>{
-    
-    
-  },[])
 
   return (
     <>
@@ -97,7 +96,10 @@ const NavBar = () => {
               )}
             </button>
             {showUser && (
-              <UserDetail setShowUser={setShowUser} name={userDetails?.user?.first_name} />
+              <UserDetail
+                setShowUser={setShowUser}
+                name={userDetails?.user?.first_name}
+              />
             )}
             {showNotification && (
               <Notification

@@ -1,5 +1,3 @@
-import React from "react";
-
 const SingleNotification = ({ id, time, title, message }) => {
   const millisecond = Date.parse(time);
   const date = new Date(millisecond);

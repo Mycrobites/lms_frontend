@@ -8,13 +8,26 @@ import { MdReportProblem } from "react-icons/md";
 const Comment = (props) => {
   const now = new Date(props.time);
 
-  const username = "Rajat Shrivastava";
+  const reportComment = async () => {
+    try {
+      const { data } = await axios.post("/api/forum/reportComment", {
+        user: 120,
+        comment: props.id,
+      });
+      console.log(data);
+      if (data.message) {
+        alert(data.message);
+      } else {
+        alert("You reported this comment!");
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const upvoteComment = async () => {
     try {
-      const { data } = await axios.patch(
-        `/api/forum/upvote/${props.id}/rajat`
-      );
+      const { data } = await axios.patch(`/api/forum/upvote/${props.id}/rajat`);
       console.log(data);
     } catch (err) {
       console.log(err.message);
@@ -37,7 +50,7 @@ const Comment = (props) => {
           <button onClick={upvoteComment}>
             <AiFillCaretUp /> Upvotes ({props.upvote})
           </button>
-          <button>
+          <button onClick={reportComment}>
             <MdReportProblem /> Report
           </button>
         </div>

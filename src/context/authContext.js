@@ -11,10 +11,8 @@ const getUserDetails = () => {
   }
 };
 
-
 export const UserContextProvider = (props) => {
   const [userDetails, setUserDetails] = useState(getUserDetails);
-
 
   const updateUser = (data) => {
     setUserDetails(data);
@@ -27,15 +25,12 @@ export const UserContextProvider = (props) => {
     localStorage.clear();
   };
 
-
-  
-
   return (
     <UserContext.Provider
       value={{
         userDetails,
         updateUser,
-        removeUser
+        removeUser,
       }}
     >
       {props.children}

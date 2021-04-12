@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SinglePost from "./SinglePost";
+import Pagination from "./Pagination";
 import axios from "../../axios/axios";
 import { AiOutlineWarning } from "react-icons/ai";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import "./Posts.css";
 import Loader from "../Loader/Loader";
+import UserContext from "../../context/authContext";
+import "./Posts.css";
 
 const Posts = () => {
   const [showAddPost, setShowAddPost] = useState(false);
@@ -14,17 +16,20 @@ const Posts = () => {
   const [error, setError] = useState(false);
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
+  // const [fetchingPosts, setFetchingPosts] = useState(true);
+  const [totalPages, setTotalPages] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const { userDetails } = useContext(UserContext);
 
   const addPost = async (e) => {
     e.preventDefault();
     setError(false);
     if (!title || !desc) return setError(true);
-    // setAddingPost(true);
     try {
       const newPost = {
         title,
         desc,
-        userid: 114,
+        userid: userDetails.user.pk,
       };
       const data = await axios.post("/api/forum/createPosts", newPost);
       console.log(data);
@@ -35,25 +40,37 @@ const Posts = () => {
       console.log(err.message);
     }
     setShowAddPost(false);
-    // setAddingPost(false);
+  };
+
+  const fetchPosts = async () => {
+    try {
+      const { data } = await axios.get(
+        `/api/forum/getPosts?pageno=${currentPage}`
+      );
+      setPosts(data.response);
+      setTotalPages(data.no_of_pages);
+      setLoading(false);
+      console.log(data.response);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const { data } = await axios.get("/api/forum/getPosts");
-        setPosts(data);
-        setLoading(false);
-        console.log(data);
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
     fetchPosts();
-  }, []);
+  }, [currentPage]);
+
+  const handlePages = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="posts">
+      {/* {fetchingPosts && (
+        <div className="loader">
+          <Loader />
+        </div>
+      )} */}
       <div className="add-post">
         <div className="add-post-title">
           <h1>Questions</h1>
@@ -149,9 +166,19 @@ const Posts = () => {
           </div>
         )}
         {posts?.map((post) => (
-          <SinglePost key={post.id} {...post} />
+          <SinglePost
+            key={post.id}
+            {...post}
+            uid={userDetails.user.pk}
+            fetchPosts={fetchPosts}
+          />
         ))}
       </div>
+      <Pagination
+        totalPages={totalPages}
+        handlePages={handlePages}
+        currentPage={currentPage}
+      />
     </div>
   );
 };

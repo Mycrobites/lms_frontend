@@ -67,7 +67,7 @@ const Task = ({user}) => {
     return () => {
       isUnmounted = true;
     };
-  }, []);
+  }, [user?.username]);
 
   useEffect(() => {
     const error = setTimeout(() => {

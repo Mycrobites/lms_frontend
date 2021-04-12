@@ -3,38 +3,25 @@ import axios from "../../axios/axios";
 import { Avatar } from "@material-ui/core";
 import { IoWarningOutline } from "react-icons/io5";
 
-const PostComment = ({ setShowPostComment, comments, setComments, postid }) => {
+const PostComment = (props) => {
+  const { setShowPostComment, comments, setComments, postid, uid } = props;
   const [comment, setComment] = useState("");
   const [isError, setIsError] = useState(false);
-
-  // console.log(comments);
 
   const postComment = async () => {
     try {
       if (comment) {
         const newComment = {
           text: comment,
-          userid: 114,
+          userid: uid,
           postid: postid,
         };
         const { data } = await axios.post(
           "/api/forum/createComments",
           newComment
         );
-        // setComments({
-        //   ...comments,
-        //   comments: [
-        //     ...comments.comments,
-        //     {
-        //       ...data,
-        //       user: "Rajat Shrivastava",
-        //       user_profile_pic:
-        //         "https://lms-seg.herokuapp.com/media/profile/defaultuser.jpg",
-        //     },
-        //   ],
-        // });
+        console.log(data);
         setShowPostComment(false);
-        // console.log(commentData);
       } else {
         setIsError(true);
       }

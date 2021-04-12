@@ -3,7 +3,7 @@ import { MediaContext } from "../../context/MediaContext";
 import "./UniqueCourse.css";
 
 const SingleLessonContent = ({ singleContent, id }) => {
-  console.log(singleContent);
+  // console.log(singleContent);
   const { changeVideoUrl, changeMediaType, changeText } = useContext(
     MediaContext
   );

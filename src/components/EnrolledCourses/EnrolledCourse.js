@@ -21,7 +21,7 @@ const getEnrolledCoursesFromLocalStorage = () => {
   }
 };
 
-const EnrolledCourse = () => {
+const EnrolledCourse = ({user}) => {
   const [allCourses, setAllCourses] = useState(
     getEnrolledCoursesFromLocalStorage
   );
@@ -37,7 +37,7 @@ const EnrolledCourse = () => {
     const getCourses = async () => {
       try {
         if (!allCourses) setIsLoading(true);
-        const { data } = await axios.get("/api/getMyCourses/rajat");
+        const { data } = await axios.get(`/api/getMyCourses/${user?.username}`);
         if (!isUnmounted) {
           setAllCourses(data);
           setActiveCourses(data.active);

@@ -14,7 +14,7 @@ const SingleLessonContent = ({ singleContent, id }) => {
     } else if (singleContent?.media_type === "text") {
       changeText(singleContent?.text);
     }
-    changeMediaType(singleContent?.media_type, singleContent?.content_id);
+    changeMediaType(singleContent?.media_type, id);
   };
 
   return (

@@ -14,7 +14,7 @@ const getTasksFromLocalStorage = () => {
   }
 };
 
-const Task = () => {
+const Task = ({user}) => {
   const [tasks, setTasks] = useState(getTasksFromLocalStorage);
   const [isLoading, setIsLoading] = useState(false);
   const [showInput, setShowInput] = useState(false);
@@ -34,7 +34,7 @@ const Task = () => {
             title: newTask,
             dueDate: dueDate,
             isComplete: false,
-            user: 115,
+            user: user?.pk,
           });
           setTasks([...tasks, data]);
           setNewTask("");
@@ -54,7 +54,7 @@ const Task = () => {
     let isUnmounted = false;
     const fetchTasks = async () => {
       try {
-        const { data } = await axios.get("/api/todo/rajat");
+        const { data } = await axios.get(`/api/todo/${user?.username}`);
         if (!isUnmounted) {
           setTasks(data);
           localStorage.setItem("tasks", JSON.stringify(data));
@@ -122,6 +122,7 @@ const Task = () => {
               {...task}
               tasks={tasks}
               setTasks={setTasks}
+              user={user}
             />
           ))}
         </div>

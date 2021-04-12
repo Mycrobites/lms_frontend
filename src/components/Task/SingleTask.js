@@ -7,7 +7,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 const SingleTasks = (props) => {
-  const { id, title, dueDate, isComplete, tasks, setTasks } = props;
+  const { id, title, dueDate, isComplete, tasks, setTasks ,user} = props;
   const [isCompleted, setIsCompleted] = useState(isComplete);
   const [showEdit, setShowEdit] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
@@ -22,7 +22,7 @@ const SingleTasks = (props) => {
         title: editTitle,
         dueDate: editDate,
         isComplete,
-        user: 115,
+        user: user?.pk,
       };
       const updatedTasks = tasks.map((task) => {
         if (task.id === id) return editedTask;
@@ -54,7 +54,7 @@ const SingleTasks = (props) => {
       title,
       dueDate,
       isComplete: !isCompleted,
-      user: 115,
+      user: user?.pk,
     };
     const completedTasks = tasks.map((task) => {
       if (task.id === id) return completedTask;
@@ -85,7 +85,7 @@ const SingleTasks = (props) => {
           <p>
             Due Date: {dueDate.split("-")[2]}{" "}
             {dueDate.split("-")[1] < 10
-              ? months[dueDate.split("-")[1].split("")[1]]
+              ? months[dueDate.split("-")[1].split("")[1]-1]
               : months[dueDate.split("-")[1]]}{" "}
             {dueDate.split("-")[0]}
           </p>

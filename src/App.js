@@ -4,6 +4,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import {useContext} from 'react' 
 // import Home from "./pages/Home/Home";
 import DashBoard from "./pages/Dashboard/DashBoard";
 import Enrollment from "./pages/Enrollments/Enrollment";
@@ -14,37 +15,43 @@ import NavBar from "./components/NavBar/NavBar";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import Login from "./pages/LoginPage/Login";
 import CoursePage from "./pages/CoursePage/CoursePage"
+import UserContext from "./context/authContext";
+
 
 const App = () => {
+
+  const{userDetails} = useContext(UserContext)
+
   return (
     <Router>
       <div className="App">
         <NavBar />
         <Switch>
-          <Route exact path="/">
-            {/* <Home /> */}
-            <Redirect to="/dashboard" />
-          </Route>
+        <Route exact path="/">
+        { !userDetails ? <Login/> : <Redirect to="/dashboard" /> }
+        </Route>
           <Route exact path="/dashboard">
-            <DashBoard />
+          { userDetails ? <DashBoard /> : <Redirect to="/" /> }
           </Route>
           <Route exact path="/enrollment">
-            <Enrollment />
+          { userDetails ? <Enrollment /> : <Redirect to="/" /> }
+            
           </Route>
           {/* <Route exact path="/achievement">
             <Achievement />
           </Route> */}
           <Route exact path="/forum">
-            <Forum />
+          { userDetails ?<Forum /> : <Redirect to="/" /> }
+            
           </Route>
           <Route exact path="/profile">
-            <ProfilePage />
+          { userDetails ? <ProfilePage /> : <Redirect to="/" /> }
+            
           </Route>
-          <Route exact path="/login">
-            <Login />
-          </Route>
+   
           <Route exact path="/course/:id">
-            <CoursePage/>
+          { userDetails ? <CoursePage/> : <Redirect to="/" /> }
+            
           </Route>
           <Route path="*">
             <ErrorPage />

@@ -1,12 +1,19 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef ,useContext } from "react";
 import { Link } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 // import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import PowerSettingsNewOutlinedIcon from "@material-ui/icons/PowerSettingsNewOutlined";
 import "./NavBar.css";
+import UserContext from "../../context/authContext";
 
 const UserDetail = ({ name, setShowUser }) => {
   const userDetailRef = useRef(null);
+  const {removeUser} = useContext(UserContext)
+
+  const logOut = ()=>{
+    setShowUser(false)
+    removeUser()
+  }
 
   useEffect(() => {
     const handler = (e) => {
@@ -33,7 +40,7 @@ const UserDetail = ({ name, setShowUser }) => {
           <SettingsOutlinedIcon />
           Settings
         </Link> */}
-        <Link to="#" onClick={() => setShowUser(false)}>
+        <Link to="#" onClick={logOut}>
           <PowerSettingsNewOutlinedIcon />
           Sign out
         </Link>

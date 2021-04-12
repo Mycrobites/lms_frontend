@@ -31,7 +31,7 @@ const UniqueCourse = () => {
         if (mountedRef.current) {
           setCourse(data.course_details);
         }
-        console.log(CourseDetails);
+        
       } catch (err) {
         console.log(err.message);
       }

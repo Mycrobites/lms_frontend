@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useContext } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import axios from "../../axios/axios";
 import Avatar from "@material-ui/core/Avatar";
@@ -9,6 +9,7 @@ import UserDetail from "./userDetail";
 import Notification from "./Notification";
 import logo from "../../assets/images/logo.png";
 import "./NavBar.css";
+import UserContext from "../../context/authContext";
 
 const getNotificationsFromLocalStorage = () => {
   const nots = localStorage.getItem("notifications");
@@ -23,9 +24,11 @@ const NavBar = () => {
   const [showUser, setShowUser] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [unseenCount , setUnseenCount]= useState(0)
   const [notifications, setNotifications] = useState(
     getNotificationsFromLocalStorage
   );
+  const{userDetails} = useContext(UserContext)
 
   const location = useLocation();
   const history = useHistory();
@@ -34,7 +37,7 @@ const NavBar = () => {
     setShowNotification(true);
     setShowUser(false);
     await axios.post("/api/notifSeen", {
-      user: 114,
+      user: userDetails?.user?.pk,
     });
   };
 
@@ -49,7 +52,7 @@ const NavBar = () => {
         setLoading(true);
       }
       try {
-        const { data } = await axios.get("/api/fetchNotification/rajat");
+        const { data } = await axios.get(`/api/fetchNotification/${userDetails?.user?.username}`);
         setNotifications(data);
         setLoading(false);
         localStorage.setItem("notifications", JSON.stringify(data));
@@ -58,21 +61,25 @@ const NavBar = () => {
       }
     };
     fetchNotifications();
+    for(var i =0;i<notifications?.length;i++){
+      !notifications[i]?.is_seen.includes(userDetails?.user?.pk) ? setUnseenCount(unseenCount + 1)  : setUnseenCount(unseenCount)
+    }
+
   }, [notifications]);
 
   return (
     <>
-      {location.pathname !== "/login" ? (
+      {location.pathname !== "/" ? (
         <div className="navbar">
           <div className="logo">
             <img src={logo} alt="logo" onClick={() => history.push("/")} />
           </div>
           <div className="user">
             <button id="notification" onClick={showNotificationBar}>
-              {notifications?.length > 0 && <span>{notifications.length}</span>}
+              {unseenCount > 0 && <span>{unseenCount}</span>}
               <NotificationsOutlinedIcon />
             </button>
-            <h4 id="user-name">Rajat</h4>
+            <h4 id="user-name">{userDetails?.user?.first_name}</h4>
             <Avatar />
             <button onClick={showUserBar}>
               {showUser ? (
@@ -82,7 +89,7 @@ const NavBar = () => {
               )}
             </button>
             {showUser && (
-              <UserDetail setShowUser={setShowUser} name={"Rajat"} />
+              <UserDetail setShowUser={setShowUser} name={userDetails?.user?.first_name} />
             )}
             {showNotification && (
               <Notification

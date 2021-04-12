@@ -13,7 +13,7 @@ const getUpcomingLessonsFromLocalStorage = () => {
   }
 };
 
-const UpcomingLessons = () => {
+const UpcomingLessons = ({user}) => {
   const [upcomingEvents, setUpcomingEvents] = useState(
     getUpcomingLessonsFromLocalStorage
   );
@@ -26,7 +26,7 @@ const UpcomingLessons = () => {
     const fetchUpcomingEvents = async () => {
       if (!upcomingEvents) setIsLoading(true);
       try {
-        const { data } = await axios.get("/api/upcomingEvents/rajat");
+        const { data } = await axios.get(`/api/upcomingEvents/${user?.username}`);
         if (mountedRef.current) {
           const sortedData = data
             .sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp))

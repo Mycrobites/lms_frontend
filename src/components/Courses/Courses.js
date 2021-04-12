@@ -14,7 +14,7 @@ const getCoursesFromLocalStorage = () => {
   }
 };
 
-const Courses = () => {
+const Courses = ({user}) => {
   const [courses, setCourses] = useState(getCoursesFromLocalStorage);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
@@ -25,7 +25,7 @@ const Courses = () => {
     const fetchCourses = async () => {
       if (!courses) setIsLoading(true);
       try {
-        const { data } = await axios.get("/api/getMyCourses/rajat");
+        const { data } = await axios.get(`/api/getMyCourses/${user?.username}`);
         if (mountedRef.current) {
           const courseData = data.active.filter((course, index) => index < 2);
           setCourses(courseData);

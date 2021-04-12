@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useContext } from "react";
 import Loader from "../Loader/Loader";
 import axios from "../../axios/axios";
 import { MdEdit } from "react-icons/md";
 import "./Profile.css";
+import UserContext from "../../context/authContext";
 
 const getProfile = () => {
-  const data = localStorage.getItem("user-profile");
+  const data = localStorage.getItem("post-data");
   if (data) {
     return JSON.parse(data);
   } else {
@@ -20,21 +21,61 @@ const Profile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [postData, setPostData] = useState(getProfile);
   const [editLoading, setEditLoading] = useState(false);
+  const {userDetails} = useContext(UserContext)
+
+
+  const getStudentsDetails = async () => {
+    try {
+      if (!postData) setLoading(true);
+      const { data } = await axios.get(`/api/getUserDetails/${userDetails?.user?.username}`);
+      setStudentDetails(data?.student_details);
+      setUserInfo(data?.user_info);
+     
+    } catch (err) {
+      console.log(err.message);
+    }
+    setLoading(false);
+  
+  };
 
   useEffect(() => {
-    const getStudentsDetails = async () => {
-      try {
-        if (!postData) setLoading(true);
-        const { data } = await axios.get("/api/getUserDetails/user1");
-        setStudentDetails(data?.student_details);
-        setUserInfo(data?.user_info);
-      } catch (err) {
-        console.log(err.message);
-      }
-      setLoading(false);
-    };
     getStudentsDetails();
-  }, [postData]);
+    
+  }, []);
+
+  useEffect(()=>{
+
+    setPostData({
+      "dob": studentDetails?.dob,
+      "Class": studentDetails?.Class,
+      "gender": studentDetails?.gender,
+      "category": studentDetails?.category,
+      "phone_no":studentDetails?.phone_no,
+      "address": studentDetails?.address,
+      "state":studentDetails?.state,
+      "pin_code": studentDetails?.pin_code,
+      "father_name": studentDetails?.father_name,
+      "father_email": studentDetails?.father_email,
+      "father_phone": studentDetails?.father_phone,
+      "father_profession": "NA",
+      "mother_name": studentDetails?.mother_name,
+      "mother_email": studentDetails?.mother_email,
+      "mother_phone": studentDetails?.mother_phone,
+      "mother_profession": "NA",
+      "school_name": studentDetails?.school_name,
+      "school_address": studentDetails?.school_address,
+      "school_state": "NA",
+      "school_pin_code": "NA",
+      "user":studentDetails?.user
+  })
+  localStorage.setItem("user-profile" , JSON.stringify(postData))
+
+},[userInfo,studentDetails])
+
+
+
+
+  
 
   const {
     Class,
@@ -59,41 +100,18 @@ const Profile = () => {
 
   const handleEditProfile = async () => {
     setEditLoading(true);
-    setPostData({
-      dob: studentDetails?.dob,
-      Class: studentDetails?.Class,
-      gender: studentDetails?.gender,
-      category: studentDetails?.category,
-      phone_no: studentDetails?.phone_no,
-      address: studentDetails?.address,
-      state: studentDetails?.state,
-      pin_code: studentDetails?.pin_code,
-      father_name: studentDetails?.father_name,
-      father_email: studentDetails?.father_email,
-      father_phone: studentDetails?.father_phone,
-      father_profession: "NA",
-      mother_name: studentDetails?.mother_name,
-      mother_email: studentDetails?.mother_email,
-      mother_phone: studentDetails?.mother_phone,
-      mother_profession: "NA",
-      school_name: studentDetails?.school_name,
-      school_address: studentDetails?.school_address,
-      school_state: "NA",
-      school_pin_code: "NA",
-      profile_pic: studentDetails?.profile_pic,
-      user: 121,
-    });
+
     localStorage.setItem("user-profile", JSON.stringify(postData));
     try {
       await axios.put(`/api/editUserDetails/${username}`, postData);
+      console.log(postData)
     } catch (err) {
       console.log(err.message);
     }
+    getStudentsDetails()
     setEditLoading(false);
     setShowEdit(!showEdit);
   };
-
-  // console.log(postData);
 
   return (
     <>

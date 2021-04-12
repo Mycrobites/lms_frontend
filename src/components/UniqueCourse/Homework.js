@@ -1,9 +1,11 @@
-import React ,{useState , useEffect} from 'react'
+import React ,{useState , useEffect ,useContext} from 'react'
 import axios from '../../axios/axios'
+import UserContext from '../../context/authContext'
 import Loader from '../Loader/Loader'
 
-const Homework = ({id}) => {
 
+const Homework = ({id}) => {
+    const{userDetails} = useContext(UserContext)
     const [homework,setHomework] = useState(null)
     const [loading, setLoading] = useState(true)
     const [homeworkFile , setHomeworkFile] =  useState(null)
@@ -33,7 +35,7 @@ const Homework = ({id}) => {
         formData.append("lessons_content" , homework?.id)
 
         try{
-         const {data}= await axios.post("/api/doHomework/rajat" , formData)
+         const {data}= await axios.post(`/api/doHomework/${userDetails?.user?.username}` , formData)
          console.log(data)
         }
         catch(err){

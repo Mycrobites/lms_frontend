@@ -2,6 +2,8 @@ import { useState, useEffect ,useContext } from "react";
 import Loader from "../Loader/Loader";
 import axios from "../../axios/axios";
 import { MdEdit } from "react-icons/md";
+import { HiOutlineCamera } from "react-icons/hi";
+import { RiImageAddLine } from "react-icons/ri";
 import "./Profile.css";
 import UserContext from "../../context/authContext";
 
@@ -17,12 +19,30 @@ const getProfile = () => {
 const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
+  const [profilePic , setProfilePic] = useState(null)
+  const [showImageEdit, setShowImageEdit] = useState(false);
   const [studentDetails, setStudentDetails] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [postData, setPostData] = useState(getProfile);
   const [editLoading, setEditLoading] = useState(false);
   const {userDetails} = useContext(UserContext)
 
+  const handleProfileSubmit = async()=>{
+    setEditLoading(true)
+    let formData = new FormData()
+    formData.append("profile_pic" , profilePic)
+  
+
+    try{
+     const {data}= await axios.patch(`/api/editUserProfilePic/${userDetails?.user?.username}` , formData)
+     getStudentsDetails()
+     console.log(data)
+     setEditLoading(false)
+    }
+    catch(err){
+        console.log(err.message)
+    }
+  }
 
   const getStudentsDetails = async () => {
     try {
@@ -30,6 +50,7 @@ const Profile = () => {
       const { data } = await axios.get(`/api/getUserDetails/${userDetails?.user?.username}`);
       setStudentDetails(data?.student_details);
       setUserInfo(data?.user_info);
+      console.log(data)
      
     } catch (err) {
       console.log(err.message);
@@ -122,7 +143,19 @@ const Profile = () => {
       ) : (
         <div className="profile-card">
           <div className="profile-image">
-            <img src={profile_pic} alt="" />
+          <div className="profile-img">
+          <img src={profile_pic} alt="" />
+          <button className='edit-img-btn' onClick={e => setShowImageEdit(!showImageEdit)}><HiOutlineCamera/></button>
+          </div>
+            
+           
+            { showImageEdit &&  <div className="edit-image">
+            <label className='label-profile-img'>
+            <input type="file" name="profile pic" accept="image/*" onChange={e=> setProfilePic(e.target.files[0])}  />
+            <RiImageAddLine/>
+            </label>
+            <button className='img-upload-btn' onClick={handleProfileSubmit} >Update</button>
+            </div>}
             <h6>{username}</h6>
             <p>Std {Class}</p>
           </div>
@@ -131,7 +164,7 @@ const Profile = () => {
               <h1>
                 {first_name} {last_name}
               </h1>
-              <p>Std{Class}</p>
+              <p>Std  {Class}</p>
               {!showEdit && (
                 <button
                   onClick={(e) => setShowEdit(true)}

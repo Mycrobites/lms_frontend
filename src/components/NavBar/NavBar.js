@@ -21,10 +21,10 @@ const getNotificationsFromLocalStorage = () => {
 };
 
 const NavBar = () => {
+  const[unseenCount , setUnseenCount] = useState(0) ;
   const [showUser, setShowUser] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [unseenCount , setUnseenCount]= useState(0)
   const [notifications, setNotifications] = useState(
     getNotificationsFromLocalStorage
   );
@@ -46,6 +46,8 @@ const NavBar = () => {
     setShowNotification(false);
   };
 
+
+
   useEffect(() => {
     const fetchNotifications = async () => {
       if (!notifications) {
@@ -61,11 +63,17 @@ const NavBar = () => {
       }
     };
     fetchNotifications();
-    for(var i =0;i<notifications?.length;i++){
-      !notifications[i]?.is_seen.includes(userDetails?.user?.pk) ? setUnseenCount(unseenCount + 1)  : setUnseenCount(unseenCount)
-    }
+
+    const unseenNotifications = notifications?.filter(notif => !notif?.is_seen.includes(userDetails?.user?.pk))
+    unseenNotifications?.length > 0 ? setUnseenCount(unseenNotifications?.length) : setUnseenCount(0)
+    
 
   }, [notifications]);
+
+  useEffect(()=>{
+    
+    
+  },[])
 
   return (
     <>

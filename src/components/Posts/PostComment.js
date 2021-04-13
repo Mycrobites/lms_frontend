@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "../../axios/axios";
+import { Avatar } from "@material-ui/core";
 import { IoWarningOutline } from "react-icons/io5";
-import { CKEditor } from "@ckeditor/ckeditor5-react"
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-const PostComment = ({ setShowPostComment, postData, setPostData }) => {
+const PostComment = ({ setShowPostComment, postid, uid }) => {
   const [comment, setComment] = useState("");
   const [isError, setIsError] = useState(false);
 
@@ -13,27 +14,15 @@ const PostComment = ({ setShowPostComment, postData, setPostData }) => {
       if (comment) {
         const newComment = {
           text: comment,
-          userid: 114,
-          postid: postData.id,
+          userid: uid,
+          postid: postid,
         };
         const { data } = await axios.post(
           "/api/forum/createComments",
           newComment
         );
-        setPostData({
-          ...postData,
-          comments: [
-            ...postData.comments,
-            {
-              ...data,
-              user: "Rajat Shrivastava",
-              user_profile_pic:
-                "https://lms-seg.herokuapp.com/media/profile/defaultuser.jpg",
-            },
-          ],
-        });
+        console.log(data);
         setShowPostComment(false);
-        console.log(postData);
       } else {
         setIsError(true);
       }
@@ -50,33 +39,37 @@ const PostComment = ({ setShowPostComment, postData, setPostData }) => {
   }, [isError]);
 
   return (
-    <div className="postComment">
+    <div className="post-comment">
       <div className="user-profile">
-        <img
-          src="https://lms-seg.herokuapp.com/media/profile/defaultuser.jpg"
-          alt="user"
-        />
+        <Avatar />
       </div>
       <div className="post-comment-body">
-          <CKEditor
-              editor={ClassicEditor}
-              data= {comment}
-              onReady={(editor) => {
-                  console.log("Editor is ready to use!", editor);
-                  editor.editing.view.change(writer => {
-                      writer.setStyle(
-                        "height",
-                        "100px",
-                        editor.editing.view.document.getRoot()
-                      );
-                    });
-              }}
-              onChange={(event, editor) => {
-                  const data = editor.getData();
-                  setComment(data)
-                  console.log(comment)
-              }}
-          />                                   
+        <form className="post-comment-form">
+          <textarea
+            placeholder="Leave a comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          {/* <CKEditor
+            editor={ClassicEditor}
+            data={comment}
+            onReady={(editor) => {
+              console.log("Editor is ready to use!", editor);
+              editor.editing.view.change((writer) => {
+                writer.setStyle(
+                  "height",
+                  "100px",
+                  editor.editing.view.document.getRoot()
+                );
+              });
+            }}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setComment(data);
+              console.log(comment);
+            }}
+          /> */}
+        </form>
         {isError && (
           <div className="error">
             <IoWarningOutline />

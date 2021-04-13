@@ -91,12 +91,8 @@ const Profile = () => {
   })
   localStorage.setItem("user-profile" , JSON.stringify(postData))
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
 },[userInfo,studentDetails])
-
-
-
-
-  
 
   const {
     Class,

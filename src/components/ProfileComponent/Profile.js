@@ -25,6 +25,7 @@ const Profile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [postData, setPostData] = useState(getProfile);
   const [editLoading, setEditLoading] = useState(false);
+  const [img , setImg] = useState({ preview: "", raw: "" })
   const {userDetails} = useContext(UserContext)
 
   const handleProfileSubmit = async()=>{
@@ -38,9 +39,24 @@ const Profile = () => {
      getStudentsDetails()
      console.log(data)
      setEditLoading(false)
+     setImg({ preview: "", raw: "" })
+     
     }
     catch(err){
         console.log(err.message)
+    }
+    setShowImageEdit(false)
+  }
+
+ 
+
+  const handleProfilePic  = (e) =>{
+    setProfilePic(e.target.files[0])
+    if (e.target.files.length) {
+      setImg({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0]
+      });
     }
   }
 
@@ -63,6 +79,7 @@ const Profile = () => {
     getStudentsDetails();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   useEffect(()=>{
 
@@ -149,13 +166,17 @@ const Profile = () => {
           </div>
             
            
-            { showImageEdit &&  <div className="edit-image">
+            { 
+            showImageEdit &&  <div className="edit-image">
             <label className='label-profile-img'>
-            <input type="file" name="profile pic" accept="image/*" onChange={e=> setProfilePic(e.target.files[0])}  />
+            <input type="file" name="profile pic" accept="image/*" onChange={handleProfilePic }  />
             <RiImageAddLine/>
+            {img?.preview && <img src={img.preview} alt="select" /> }
             </label>
-            <button className='img-upload-btn' onClick={handleProfileSubmit} >Update</button>
-            </div>}
+            <button className='img-upload-btn' onClick={handleProfileSubmit} >Upload</button>
+            </div>
+          }
+
             <h6>{username}</h6>
             <p>Std {Class}</p>
           </div>

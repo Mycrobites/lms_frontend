@@ -23,7 +23,8 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        <NavBar />
+      { userDetails ?  <NavBar /> : <></>}
+       
         <Switch>
           <Route exact path="/">
             {!userDetails ? <Login /> : <Redirect to="/dashboard" />}

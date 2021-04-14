@@ -4,14 +4,12 @@ import axios from "../../axios/axios";
 import { MediaContext } from "../../context/MediaContext";
 import Loader from "../Loader/Loader";
 import AboutCourse from "./AboutCourse";
-import Assignment from "./Assignment";
 import CourseContent from "./CourseContent";
 import CourseContentResponsive from "./CourseContentResponsive";
 import DefaultLesson from "./DefaultLesson";
 import Homework from "./Homework";
 import MediaPlayer from "./MediaPlayer";
 import PdfDocument from "./PdfDocument";
-import Quiz from "./Quiz";
 import Text from "./Text";
 import "./UniqueCourse.css";
 
@@ -52,10 +50,6 @@ const UniqueCourse = () => {
         return <PdfDocument />;
       case "text":
         return <Text text={text}/>
-      case "assignment":
-        return <Assignment />;
-      case "quiz":
-        return <Quiz/>
       case "homework":
         return <Homework id ={mediaId}/>
       default :

@@ -16,6 +16,8 @@ import ProfilePage from "./pages/Profile/ProfilePage";
 import Login from "./pages/LoginPage/Login";
 import CoursePage from "./pages/CoursePage/CoursePage";
 import UserContext from "./context/authContext";
+import Assignment from "./pages/AssignmentPage/Assignment";
+import QuizPage from "./pages/QuizPage/QuizPage";
 
 const App = () => {
   const { userDetails } = useContext(UserContext);
@@ -47,6 +49,14 @@ const App = () => {
           <Route exact path="/course/:id">
             {userDetails ? <CoursePage /> : <Redirect to="/" />}
           </Route>
+
+          <Route exact path="/quiz/:id">
+          {userDetails ? <QuizPage /> : <Redirect to="/" />}
+        </Route>
+
+        <Route exact path="/assignment/:id">
+        {userDetails ? <Assignment/> : <Redirect to="/" />}
+      </Route>
           <Route path="*">
             <ErrorPage />
           </Route>

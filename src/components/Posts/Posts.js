@@ -13,6 +13,7 @@ const Posts = () => {
   const [showAddPost, setShowAddPost] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [tags, setTags] = useState("");
   const [error, setError] = useState(false);
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -29,6 +30,7 @@ const Posts = () => {
         title,
         desc,
         userid: userDetails.user.pk,
+        tags,
       };
       const data = await axios.post("/api/forum/createPosts", newPost);
       console.log(data);
@@ -125,6 +127,27 @@ const Posts = () => {
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setDesc(data);
+                  }}
+                />
+              </label>
+              <label>
+                <p>Tags (Enter tags as a comma separated string)</p>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={tags}
+                  onReady={(editor) => {
+                    console.log("Editor is ready to use!", editor);
+                    editor.editing.view.change((writer) => {
+                      writer.setStyle(
+                        "height",
+                        "130px",
+                        editor.editing.view.document.getRoot()
+                      );
+                    });
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setTags(data);
                   }}
                 />
               </label>

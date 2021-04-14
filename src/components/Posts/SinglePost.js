@@ -15,6 +15,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { AiOutlineWarning } from "react-icons/ai";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -49,6 +50,10 @@ const SinglePost = (props) => {
   const [isEditingPost, setIsEditingPost] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedDesc, setEditedDesc] = useState(desc);
+  const [editedTags, setEditedTags] = useState(
+    tags.map((t) => t.tag).toString()
+  );
+  const [error, setError] = useState(false);
   const editDeleteRef = useRef(null);
   const classes = useStyles();
   const now = new Date(time);
@@ -98,6 +103,7 @@ const SinglePost = (props) => {
   };
 
   const editPost = async () => {
+    if (!editedTitle || !editedDesc) return setError(true);
     try {
       const { data } = await axios.put(`/api/forum/editPost/${id}`, {
         title: editedTitle,
@@ -221,13 +227,37 @@ const SinglePost = (props) => {
                   }}
                 />
               </label>
-              {/* {error && (
-                  <p className="post-upload-question">
-                    <AiOutlineWarning />
-                    Please fill all the fields!
-                  </p>
-                )} */}
-              <button onClick={editPost}>Done</button>
+              <label>
+                <p>Tags (Enter tags as a comma separated string)</p>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={editedTags}
+                  onReady={(editor) => {
+                    console.log("Editor is ready to use!", editor);
+                    editor.editing.view.change((writer) => {
+                      writer.setStyle(
+                        "height",
+                        "130px",
+                        editor.editing.view.document.getRoot()
+                      );
+                    });
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setEditedTags(data);
+                  }}
+                />
+              </label>
+              {error && (
+                <p className="post-upload-question">
+                  <AiOutlineWarning />
+                  Please fill all the fields!
+                </p>
+              )}
+              <div className="isedit-buttons">
+                <button onClick={() => setIsEditingPost(false)}>Cancel</button>
+                <button onClick={editPost}>Done</button>
+              </div>
             </div>
           </div>
         )}

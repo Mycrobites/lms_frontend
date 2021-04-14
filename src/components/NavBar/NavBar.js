@@ -87,7 +87,7 @@ const NavBar = () => {
               <NotificationsOutlinedIcon />
             </button>
             <h4 id="user-name">{userDetails?.user?.first_name}</h4>
-            <Avatar  src={userDetails?.profile_pic} alt="Rajat" />
+            <Avatar src={userDetails?.profile_pic} />
             <button onClick={showUserBar}>
               {showUser ? (
                 <ExpandLessOutlinedIcon />

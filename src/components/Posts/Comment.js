@@ -79,8 +79,7 @@ const Comment = (props) => {
 
   const deleteComment = async () => {
     try {
-      const { data } = await axios.delete(`/api/forum/editComment/${id}`);
-      // console.log(data);
+      await axios.delete(`/api/forum/editComment/${id}`);
       setComments(comments.filter((comment) => comment.id !== id));
     } catch (err) {
       console.log(err.message);

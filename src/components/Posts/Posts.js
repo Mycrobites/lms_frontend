@@ -49,8 +49,7 @@ const Posts = () => {
         userid: userDetails.user.pk,
         tags,
       };
-      const data = await axios.post("/api/forum/createPosts", newPost);
-      // console.log(data);
+      await axios.post("/api/forum/createPosts", newPost);
       setTitle("");
       setDesc("");
       setTags("");

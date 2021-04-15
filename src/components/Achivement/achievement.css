@@ -1,0 +1,41 @@
+.live-quiz, .past-quiz, .achievements {
+  padding: 10px;
+}
+.live-quiz h2,
+.past-quiz h2,
+.achievements h2 {
+  font-size: 1.4em;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.quiz-div .single-quiz {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+.single-quiz h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+.single-quiz p {
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+}
+.single-quiz button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none !important;
+  color: white;
+  background: #006eff;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 4px;
+}

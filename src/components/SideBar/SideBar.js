@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import NoteAddOutlinedIcon from "@material-ui/icons/NoteAddOutlined";
 import ForumOutlinedIcon from "@material-ui/icons/ForumOutlined";
-// import EmojiEventsOutlinedIcon from "@material-ui/icons/EmojiEventsOutlined";
+import EmojiEventsOutlinedIcon from "@material-ui/icons/EmojiEventsOutlined";
 import "./SideBar.css";
 
 const SideBar = ({ active }) => {
@@ -25,11 +25,11 @@ const SideBar = ({ active }) => {
             <NoteAddOutlinedIcon />
           </Link>
         </div>
-        {/* <div id={active === "achievement" ? "active" : ""} className="menu">
+        <div id={active === "achievement" ? "active" : ""} className="menu">
           <Link to="/achievement">
             <EmojiEventsOutlinedIcon />
           </Link>
-        </div> */}
+        </div>
         <div id={active === "forum" ? "active" : ""} className="menu">
           <Link to="/forum">
             <ForumOutlinedIcon />
@@ -56,12 +56,12 @@ const SideBar = ({ active }) => {
             My Enrollments
           </Link>
         </div>
-        {/* <div id={active === "achievement" ? "active" : ""} className="menu">
+        <div id={active === "achievement" ? "active" : ""} className="menu">
           <Link to="/achievement">
             <EmojiEventsOutlinedIcon />
             Achievements
           </Link>
-        </div> */}
+        </div>
         <div id={active === "forum" ? "active" : ""} className="forum menu">
           <Link to="/forum">
             <ForumOutlinedIcon />

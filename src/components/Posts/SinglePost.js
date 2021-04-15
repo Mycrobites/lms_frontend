@@ -24,6 +24,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getCookie = (name) => {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+};
+
 const SinglePost = (props) => {
   const {
     id,
@@ -58,6 +73,8 @@ const SinglePost = (props) => {
   const classes = useStyles();
   const now = new Date(time);
 
+  const csrftoken = getCookie("csrftoken");
+
   const getAnswers = async () => {
     setShowComments(!showComments);
     setShowPostComment(false);
@@ -65,7 +82,7 @@ const SinglePost = (props) => {
     try {
       const { data } = await axios.get(`/api/forum/getComments/${id}`);
       setComments(data);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err.message);
     }
@@ -86,7 +103,7 @@ const SinglePost = (props) => {
           setReportModalText("You reported this post");
         }
       }
-      console.log(response);
+      // console.log(response);
     } catch (err) {
       console.log(err.message);
     }
@@ -94,9 +111,9 @@ const SinglePost = (props) => {
 
   const deletePost = async () => {
     try {
-      const { data } = await axios.delete(`/api/forum/editPost/${id}`);
+      await axios.delete(`/api/forum/editPost/${id}`);
       fetchPosts();
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err.message);
     }
@@ -118,7 +135,7 @@ const SinglePost = (props) => {
           else return post;
         })
       );
-      console.log(data);
+      // console.log(data);
       setIsEditingPost(false);
     } catch (err) {
       console.log(err.message);
@@ -187,65 +204,62 @@ const SinglePost = (props) => {
             <div className="post-post">
               <label>
                 <p>Title</p>
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={title}
-                  onReady={(editor) => {
-                    console.log("Editor is ready to use!", editor);
-                    editor.editing.view.change((writer) => {
-                      writer.setStyle(
-                        "height",
-                        "80px",
-                        editor.editing.view.document.getRoot()
-                      );
-                    });
-                  }}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setEditedTitle(data);
-                  }}
+                <input
+                  type="text"
+                  placeholder="title..."
+                  value={editedTitle}
+                  onChange={(e) => setEditedTitle(e.target.value)}
                 />
               </label>
               <label>
                 <p>Description</p>
                 <CKEditor
                   editor={ClassicEditor}
-                  data={desc}
-                  onReady={(editor) => {
-                    console.log("Editor is ready to use!", editor);
-                    editor.editing.view.change((writer) => {
-                      writer.setStyle(
-                        "height",
-                        "130px",
-                        editor.editing.view.document.getRoot()
-                      );
-                    });
+                  data={editedDesc}
+                  config={{
+                    ckfinder: {
+                      uploadUrl:
+                        "http://lms-seg.herokuapp.com/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
+                      options: {
+                        resourceType: "Images",
+                      },
+                      credentials: "include",
+                      headers: {
+                        "X-CSRF-TOKEN": csrftoken,
+                        csrftoken: csrftoken,
+                        csrfmiddlewaretoken: csrftoken,
+                      },
+                    },
                   }}
+                  // onReady={(editor) => {
+                  //   console.log("Editor is ready to use!", editor);
+                  // }}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setEditedDesc(data);
                   }}
+                  // onBlur={(event, editor) => {
+                  //   console.log("Blur.", editor);
+                  // }}
+                  // onFocus={(event, editor) => {
+                  //   console.log("Focus.", editor);
+                  // }}
                 />
               </label>
               <label>
                 <p>Tags (Enter tags as a comma separated string)</p>
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={editedTags}
-                  onReady={(editor) => {
-                    console.log("Editor is ready to use!", editor);
-                    editor.editing.view.change((writer) => {
-                      writer.setStyle(
-                        "height",
-                        "130px",
-                        editor.editing.view.document.getRoot()
-                      );
-                    });
-                  }}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setEditedTags(data);
-                  }}
+                <textarea
+                  placeholder="tags..."
+                  value={editedTags}
+                  onChange={(e) => setEditedTags(e.target.value)}
+                />
+              </label>
+              <label>
+                <p>Tags (Enter tags as a comma separated string)</p>
+                <textarea
+                  placeholder="tags..."
+                  value={editedTags}
+                  onChange={(e) => setEditedTags(e.target.value)}
                 />
               </label>
               {error && (

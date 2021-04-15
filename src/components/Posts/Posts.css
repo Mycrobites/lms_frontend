@@ -84,6 +84,13 @@
   font-size: 16px !important;
 }
 
+.post-post input,
+.post-post textarea {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.3) !important;
+  border-radius: 2px !important;
+}
+
 /* BUTTON STYLES */
 .add-post-title button,
 .answer-btn-div .answers,
@@ -370,6 +377,13 @@
   padding-right: 20px;
   color: rgb(0, 140, 255);
 }
+.comment-upvotes button:nth-child(2) {
+  border-right: 1px solid rgba(0, 0, 0, 0.4);
+  padding-right: 20px;
+}
+.comment-upvotes button:nth-child(3) {
+  color: rgba(0, 0, 0, 0.6);
+}
 .comment-upvotes button:first-child svg {
   font-size: 22px;
   color: rgb(0, 140, 255);
@@ -424,6 +438,9 @@
   border-radius: 4px;
   display: inline;
   margin-bottom: 5px;
+}
+.edit-div button {
+  margin-left: 15px;
 }
 
 /* FORUM LOADER */
@@ -520,4 +537,8 @@
   padding: 5px 10px;
   border-radius: 3px;
   margin-top: 10px;
+}
+
+.comment-upvotes .report-button {
+  border-right: none;
 }

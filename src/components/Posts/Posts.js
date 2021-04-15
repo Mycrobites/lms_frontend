@@ -9,6 +9,21 @@ import Loader from "../Loader/Loader";
 import UserContext from "../../context/authContext";
 import "./Posts.css";
 
+const getCookie = (name) => {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+};
+
 const Posts = () => {
   const [showAddPost, setShowAddPost] = useState(false);
   const [title, setTitle] = useState("");
@@ -20,6 +35,8 @@ const Posts = () => {
   const [totalPages, setTotalPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const { userDetails } = useContext(UserContext);
+
+  const csrftoken = getCookie("csrftoken");
 
   const addPost = async (e) => {
     e.preventDefault();
@@ -33,9 +50,10 @@ const Posts = () => {
         tags,
       };
       const data = await axios.post("/api/forum/createPosts", newPost);
-      console.log(data);
+      // console.log(data);
       setTitle("");
       setDesc("");
+      setTags("");
       fetchPosts();
       setShowAddPost(false);
     } catch (err) {
@@ -51,7 +69,7 @@ const Posts = () => {
       setPosts(data.response);
       setTotalPages(data.no_of_pages);
       setLoading(false);
-      console.log(data.response);
+      // console.log(data.response);
     } catch (err) {
       console.log(err.message);
     }
@@ -68,11 +86,6 @@ const Posts = () => {
 
   return (
     <div className="posts">
-      {/* {fetchingPosts && (
-        <div className="loader">
-          <Loader />
-        </div>
-      )} */}
       <div className="add-post">
         <div className="add-post-title">
           <h1>Questions</h1>
@@ -90,23 +103,11 @@ const Posts = () => {
             <form onSubmit={addPost}>
               <label>
                 <p>Title</p>
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={title}
-                  onReady={(editor) => {
-                    console.log("Editor is ready to use!", editor);
-                    editor.editing.view.change((writer) => {
-                      writer.setStyle(
-                        "height",
-                        "80px",
-                        editor.editing.view.document.getRoot()
-                      );
-                    });
-                  }}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setTitle(data);
-                  }}
+                <input
+                  type="text"
+                  placeholder="title..."
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </label>
               <label>
@@ -114,41 +115,42 @@ const Posts = () => {
                 <CKEditor
                   editor={ClassicEditor}
                   data={desc}
-                  onReady={(editor) => {
-                    console.log("Editor is ready to use!", editor);
-                    editor.editing.view.change((writer) => {
-                      writer.setStyle(
-                        "height",
-                        "130px",
-                        editor.editing.view.document.getRoot()
-                      );
-                    });
+                  config={{
+                    ckfinder: {
+                      uploadUrl:
+                        "http://lms-seg.herokuapp.com/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
+                      options: {
+                        resourceType: "Images",
+                      },
+                      credentials: "include",
+                      headers: {
+                        "X-CSRF-TOKEN": csrftoken,
+                        csrftoken: csrftoken,
+                        csrfmiddlewaretoken: csrftoken,
+                      },
+                    },
                   }}
+                  // onReady={(editor) => {
+                  //   console.log("Editor is ready to use!", editor);
+                  // }}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setDesc(data);
                   }}
+                  // onBlur={(event, editor) => {
+                  //   console.log("Blur.", editor);
+                  // }}
+                  // onFocus={(event, editor) => {
+                  //   console.log("Focus.", editor);
+                  // }}
                 />
               </label>
               <label>
                 <p>Tags (Enter tags as a comma separated string)</p>
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={tags}
-                  onReady={(editor) => {
-                    console.log("Editor is ready to use!", editor);
-                    editor.editing.view.change((writer) => {
-                      writer.setStyle(
-                        "height",
-                        "130px",
-                        editor.editing.view.document.getRoot()
-                      );
-                    });
-                  }}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setTags(data);
-                  }}
+                <textarea
+                  placeholder="tags..."
+                  value={tags}
+                  onChange={(e) => setTags(e.target.value)}
                 />
               </label>
               {error && (

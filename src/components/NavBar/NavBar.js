@@ -72,6 +72,7 @@ const NavBar = () => {
     //     (notif) => !notif?.is_seen.includes(userDetails?.user?.pk)
     //   );
     // }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notifications]);
 
   return (

@@ -53,6 +53,7 @@ const EnrolledCourse = ({user}) => {
     return () => {
       isUnmounted = true;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allCourses]);
 
   if (isLoading) {

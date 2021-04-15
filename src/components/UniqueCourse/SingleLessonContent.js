@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import {useHistory} from 'react-router-dom'
 import { MediaContext } from "../../context/MediaContext";
 import "./UniqueCourse.css";
 
@@ -8,11 +9,19 @@ const SingleLessonContent = ({ singleContent, id }) => {
     MediaContext
   );
 
+  const history = useHistory()
+
   const handleLessonClick = () => {
     if (singleContent?.media_type === "video") {
       changeVideoUrl(singleContent?.link);
     } else if (singleContent?.media_type === "text") {
       changeText(singleContent?.text);
+    }
+    else if (singleContent?.media_type === "quiz"){
+      history.push(`/quiz/${id}`)
+    }
+    else if (singleContent?.media_type === "assignment"){
+      history.push(`/assignment/${id}`)
     }
     changeMediaType(singleContent?.media_type, id);
   };

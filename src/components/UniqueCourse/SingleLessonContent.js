@@ -20,6 +20,10 @@ const SingleLessonContent = ({ singleContent, id }) => {
       changeVideoUrl(singleContent?.link);
       changeMediaType(singleContent?.media_type, id);
     } 
+    else if (singleContent?.media_type === "pdf") {
+      changeVideoUrl(singleContent?.pdf_file);
+      changeMediaType(singleContent?.media_type, id);
+    } 
     else if (singleContent?.media_type === "text") {
       changeText(singleContent?.text);
       changeMediaType(singleContent?.media_type, id);

@@ -40,6 +40,7 @@ const Profile = () => {
      console.log(data)
      setEditLoading(false)
      setImg({ preview: "", raw: "" })
+     setProfilePic(null)
      
     }
     catch(err){
@@ -169,7 +170,7 @@ const Profile = () => {
             <RiImageAddLine/>
             {img?.preview && <img src={img.preview} alt="select" /> }
             </label>
-            <button className='img-upload-btn' onClick={handleProfileSubmit} >Upload</button>
+            <button disabled={!profilePic ? true : false} className='img-upload-btn' onClick={handleProfileSubmit} >Upload</button>
             </div>
           }
 

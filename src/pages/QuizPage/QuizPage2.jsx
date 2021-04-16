@@ -22,23 +22,39 @@ const getResponses = () => {
     }
   };
 
+const getTimer =()=>{
+  const timer = sessionStorage.getItem("quiz-timer");
+  if (timer) {
+    return JSON.parse(timer);
+  } else {
+    return null;
+  }
+};
+
+
 const QuizPage = () => {
     const [quiz, setQuiz] = useState(null);
     const [index, setIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [showSubmit, setShowSubmit] = useState(false);
     const [responses, setResponses] = useState(getResponses);
+    const [timer,setTimer]= useState(getTimer)
     const {
         userDetails,
-        userCurrentQuiz,
-        timeUpdate,
-        submitTest,
-        addQuiz,
+        submitTest
       } = useContext(UserContext);
 
     const { id } = useParams();
     const history = useHistory();
     const mountedRef = useRef(true);
+
+
+    const timerUpdate = ()=>{
+
+       setTimer(timer-1000)
+       sessionStorage.setItem("quiz-timer" ,JSON.stringify(timer))
+      
+    }
 
     const handlePrevious = () => {
         if (index > 0) {
@@ -95,8 +111,9 @@ const QuizPage = () => {
             user: userDetails?.user.pk,
             response: responses,
           };
-          await axios.post("/api/quiz/create-response", res, config);
+          const{data}=await axios.post("/api/quiz/create-response", res, config);
           submitTest();
+          console.log(data)
           history.push("/enrollment");
         } catch (err) {
           console.log(err.message);
@@ -120,9 +137,9 @@ const QuizPage = () => {
         if (!mountedRef.current) return null;
         console.log(data)
         setQuiz(data?.quiz_questions);
-        // const test_time = new Date("1970-01-01T" + quiz?.duration + "Z").getTime();
-        // addQuiz(quiz?.id, quiz?.duration, test_time);
-        // timeUpdate();
+        const test_time = new Date("1970-01-01T" + data?.quiz_details.duration + "Z").getTime();
+        setTimer(test_time)
+        //timerUpdate();
         if (responses === null) {
           setResponses(
             data?.quiz_questions.map((quiz) => ({
@@ -146,12 +163,12 @@ const QuizPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       timeUpdate();
-//     }, 1000);
-//     return () => clearInterval(interval);
-//   });
+  useEffect(() => {
+    const interval = setInterval(() => {
+      timerUpdate();
+    }, 1000);
+    return () => clearInterval(interval);
+  });
 
 //   useEffect(() => {
 //     addQuiz(quizid, quizDuration, test_time);
@@ -303,7 +320,10 @@ const QuizPage = () => {
                 </div>
               )}
               <div className="quiz-status">
-             
+              <CountDownTimer
+                handleTestSubmit={handleTestSubmit}
+                duration={timer}
+              />
                 <div className="quiz-navigation-stats">
                   {btnarray.map((button, idx) => {
                     return (

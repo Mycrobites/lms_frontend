@@ -1,7 +1,12 @@
 import React, { useContext } from "react";
-import {useHistory} from 'react-router-dom'
 import { MediaContext } from "../../context/MediaContext";
 import "./UniqueCourse.css";
+import {VscFilePdf} from 'react-icons/vsc'
+import {AiOutlineFileText} from 'react-icons/ai'
+import {BiTask} from 'react-icons/bi'
+import {MdAssignment} from 'react-icons/md'
+import {IoIosPlayCircle} from 'react-icons/io'
+import {FaHandMiddleFinger} from 'react-icons/fa'
 
 const SingleLessonContent = ({ singleContent, id }) => {
   // console.log(singleContent);
@@ -9,22 +14,46 @@ const SingleLessonContent = ({ singleContent, id }) => {
     MediaContext
   );
 
-  const history = useHistory()
 
   const handleLessonClick = () => {
     if (singleContent?.media_type === "video") {
       changeVideoUrl(singleContent?.link);
-    } else if (singleContent?.media_type === "text") {
+      changeMediaType(singleContent?.media_type, id);
+    } 
+    else if (singleContent?.media_type === "text") {
       changeText(singleContent?.text);
+      changeMediaType(singleContent?.media_type, id);
     }
     else if (singleContent?.media_type === "quiz"){
-      history.push(`/quiz/${id}`)
+      changeMediaType(singleContent?.media_type, singleContent?.quiz_id);
     }
     else if (singleContent?.media_type === "assignment"){
-      history.push(`/assignment/${id}`)
+      changeMediaType(singleContent?.media_type, singleContent?.assignment_id);
     }
-    changeMediaType(singleContent?.media_type, id);
+    else{
+      changeMediaType(singleContent?.media_type, id);
+    }
   };
+
+  const toggleIcon=()=>{
+    switch(singleContent?.media_type){
+      case "text":
+        return <AiOutlineFileText/>
+      case "quiz":
+        return <MdAssignment/>
+      case "video":
+        return <IoIosPlayCircle/>
+      case "homework":
+        return <BiTask/>
+      case "pdf":
+        return <VscFilePdf/>
+      case "assignment":
+        return <MdAssignment/>
+      default:
+        return <FaHandMiddleFinger/>
+
+    }
+  }
 
   return (
     <div onClick={handleLessonClick} className="single-lesson-content">
@@ -37,7 +66,7 @@ const SingleLessonContent = ({ singleContent, id }) => {
           </div>
         </div>
       </div>
-      <p>{singleContent?.media_type === "video" ? "15 min" : "1 min"}</p>
+      <p>{toggleIcon()}</p>
     </div>
   );
 };

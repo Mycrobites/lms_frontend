@@ -6,7 +6,7 @@ const Achievements = ({ achievements }) => {
     <div className="achievements">
       <h2>Achievements</h2>
       <div className="quiz-div">
-        {achievements.map((achievement) => {
+        {achievements?.map((achievement) => {
           const { id, user, score } = achievement;
           return (
             <div key={id}>

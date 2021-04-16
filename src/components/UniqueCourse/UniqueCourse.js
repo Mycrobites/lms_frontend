@@ -4,12 +4,14 @@ import axios from "../../axios/axios";
 import { MediaContext } from "../../context/MediaContext";
 import Loader from "../Loader/Loader";
 import AboutCourse from "./AboutCourse";
+import Assignment from "./Assignment";
 import CourseContent from "./CourseContent";
 import CourseContentResponsive from "./CourseContentResponsive";
 import DefaultLesson from "./DefaultLesson";
 import Homework from "./Homework";
 import MediaPlayer from "./MediaPlayer";
 import PdfDocument from "./PdfDocument";
+import Quiz from "./Quiz";
 import Text from "./Text";
 import "./UniqueCourse.css";
 
@@ -27,35 +29,43 @@ const UniqueCourse = () => {
       try {
         const { data } = await axios.get(`/api/course/${id}`);
         if (mountedRef.current) {
+          console.log(data)
           setCourse(data.course_details);
+          setIsLoading(false);
         }
         
       } catch (err) {
         console.log(err.message);
+        setIsLoading(false);
       }
     };
     fetchCourseDetails();
-    setIsLoading(false);
+    
     return function callback() {
       mountedRef.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [CourseDetails]);
 
-  const toggleComponent = () => {
-    switch (mediaType) {
+  const toggleComponent = ()=>{
+     
+    switch(mediaType){
       case "video":
-        return <MediaPlayer />;
+        return <MediaPlayer/>
       case "pdf":
-        return <PdfDocument />;
+        return <PdfDocument/>
       case "text":
         return <Text text={text}/>
+      case "assignment":
+        return <Assignment/>
+      case "quiz":
+        return <Quiz/>
       case "homework":
         return <Homework id ={mediaId}/>
       default :
         return <DefaultLesson src={CourseDetails?.image} name={CourseDetails?.course_name}/>
     }
-  };
+  }
 
   return (
     <>

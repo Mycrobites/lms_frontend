@@ -17,7 +17,7 @@ import Login from "./pages/LoginPage/Login";
 import CoursePage from "./pages/CoursePage/CoursePage";
 import UserContext from "./context/authContext";
 import Assignment from "./pages/AssignmentPage/Assignment";
-import QuizPage from "./pages/QuizPage/QuizPage";
+import QuizPage from "./pages/QuizPage/QuizPage2";
 
 const App = () => {
   const { userDetails } = useContext(UserContext);

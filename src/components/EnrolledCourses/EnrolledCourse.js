@@ -21,7 +21,7 @@ const getEnrolledCoursesFromLocalStorage = () => {
   }
 };
 
-const EnrolledCourse = ({user}) => {
+const EnrolledCourse = ({ user }) => {
   const [allCourses, setAllCourses] = useState(
     getEnrolledCoursesFromLocalStorage
   );
@@ -53,7 +53,7 @@ const EnrolledCourse = ({user}) => {
     return () => {
       isUnmounted = true;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allCourses]);
 
   if (isLoading) {
@@ -67,7 +67,7 @@ const EnrolledCourse = ({user}) => {
   return (
     <div className="Enrolled-courses">
       <div className="title">
-        <h1>Welcome! {user.first_name}</h1>
+        <h1>Welcome! {user?.first_name}</h1>
         <div className="stats">
           <div
             className={`card ${active === "active" && "active"}`}

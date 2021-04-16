@@ -74,8 +74,8 @@
 	font-weight: 650;
 	padding: 10px;
 	margin-bottom: 0;
-	color: white;
-	background: rgb(0, 157, 255);
+	color: rgba(255, 255, 255, 0.8);
+	background: black;
 }
 
 .lesson_name button {

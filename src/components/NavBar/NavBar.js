@@ -28,7 +28,7 @@ const NavBar = () => {
   const [notifications, setNotifications] = useState(
     getNotificationsFromLocalStorage
   );
-  const { userDetails } = useContext(UserContext);
+  const { userDetails, userProfilePic } = useContext(UserContext);
 
   const location = useLocation();
   const history = useHistory();
@@ -73,7 +73,7 @@ const NavBar = () => {
     //   );
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notifications]);
+  }, []);
 
   return (
     <>
@@ -88,7 +88,8 @@ const NavBar = () => {
               <NotificationsOutlinedIcon />
             </button>
             <h4 id="user-name">{userDetails?.user?.first_name}</h4>
-            <Avatar src={userDetails?.profile_pic} />
+            {/* <Avatar src={userDetails?.profile_pic} /> */}
+            <Avatar src={userProfilePic.profile} />
             <button onClick={showUserBar}>
               {showUser ? (
                 <ExpandLessOutlinedIcon />

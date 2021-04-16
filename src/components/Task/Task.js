@@ -89,7 +89,7 @@ const Task = ({ user }) => {
           {showInput ? <IoCloseOutline /> : <IoAdd />}
         </button>
       </div>
-      {tasks.length === 0 && <p className="no-task">You haven't added any task</p>}
+      {tasks?.length === 0 && <p className="no-task">You haven't added any task</p>}
       <div className="Tasks-main-div">
         {showInput && (
           <div className="add-newtask">

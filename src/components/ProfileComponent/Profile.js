@@ -26,13 +26,12 @@ const Profile = () => {
   const [postData, setPostData] = useState(getProfile);
   const [editLoading, setEditLoading] = useState(false);
   const [img, setImg] = useState({ preview: "", raw: "" });
-  const { userDetails } = useContext(UserContext);
+  const { userDetails, updateUserProfilePic } = useContext(UserContext);
 
   const handleProfileSubmit = async () => {
     setEditLoading(true);
     let formData = new FormData();
     formData.append("profile_pic", profilePic);
-
     try {
       const { data } = await axios.patch(
         `/api/editUserProfilePic/${userDetails?.user?.username}`,
@@ -40,8 +39,10 @@ const Profile = () => {
       );
       getStudentsDetails();
       console.log(data);
+      updateUserProfilePic(data.user_profile_pic);
       setEditLoading(false);
       setImg({ preview: "", raw: "" });
+      setProfilePic(null);
     } catch (err) {
       console.log(err.message);
     }
@@ -66,7 +67,7 @@ const Profile = () => {
       );
       setStudentDetails(data?.student_details);
       setUserInfo(data?.user_info);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err.message);
     }
@@ -130,7 +131,6 @@ const Profile = () => {
 
   const handleEditProfile = async () => {
     setEditLoading(true);
-
     localStorage.setItem("user-profile", JSON.stringify(postData));
     try {
       await axios.put(`/api/editUserDetails/${username}`, postData);
@@ -175,6 +175,7 @@ const Profile = () => {
                   {img?.preview && <img src={img.preview} alt="select" />}
                 </label>
                 <button
+                  disabled={!profilePic ? true : false}
                   className="img-upload-btn"
                   onClick={handleProfileSubmit}
                 >

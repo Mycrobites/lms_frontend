@@ -10,14 +10,18 @@ import {FaHandMiddleFinger} from 'react-icons/fa'
 
 const SingleLessonContent = ({ singleContent, id }) => {
   // console.log(singleContent);
-  const { changeVideoUrl, changeMediaType, changeText } = useContext(
+  const { changeMediaUrl, changeMediaType, changeText } = useContext(
     MediaContext
   );
 
 
   const handleLessonClick = () => {
     if (singleContent?.media_type === "video") {
-      changeVideoUrl(singleContent?.link);
+      changeMediaUrl(singleContent?.link);
+      changeMediaType(singleContent?.media_type, id);
+    } 
+    else if (singleContent?.media_type === "pdf") {
+      changeMediaUrl(singleContent?.pdf_file);
       changeMediaType(singleContent?.media_type, id);
     } 
     else if (singleContent?.media_type === "text") {

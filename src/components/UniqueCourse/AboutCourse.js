@@ -1,6 +1,21 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 
 const AboutCourse = ({ CourseDetails }) => {
+
+  const[lectures , setLectures]= useState(0)
+
+  useEffect(()=>{
+
+    let p=0;
+    CourseDetails?.lessons.forEach(lesson =>{
+       p = p + lesson?.contents?.length
+    })
+
+    setLectures(p)
+
+
+  },[])
+
   return (
     <div className="course-overview">
       <div className="course-about">
@@ -11,7 +26,7 @@ const AboutCourse = ({ CourseDetails }) => {
 
       <div className="course-details">
         <p>Lessons : {CourseDetails?.totallesson}</p>
-        <p>Total Video : 35 hours</p>
+        <p>Total Video : {lectures} lectures</p>
       </div>
 
       {CourseDetails?.concepts !== "" && (

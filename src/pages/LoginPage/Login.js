@@ -18,17 +18,18 @@ const Login = () => {
     password: "",
   });
   const history = useHistory();
-  const { updateUser } = useContext(UserContext);
+  const { updateUser, updateUserProfilePic } = useContext(UserContext);
 
-  const fetchUser =  async () => {
+  const fetchUser = async () => {
     setLoading(true);
     try {
       const { data } = await axios.post("/rest-auth/login/", {
         username: username.trim(),
-        password: password
+        password: password,
       });
       setLoading(false);
       updateUser(data);
+      updateUserProfilePic(data.profile_pic);
       history.push("/dashboard");
     } catch (err) {
       setError({
@@ -67,7 +68,7 @@ const Login = () => {
 
   return (
     <div className="login-page">
-    <div className='login-clip-path'></div>
+      <div className="login-clip-path"></div>
       {loading && (
         <div className="login-loader">
           <Loader />

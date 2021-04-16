@@ -3,14 +3,14 @@ import React, { createContext, useState, useEffect } from "react";
 export const MediaContext = createContext();
 
 const MediaContextProvider = (props) => {
-  const [videoUrl, setVideoUrl] = useState("");
+  const [mediaUrl, setMediaUrl] = useState("");
   const [mediaId, setMediaId] = useState("");
   const [text, setText] = useState("");
 
   const [mediaType, setMediaType] = useState("");
 
-  const changeVideoUrl = (url) => {
-    setVideoUrl(url);
+  const changeMediaUrl = (url) => {
+    setMediaUrl(url);
   };
 
   const changeMediaType = (media, id) => {
@@ -29,9 +29,9 @@ const MediaContextProvider = (props) => {
   return (
     <MediaContext.Provider
       value={{
-        videoUrl,
+        mediaUrl,
         mediaType,
-        changeVideoUrl,
+        changeMediaUrl,
         changeMediaType,
         mediaId,
         changeText,

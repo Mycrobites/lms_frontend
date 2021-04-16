@@ -29,10 +29,21 @@ const checkIsTestSubmitted = () => {
   }
 };
 
+const getUserProfilePic = () => {
+  const pic = localStorage.getItem("user-profile-pic");
+  if (pic) {
+    console.log(pic);
+    return JSON.parse(pic);
+  } else {
+    return null;
+  }
+};
+
 export const UserContextProvider = (props) => {
   const [userDetails, setUserDetails] = useState(getUserDetails);
   const [userCurrentQuiz, setUserCurrentQuiz] = useState(getUserQuiz);
   const [isTestSubmitted, setIsTestSubmitted] = useState(checkIsTestSubmitted);
+  const [userProfilePic, setUserProfilePic] = useState(getUserProfilePic);
 
   const updateUser = (data) => {
     setUserDetails(data);
@@ -43,6 +54,11 @@ export const UserContextProvider = (props) => {
     setUserDetails(null);
     sessionStorage.clear();
     localStorage.clear();
+  };
+
+  const updateUserProfilePic = (pic) => {
+    setUserProfilePic(pic);
+    localStorage.setItem("user-profile-pic", JSON.stringify({ profile: pic }));
   };
 
   const addQuiz = (id, duration, test_time) => {
@@ -76,6 +92,8 @@ export const UserContextProvider = (props) => {
         timeUpdate,
         submitTest,
         isTestSubmitted,
+        userProfilePic,
+        updateUserProfilePic,
       }}
     >
       {props.children}

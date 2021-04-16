@@ -5,7 +5,7 @@ import "./UniqueCourse.css";
 
 const MediaPlayer = () => {
 
-  const{videoUrl}= useContext(MediaContext)
+  const{mediaUrl}= useContext(MediaContext)
   
   return (
     <div className="media-player">
@@ -13,7 +13,7 @@ const MediaPlayer = () => {
         className="react-player"
         controls
         onEnded={() => console.log("video ended")}
-        url={videoUrl}
+        url={mediaUrl}
        
       />
     </div>

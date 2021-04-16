@@ -14,7 +14,7 @@ const getTasksFromLocalStorage = () => {
   }
 };
 
-const Task = ({user}) => {
+const Task = ({ user }) => {
   const [tasks, setTasks] = useState(getTasksFromLocalStorage);
   const [isLoading, setIsLoading] = useState(false);
   const [showInput, setShowInput] = useState(false);
@@ -89,6 +89,7 @@ const Task = ({user}) => {
           {showInput ? <IoCloseOutline /> : <IoAdd />}
         </button>
       </div>
+      {tasks.length === 0 && <p className="no-task">You haven't added any task</p>}
       <div className="Tasks-main-div">
         {showInput && (
           <div className="add-newtask">

@@ -1,4 +1,4 @@
-import { useState, useEffect ,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Loader from "../Loader/Loader";
 import axios from "../../axios/axios";
 import { MdEdit } from "react-icons/md";
@@ -19,97 +19,93 @@ const getProfile = () => {
 const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
-  const [profilePic , setProfilePic] = useState(null)
+  const [profilePic, setProfilePic] = useState(null);
   const [showImageEdit, setShowImageEdit] = useState(false);
   const [studentDetails, setStudentDetails] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [postData, setPostData] = useState(getProfile);
   const [editLoading, setEditLoading] = useState(false);
-  const [img , setImg] = useState({ preview: "", raw: "" })
-  const {userDetails} = useContext(UserContext)
+  const [img, setImg] = useState({ preview: "", raw: "" });
+  const { userDetails } = useContext(UserContext);
 
-  const handleProfileSubmit = async()=>{
-    setEditLoading(true)
-    let formData = new FormData()
-    formData.append("profile_pic" , profilePic)
-  
+  const handleProfileSubmit = async () => {
+    setEditLoading(true);
+    let formData = new FormData();
+    formData.append("profile_pic", profilePic);
 
-    try{
-     const {data}= await axios.patch(`/api/editUserProfilePic/${userDetails?.user?.username}` , formData)
-     getStudentsDetails()
-     console.log(data)
-     setEditLoading(false)
-     setImg({ preview: "", raw: "" })
-     
+    try {
+      const { data } = await axios.patch(
+        `/api/editUserProfilePic/${userDetails?.user?.username}`,
+        formData
+      );
+      getStudentsDetails();
+      console.log(data);
+      setEditLoading(false);
+      setImg({ preview: "", raw: "" });
+    } catch (err) {
+      console.log(err.message);
     }
-    catch(err){
-        console.log(err.message)
-    }
-    setShowImageEdit(false)
-  }
+    setShowImageEdit(false);
+  };
 
- 
-
-  const handleProfilePic  = (e) =>{
-    setProfilePic(e.target.files[0])
+  const handleProfilePic = (e) => {
+    setProfilePic(e.target.files[0]);
     if (e.target.files.length) {
       setImg({
         preview: URL.createObjectURL(e.target.files[0]),
-        raw: e.target.files[0]
+        raw: e.target.files[0],
       });
     }
-  }
+  };
 
   const getStudentsDetails = async () => {
     try {
       if (!postData) setLoading(true);
-      const { data } = await axios.get(`/api/getUserDetails/${userDetails?.user?.username}`);
+      const { data } = await axios.get(
+        `/api/getUserDetails/${userDetails?.user?.username}`
+      );
       setStudentDetails(data?.student_details);
       setUserInfo(data?.user_info);
-      console.log(data)
-     
+      console.log(data);
     } catch (err) {
       console.log(err.message);
     }
     setLoading(false);
-  
   };
 
   useEffect(() => {
     getStudentsDetails();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-  useEffect(()=>{
-
+  useEffect(() => {
     setPostData({
-      "dob": studentDetails?.dob,
-      "Class": studentDetails?.Class,
-      "gender": studentDetails?.gender,
-      "category": studentDetails?.category,
-      "phone_no":studentDetails?.phone_no,
-      "address": studentDetails?.address,
-      "state":studentDetails?.state,
-      "pin_code": studentDetails?.pin_code,
-      "father_name": studentDetails?.father_name,
-      "father_email": studentDetails?.father_email,
-      "father_phone": studentDetails?.father_phone,
-      "father_profession": "NA",
-      "mother_name": studentDetails?.mother_name,
-      "mother_email": studentDetails?.mother_email,
-      "mother_phone": studentDetails?.mother_phone,
-      "mother_profession": "NA",
-      "school_name": studentDetails?.school_name,
-      "school_address": studentDetails?.school_address,
-      "school_state": "NA",
-      "school_pin_code": "NA",
-      "user":studentDetails?.user
-  })
-  localStorage.setItem("user-profile" , JSON.stringify(postData))
+      dob: studentDetails?.dob,
+      Class: studentDetails?.Class,
+      gender: studentDetails?.gender,
+      category: studentDetails?.category,
+      phone_no: studentDetails?.phone_no,
+      address: studentDetails?.address,
+      state: studentDetails?.state,
+      pin_code: studentDetails?.pin_code,
+      father_name: studentDetails?.father_name,
+      father_email: studentDetails?.father_email,
+      father_phone: studentDetails?.father_phone,
+      father_profession: "NA",
+      mother_name: studentDetails?.mother_name,
+      mother_email: studentDetails?.mother_email,
+      mother_phone: studentDetails?.mother_phone,
+      mother_profession: "NA",
+      school_name: studentDetails?.school_name,
+      school_address: studentDetails?.school_address,
+      school_state: "NA",
+      school_pin_code: "NA",
+      user: studentDetails?.user,
+    });
+    localStorage.setItem("user-profile", JSON.stringify(postData));
 
-// eslint-disable-next-line react-hooks/exhaustive-deps
-},[userInfo,studentDetails])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfo, studentDetails]);
 
   const {
     Class,
@@ -138,11 +134,11 @@ const Profile = () => {
     localStorage.setItem("user-profile", JSON.stringify(postData));
     try {
       await axios.put(`/api/editUserDetails/${username}`, postData);
-      console.log(postData)
+      console.log(postData);
     } catch (err) {
       console.log(err.message);
     }
-    getStudentsDetails()
+    getStudentsDetails();
     setEditLoading(false);
     setShowEdit(!showEdit);
   };
@@ -156,22 +152,36 @@ const Profile = () => {
       ) : (
         <div className="profile-card">
           <div className="profile-image">
-          <div className="profile-img">
-          <img src={profile_pic} alt="" />
-          <button className='edit-img-btn' onClick={e => setShowImageEdit(!showImageEdit)}><HiOutlineCamera/></button>
-          </div>
-            
-           
-            { 
-            showImageEdit &&  <div className="edit-image">
-            <label className='label-profile-img'>
-            <input type="file" name="profile pic" accept="image/*" onChange={handleProfilePic }  />
-            <RiImageAddLine/>
-            {img?.preview && <img src={img.preview} alt="select" /> }
-            </label>
-            <button className='img-upload-btn' onClick={handleProfileSubmit} >Upload</button>
+            <div className="profile-img">
+              <img src={profile_pic} alt="" />
+              <button
+                className="edit-img-btn"
+                onClick={(e) => setShowImageEdit(!showImageEdit)}
+              >
+                <HiOutlineCamera />
+              </button>
             </div>
-          }
+
+            {showImageEdit && (
+              <div className="edit-image">
+                <label className="label-profile-img">
+                  <input
+                    type="file"
+                    name="profile pic"
+                    accept="image/*"
+                    onChange={handleProfilePic}
+                  />
+                  <RiImageAddLine />
+                  {img?.preview && <img src={img.preview} alt="select" />}
+                </label>
+                <button
+                  className="img-upload-btn"
+                  onClick={handleProfileSubmit}
+                >
+                  Upload
+                </button>
+              </div>
+            )}
 
             <h6>{username}</h6>
             <p>Std {Class}</p>
@@ -181,7 +191,7 @@ const Profile = () => {
               <h1>
                 {first_name} {last_name}
               </h1>
-              <p>Std  {Class}</p>
+              <p>Std {Class}</p>
               {!showEdit && (
                 <button
                   onClick={(e) => setShowEdit(true)}

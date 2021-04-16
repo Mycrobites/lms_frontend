@@ -261,3 +261,8 @@ button[type="submit"] {
   place-items: center;
   z-index: 999;
 }
+
+.no-task {
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+}

@@ -2,46 +2,39 @@ import { Avatar } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 const SingleCourse = (props) => {
+  const {
+    course_image,
+    course_name,
+    author_picture,
+    author,
+    percentage_completed,
+    // total_lesson,
+    course,
+  } = props;
   const history = useHistory();
 
   return (
     <div className="single-course-card">
       <div className="single-course-image">
-        <img src={props.course_image} alt={props.course_name} />
+        <img src={course_image} alt={course_name} />
       </div>
-      <h2 className="single-course-title">{props.course_name}</h2>
+      <h2 className="single-course-title">{course_name}</h2>
       <div className="single-course-author">
-        <Avatar src={props.author_picture} />
-        <h2>{props.author}</h2>
+        <Avatar src={author_picture} />
+        <h2>{author}</h2>
       </div>
-      <progress value={props.percentage_completed} max="100">
-        {props.percentage_completed}%
+      <progress value={percentage_completed} max="100">
+        {percentage_completed}%
       </progress>
-      {!props.percentage_completed ? (
-        <div>
-          <div className="lessons">
-            <div className="content">Lessons: {props.total_lesson}</div>
-            <button
-              className="enrollment-course-btn"
-              onClick={() => history.push(`/course/${props.course}`)}
-            >
-              Start
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="lessons">
-          <div className="content">
-            Completed: {props.percentage_completed}%
-          </div>
-          <button
-            className="enrollment-course-btn"
-            onClick={() => history.push(`/course/${props.course}`)}
-          >
-            Resume
-          </button>
-        </div>
-      )}
+      <div className="lessons">
+        <div className="content">Completed: {percentage_completed}%</div>
+        <button
+          className="enrollment-course-btn"
+          onClick={() => history.push(`/course/${course}`)}
+        >
+          Resume
+        </button>
+      </div>
     </div>
   );
 };

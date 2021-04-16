@@ -24,6 +24,7 @@ const CommentReplies = ({ id, uid }) => {
       const { data } = await axios.post("/api/forum/createComments", reply);
       // console.log(data);
       setReplies([...replies, data.comment]);
+      setReplyText("");
       setShowReplyInput(false);
     } catch (err) {
       console.log(err);

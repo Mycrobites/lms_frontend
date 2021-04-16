@@ -66,7 +66,7 @@ const SinglePost = (props) => {
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedDesc, setEditedDesc] = useState(desc);
   const [editedTags, setEditedTags] = useState(
-    tags.map((t) => t.tag).toString()
+    tags?.map((t) => t.tag).toString()
   );
   const [error, setError] = useState(false);
   const editDeleteRef = useRef(null);
@@ -119,7 +119,8 @@ const SinglePost = (props) => {
     }
   };
 
-  const editPost = async () => {
+  const editPost = async (e) => {
+    e.preventDefault();
     if (!editedTitle || !editedDesc) return setError(true);
     try {
       const { data } = await axios.put(`/api/forum/editPost/${id}`, {
@@ -202,76 +203,63 @@ const SinglePost = (props) => {
         ) : (
           <div>
             <div className="post-post">
-              <label>
-                <p>Title</p>
-                <input
-                  type="text"
-                  placeholder="title..."
-                  value={editedTitle}
-                  onChange={(e) => setEditedTitle(e.target.value)}
-                />
-              </label>
-              <label>
-                <p>Description</p>
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={editedDesc}
-                  config={{
-                    ckfinder: {
-                      uploadUrl:
-                        "http://lms-seg.herokuapp.com/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
-                      options: {
-                        resourceType: "Images",
+              <form>
+                <label>
+                  <p>Title</p>
+                  <input
+                    type="text"
+                    placeholder="title..."
+                    value={editedTitle}
+                    onChange={(e) => setEditedTitle(e.target.value)}
+                  />
+                </label>
+                <label>
+                  <p>Description</p>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={editedDesc}
+                    config={{
+                      ckfinder: {
+                        uploadUrl:
+                          "http://lms-seg.herokuapp.com/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
+                        options: {
+                          resourceType: "Images",
+                        },
+                        credentials: "include",
+                        headers: {
+                          "X-CSRF-TOKEN": csrftoken,
+                          csrftoken: csrftoken,
+                          csrfmiddlewaretoken: csrftoken,
+                        },
                       },
-                      credentials: "include",
-                      headers: {
-                        "X-CSRF-TOKEN": csrftoken,
-                        csrftoken: csrftoken,
-                        csrfmiddlewaretoken: csrftoken,
-                      },
-                    },
-                  }}
-                  // onReady={(editor) => {
-                  //   console.log("Editor is ready to use!", editor);
-                  // }}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setEditedDesc(data);
-                  }}
-                  // onBlur={(event, editor) => {
-                  //   console.log("Blur.", editor);
-                  // }}
-                  // onFocus={(event, editor) => {
-                  //   console.log("Focus.", editor);
-                  // }}
-                />
-              </label>
-              <label>
-                <p>Tags (Enter tags as a comma separated string)</p>
-                <textarea
-                  placeholder="tags..."
-                  value={editedTags}
-                  onChange={(e) => setEditedTags(e.target.value)}
-                />
-              </label>
-              <label>
-                <p>Tags (Enter tags as a comma separated string)</p>
-                <textarea
-                  placeholder="tags..."
-                  value={editedTags}
-                  onChange={(e) => setEditedTags(e.target.value)}
-                />
-              </label>
-              {error && (
-                <p className="post-upload-question">
-                  <AiOutlineWarning />
-                  Please fill all the fields!
-                </p>
-              )}
-              <div className="isedit-buttons">
-                <button onClick={() => setIsEditingPost(false)}>Cancel</button>
-                <button onClick={editPost}>Done</button>
-              </div>
+                    }}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setEditedDesc(data);
+                    }}
+                  />
+                </label>
+                <label>
+                  <p>Tags (Enter tags as a comma separated string)</p>
+                  <textarea
+                    placeholder="tags..."
+                    value={editedTags}
+                    onChange={(e) => setEditedTags(e.target.value)}
+                  />
+                </label>
+                {error && (
+                  <p className="post-upload-question">
+                    <AiOutlineWarning />
+                    Please fill all the fields!
+                  </p>
+                )}
+                <div className="isedit-buttons">
+                  <button onClick={() => setIsEditingPost(false)}>
+                    Cancel
+                  </button>
+                  <button onClick={editPost}>Done</button>
+                </div>
+              </form>
             </div>
           </div>
         )}

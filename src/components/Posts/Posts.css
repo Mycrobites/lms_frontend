@@ -74,7 +74,7 @@
   margin-right: 5px;
 }
 
-.isedit-buttons {
+.post-post .isedit-buttons {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -89,6 +89,10 @@
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3) !important;
   border-radius: 2px !important;
+}
+
+.post-post textarea {
+  margin-bottom: 0;
 }
 
 /* BUTTON STYLES */

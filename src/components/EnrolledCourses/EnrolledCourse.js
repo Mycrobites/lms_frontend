@@ -67,7 +67,7 @@ const EnrolledCourse = ({user}) => {
   return (
     <div className="Enrolled-courses">
       <div className="title">
-        <h1>Welcome! Rajat</h1>
+        <h1>Welcome! {user.first_name}</h1>
         <div className="stats">
           <div
             className={`card ${active === "active" && "active"}`}

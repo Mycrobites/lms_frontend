@@ -14,7 +14,7 @@ import './Assignment.css'
 
 
 const getResponses = () => {
-    const responses = sessionStorage.getItem("quiz-responses");
+    const responses = sessionStorage.getItem("assignment-responses");
     if (responses) {
       return JSON.parse(responses);
     } else {
@@ -29,6 +29,7 @@ const Assignment = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [showSubmit, setShowSubmit] = useState(false);
     const [responses, setResponses] = useState(getResponses);
+    
     const {
         userDetails,
         submitTest
@@ -72,7 +73,7 @@ const Assignment = () => {
           } else return ques;
         });
         setResponses(newResponses);
-        sessionStorage.setItem("quiz-responses", JSON.stringify(newResponses));
+        sessionStorage.setItem("assignment-responses", JSON.stringify(newResponses));
       };
 
       const handleFlagQuestion = () => {
@@ -81,7 +82,7 @@ const Assignment = () => {
           else return ques;
         });
         setResponses(newResponses);
-        sessionStorage.setItem("quiz-responses", JSON.stringify(newResponses));
+        sessionStorage.setItem("assignment-responses", JSON.stringify(newResponses));
       };
 
       const testSubmit = async () => {
@@ -121,6 +122,9 @@ const Assignment = () => {
         if (!mountedRef.current) return null;
         console.log(data)
         setQuiz(data?.quiz_questions);
+       
+        
+        //timerUpdate();
         if (responses === null) {
           setResponses(
             data?.quiz_questions.map((quiz) => ({
@@ -131,7 +135,7 @@ const Assignment = () => {
           );
         }
         setIsLoading(false);
-        sessionStorage.setItem("quiz-responses", JSON.stringify(responses));
+        sessionStorage.setItem("assignment-responses", JSON.stringify(responses));
       } catch (err) {
         console.log(err.message);
         history.push("/404");
@@ -143,6 +147,7 @@ const Assignment = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
 
 //   useEffect(() => {
@@ -295,6 +300,7 @@ const Assignment = () => {
                 </div>
               )}
               <div className="quiz-status">
+       
                 <div className="quiz-navigation-stats">
                   {btnarray.map((button, idx) => {
                     return (

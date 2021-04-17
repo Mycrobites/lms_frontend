@@ -10,7 +10,7 @@ import {FaHandMiddleFinger} from 'react-icons/fa'
 
 const SingleLessonContent = ({ singleContent, id }) => {
   // console.log(singleContent);
-  const { changeMediaUrl, changeMediaType, changeText } = useContext(
+  const {changeMediaContent, changeMediaUrl, changeMediaType, changeText } = useContext(
     MediaContext
   );
 
@@ -19,6 +19,7 @@ const SingleLessonContent = ({ singleContent, id }) => {
     if (singleContent?.media_type === "video") {
       changeMediaUrl(singleContent?.link);
       changeMediaType(singleContent?.media_type, id);
+      changeMediaContent(singleContent?.video_name, singleContent?.description)
     } 
     else if (singleContent?.media_type === "pdf") {
       changeMediaUrl(singleContent?.pdf_file);
@@ -30,9 +31,11 @@ const SingleLessonContent = ({ singleContent, id }) => {
     }
     else if (singleContent?.media_type === "quiz"){
       changeMediaType(singleContent?.media_type, singleContent?.quiz_id);
+      changeMediaContent(singleContent?.quiz_name, singleContent?.description)
     }
     else if (singleContent?.media_type === "assignment"){
       changeMediaType(singleContent?.media_type, singleContent?.assignment_id);
+      changeMediaContent(singleContent?.assignment_name, singleContent?.description)
     }
     else{
       changeMediaType(singleContent?.media_type, id);

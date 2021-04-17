@@ -80,7 +80,7 @@ const UniqueCourse = () => {
             <CourseContent lessons={CourseDetails?.lessons} />
           </div>
 
-          <div className="all-course-content">{toggleComponent()}</div>
+          {toggleComponent()}
 
           <div className="unresponsive">
             <AboutCourse CourseDetails={CourseDetails} />

@@ -74,8 +74,8 @@
 	font-weight: 650;
 	padding: 10px;
 	margin-bottom: 0;
-	color: rgba(255, 255, 255, 0.8);
-	background: black;
+	color: black;
+	background: rgb(0, 0, 0, 0.1);
 }
 
 .lesson_name button {
@@ -183,17 +183,7 @@
 	height: 350px;
 	object-fit: contain;
 }
-.all-course-content {
-	width: 100%;
-	min-height: 350px;
-	height: object-fit;
-	background: black;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: white;
-	position: relative;
-}
+
 .lesson-pdf-document {
 	width: 100%;
 }
@@ -217,19 +207,32 @@ iframe {
 .lesson-text,
 .lesson-homework,
 .lesson-assignment,
-.course-quiz {
+.course-quiz,
+.lesson-pdf-document {
 	width: 100%;
-	max-width: 700px;
-	height: 40vh;
+	height: object-fit;
+	min-height: 30vh;
 	background-color: white;
 	color: black;
 	padding: 20px;
-	overflow: scroll;
+}
+.lesson-text {
+	font-weight: 500;
+	display: grid;
+	place-items: center;
+}
+
+.lesson-text-div {
+	width: 100%;
+	height: 100%;
+	max-width: 400px;
+	padding: 10px;
 }
 
 .lesson-homework,
 .lesson-assignment,
-.course-quiz {
+.course-quiz,
+.lesson-pdf-document {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
@@ -255,6 +258,45 @@ iframe {
 	border: 1px solid black;
 	background-color: white;
 	color: black;
+}
+.homework-content {
+	width: 100%;
+	height: object-fit;
+	min-height: 30vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+.lesson-pdf-document {
+	display: grid;
+	place-items: center;
+}
+
+.pdf-wrapper {
+	width: 100%;
+	max-width: 400px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	text-align: center;
+}
+
+.lesson-pdf-document a {
+	color: white;
+	background: rgb(0, 157, 255);
+	width: 75px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	text-decoration: none;
+}
+.lesson-pdf-document a:hover {
+	color: black;
+	background: white;
+	border: 1px solid black;
 }
 
 @media only screen and (max-width: 900px) {

@@ -1,5 +1,7 @@
 import { Avatar } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { useHistory  } from "react-router-dom";
+import { MediaContext } from "../../context/MediaContext";
+import {useContext} from 'react'
 
 const SingleCourse = (props) => {
   const {
@@ -12,6 +14,12 @@ const SingleCourse = (props) => {
     course,
   } = props;
   const history = useHistory();
+  const{changeCurrentCourse} = useContext(MediaContext)
+
+  const handleClick= ()=>{
+    changeCurrentCourse(course)
+    history.push(`/course/${course}`)
+  }
 
   return (
     <div className="single-course-card">
@@ -30,7 +38,7 @@ const SingleCourse = (props) => {
         <div className="content">Completed: {percentage_completed}%</div>
         <button
           className="enrollment-course-btn"
-          onClick={() => history.push(`/course/${course}`)}
+          onClick={handleClick}
         >
           Resume
         </button>

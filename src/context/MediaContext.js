@@ -6,8 +6,15 @@ const MediaContextProvider = (props) => {
   const [mediaUrl, setMediaUrl] = useState("");
   const [mediaId, setMediaId] = useState("");
   const [text, setText] = useState("");
+  const [mediaName , setMediaName] = useState("");
+  const [mediaDescription, setMediaDescription] = useState("");
+  const [currentCourseId , setCurrentCourseId]= useState(null)
 
   const [mediaType, setMediaType] = useState("");
+
+  const changeCurrentCourse = (id)=>{
+    setCurrentCourseId(id)
+  }
 
   const changeMediaUrl = (url) => {
     setMediaUrl(url);
@@ -17,6 +24,11 @@ const MediaContextProvider = (props) => {
     setMediaType(media);
     setMediaId(id);
   };
+
+  const changeMediaContent = (name , des)=>{
+    setMediaName(name)
+    setMediaDescription(des)
+  }
 
   const changeText = (text) => {
     setText(text);
@@ -35,6 +47,11 @@ const MediaContextProvider = (props) => {
         changeMediaType,
         mediaId,
         changeText,
+        changeMediaContent,
+        mediaName,
+        mediaDescription,
+        currentCourseId,
+        changeCurrentCourse,
         text,
       }}
     >

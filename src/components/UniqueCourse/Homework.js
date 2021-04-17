@@ -51,18 +51,27 @@ const Homework = ({id}) => {
 
 
     return (
-        <>
-        {loading ? <Loader/> : 
-            <div className='lesson-homework'>
-            {homework?.text_content}
+       
         
-        <input type='file' name='file' onChange={handleFileChange} />
-        <button onClick={handleHomeworkUpload}>Upload</button>
+            <div className='lesson-homework'>
+
+            {loading ? <Loader/> :
+
+            <div className="homework-content">
+            
+            <h4>{homework?.text_content}</h4>
+        
+            <input type='file' name='file' onChange={handleFileChange} />
+            <button onClick={handleHomeworkUpload}>Upload</button>
+            
+            </div>
+            }
+            
         
                     
-            </div>}
+            </div>
        
-        </>
+       
     )
 }
 

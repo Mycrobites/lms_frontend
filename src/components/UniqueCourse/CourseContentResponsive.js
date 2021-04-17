@@ -8,8 +8,8 @@ const CourseContentResponsive = ({ lessons }) => {
       <div className="course-content-header">
         <h4>Course content</h4>
       </div>
-      {lessons?.map((lesson) => (
-        <SingleCourseContent key={lesson?.lesson_id} lesson={lesson} />
+      {lessons?.map((lesson,idx) => (
+        <SingleCourseContent key={lesson?.lesson_id} id={idx} lesson={lesson} />
       ))}
     </div>
   );

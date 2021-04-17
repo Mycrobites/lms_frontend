@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext , useState ,useRef } from "react";
 import { MediaContext } from "../../context/MediaContext";
 import "./UniqueCourse.css";
 import {VscFilePdf} from 'react-icons/vsc'
@@ -7,15 +7,23 @@ import {BiTask} from 'react-icons/bi'
 import {MdAssignment} from 'react-icons/md'
 import {IoIosPlayCircle} from 'react-icons/io'
 import {FaHandMiddleFinger} from 'react-icons/fa'
+import {MdCheckBoxOutlineBlank} from 'react-icons/md'
+import {MdCheckBox} from 'react-icons/md'
 
-const SingleLessonContent = ({ singleContent, id }) => {
+const SingleLessonContent = ({ singleContent, id ,index }) => {
   // console.log(singleContent);
   const {changeMediaContent, changeMediaUrl, changeMediaType, changeText } = useContext(
     MediaContext
   );
 
+  const[completed ,setCompleted] = useState(false)
+
+  const clickRef = useRef(null)
 
   const handleLessonClick = () => {
+
+    clickRef.current.id="clicked-content"
+
     if (singleContent?.media_type === "video") {
       changeMediaUrl(singleContent?.link);
       changeMediaType(singleContent?.media_type, id);
@@ -63,13 +71,12 @@ const SingleLessonContent = ({ singleContent, id }) => {
   }
 
   return (
-    <div onClick={handleLessonClick} className="single-lesson-content">
+    <div onClick={handleLessonClick} ref={clickRef} className="single-lesson-content">
       <div className="lesson-left">
         <div className="label">
-          <input type="checkbox" />
+          <button className='lesson-custom-checkbox' onClick={()=> setCompleted(!completed)}>{completed ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }</button>
           <div>
             {singleContent?.media_type}
-            {singleContent?.descripion}
           </div>
         </div>
       </div>

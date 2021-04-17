@@ -26,6 +26,10 @@
 	background: white;
 	font-size: 0.8em;
 }
+#clicked-content {
+	color: rgb(0, 157, 255);
+	background: #f7f7f7;
+}
 
 .course-content::-webkit-scrollbar {
 	width: 5px;
@@ -46,6 +50,22 @@
 	padding: 15px 10px;
 	border: 1px solid rgb(255, 255, 255);
 	border-radius: 5px;
+}
+.lesson-custom-checkbox {
+	border: none;
+	outline: none;
+	display: grid;
+	place-items: center;
+	color: inherit;
+	background: inherit;
+	width: 20px;
+	height: 20px;
+	font-size: 1.5em;
+	margin-right: 5px;
+}
+.lesson-custom-checkbox:focus {
+	border: none;
+	outline: none;
 }
 
 .lesson_name h5 {

@@ -9,11 +9,15 @@ const MediaContextProvider = (props) => {
   const [mediaName , setMediaName] = useState("");
   const [mediaDescription, setMediaDescription] = useState("");
   const [currentCourseId , setCurrentCourseId]= useState(null)
-
+  const [lessonIndex , setLessonIndex] = useState(0)
   const [mediaType, setMediaType] = useState("");
 
   const changeCurrentCourse = (id)=>{
     setCurrentCourseId(id)
+  }
+
+  const updateLessonIndex=(index)=>{
+    setLessonIndex(index)
   }
 
   const changeMediaUrl = (url) => {
@@ -36,7 +40,10 @@ const MediaContextProvider = (props) => {
 
   useEffect(() => {
     console.log(mediaType);
-  }, [mediaType]);
+    console.log(mediaDescription);
+    console.log(mediaName);
+    console.log(lessonIndex)
+  }, [mediaType ,mediaName, mediaDescription,lessonIndex]);
 
   return (
     <MediaContext.Provider
@@ -48,6 +55,8 @@ const MediaContextProvider = (props) => {
         mediaId,
         changeText,
         changeMediaContent,
+        updateLessonIndex,
+        lessonIndex,
         mediaName,
         mediaDescription,
         currentCourseId,

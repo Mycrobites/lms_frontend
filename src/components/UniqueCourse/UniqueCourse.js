@@ -8,6 +8,7 @@ import Assignment from "./Assignment";
 import CourseContent from "./CourseContent";
 import CourseContentResponsive from "./CourseContentResponsive";
 import DefaultLesson from "./DefaultLesson";
+import Description from "./Description";
 import Homework from "./Homework";
 import MediaPlayer from "./MediaPlayer";
 import PdfDocument from "./PdfDocument";
@@ -21,7 +22,7 @@ const UniqueCourse = () => {
   const [CourseDetails, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [overView ,setOverview] = useState("course_content")
-  const {mediaType , mediaId , text} = useContext(MediaContext)
+  const {mediaType , mediaDescription , mediaId , text , lessonIndex} = useContext(MediaContext)
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -46,6 +47,8 @@ const UniqueCourse = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [CourseDetails]);
+
+
 
   const toggleComponent = ()=>{
      
@@ -83,21 +86,25 @@ const UniqueCourse = () => {
           {toggleComponent()}
 
           <div className="unresponsive">
-            <AboutCourse CourseDetails={CourseDetails} />
+          {lessonIndex===0 && <AboutCourse CourseDetails={CourseDetails} />}
+          {mediaType && mediaDescription ? <Description description={mediaDescription}/> : <></> }
+          
+            
           </div>
           <div className="responsive-overview">
             <div className="overview-headers">
-              <button onClick={() => setOverview("about")}>About</button>
+            
               <button onClick={() => setOverview("course_content")}>
                 Course
               </button>
+              {mediaDescription && <button onClick={() => setOverview("description")}>Description</button> }
             </div>
 
             <div className="overview-body">
               {overView === "course_content" ? (
                 <CourseContentResponsive lessons={CourseDetails?.lessons} />
               ) : (
-                <AboutCourse CourseDetails={CourseDetails} />
+                mediaDescription ? <Description description={mediaDescription} /> : <></>
               )}
             </div>
           </div>

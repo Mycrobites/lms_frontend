@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useContext } from "react";
 import axios from "../../axios/axios";
 import { Avatar } from "@material-ui/core";
 import { IoWarningOutline } from "react-icons/io5";
+import UserContext from "../../context/authContext";
 // import { CKEditor } from "@ckeditor/ckeditor5-react";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const PostComment = ({ setShowPostComment, postid, uid }) => {
   const [comment, setComment] = useState("");
   const [isError, setIsError] = useState(false);
+  const{userDetails}= useContext(UserContext)
 
   const postComment = async () => {
     try {
@@ -17,9 +19,12 @@ const PostComment = ({ setShowPostComment, postid, uid }) => {
           userid: uid,
           postid: postid,
         };
+        const config = {
+          headers: { Authorization: `Bearer ${userDetails.key}` },
+        };
         const { data } = await axios.post(
           "/api/forum/createComments",
-          newComment
+          newComment,config
         );
         console.log(data);
         setShowPostComment(false);

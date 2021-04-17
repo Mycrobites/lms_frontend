@@ -49,7 +49,10 @@ const Posts = () => {
         userid: userDetails.user.pk,
         tags,
       };
-      await axios.post("/api/forum/createPosts", newPost);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.post("/api/forum/createPosts", newPost ,config);
       setTitle("");
       setDesc("");
       setTags("");
@@ -62,8 +65,11 @@ const Posts = () => {
 
   const fetchPosts = async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
       const { data } = await axios.get(
-        `/api/forum/getPosts?pageno=${currentPage}`
+        `/api/forum/getPosts?pageno=${currentPage}`,config
       );
       setPosts(data.response);
       setTotalPages(data.no_of_pages);

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../axios/axios";
+import UserContext from "../../context/authContext";
 import { MediaContext } from "../../context/MediaContext";
 import Loader from "../Loader/Loader";
 import AboutCourse from "./AboutCourse";
@@ -22,13 +23,17 @@ const UniqueCourse = () => {
   const [CourseDetails, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [overView ,setOverview] = useState("course_content")
+  const {userDetails} = useContext(UserContext)
   const {mediaType , mediaDescription , mediaId , text , lessonIndex} = useContext(MediaContext)
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
       if (CourseDetails == null) setIsLoading(true);
       try {
-        const { data } = await axios.get(`/api/course/${id}`);
+        const config = {
+          headers: { Authorization: `Bearer ${userDetails.key}` },
+        };
+        const { data } = await axios.get(`/api/course/${id}`,config);
         if (mountedRef.current) {
           console.log(data)
           setCourse(data.course_details);

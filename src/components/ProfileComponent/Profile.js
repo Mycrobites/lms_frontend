@@ -33,9 +33,12 @@ const Profile = () => {
     let formData = new FormData();
     formData.append("profile_pic", profilePic);
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
       const { data } = await axios.patch(
         `/api/editUserProfilePic/${userDetails?.user?.username}`,
-        formData
+        formData , config
       );
       getStudentsDetails();
       console.log(data);
@@ -62,8 +65,11 @@ const Profile = () => {
   const getStudentsDetails = async () => {
     try {
       if (!postData) setLoading(true);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
       const { data } = await axios.get(
-        `/api/getUserDetails/${userDetails?.user?.username}`
+        `/api/getUserDetails/${userDetails?.user?.username}`,config
       );
       setStudentDetails(data?.student_details);
       setUserInfo(data?.user_info);
@@ -133,7 +139,10 @@ const Profile = () => {
     setEditLoading(true);
     localStorage.setItem("user-profile", JSON.stringify(postData));
     try {
-      await axios.put(`/api/editUserDetails/${username}`, postData);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.put(`/api/editUserDetails/${username}`, postData ,config);
       console.log(postData);
     } catch (err) {
       console.log(err.message);

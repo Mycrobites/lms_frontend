@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef ,useContext} from "react";
 import axios from "../../axios/axios";
 import months from "../../assets/months/months";
 import { IoCloseOutline } from "react-icons/io5";
 import { MdCheckCircle, MdRadioButtonUnchecked } from "react-icons/md";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import UserContext from "../../context/authContext";
 
 const SingleTasks = (props) => {
   const { id, title, dueDate, isComplete, tasks, setTasks ,user} = props;
@@ -13,6 +14,7 @@ const SingleTasks = (props) => {
   const [editTitle, setEditTitle] = useState(title);
   const [editDate, setEditDate] = useState(dueDate);
   const inputRef = useRef(null);
+  const{userDetails}= useContext(UserContext)
 
   const updateTask = async () => {
     setShowEdit(!showEdit);
@@ -30,7 +32,10 @@ const SingleTasks = (props) => {
       });
       setTasks(updatedTasks);
       localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-      await axios.put(`/api/todo/edit/${id}`, editedTask);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.put(`/api/todo/edit/${id}`, editedTask,config);
     } catch (err) {
       console.log(err.message);
     }
@@ -41,7 +46,10 @@ const SingleTasks = (props) => {
       const deletedTasks = tasks.filter((task) => task.id !== id);
       localStorage.setItem("tasks", JSON.stringify(deletedTasks));
       setTasks(deletedTasks);
-      await axios.delete(`/api/todo/edit/${id}`);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.delete(`/api/todo/edit/${id}`,config);
     } catch (err) {
       console.log(err.message);
     }
@@ -62,7 +70,10 @@ const SingleTasks = (props) => {
     });
     localStorage.setItem("tasks", JSON.stringify(completedTasks));
     try {
-      await axios.put(`/api/todo/edit/${id}`, completedTask);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.put(`/api/todo/edit/${id}`, completedTask,config);
     } catch (err) {
       console.log(err.message);
     }

@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useContext } from "react";
 import SingleCourse from "./SingleCourse";
 import Loader from "../../components/Loader/Loader";
 import axios from "../../axios/axios";
 import Carousel from "react-elastic-carousel";
 import "./EnrolledCourse.css";
+import UserContext from "../../context/authContext";
 
 const breakPoints = [
   { width: 1, itemsToShow: 1 },
@@ -31,13 +32,17 @@ const EnrolledCourse = ({ user }) => {
   );
   const [isLoading, setIsLoading] = useState(false);
   const [active, setActive] = useState("active");
+  const{userDetails} = useContext(UserContext)
 
   useEffect(() => {
     let isUnmounted = false;
     const getCourses = async () => {
       try {
         if (!allCourses) setIsLoading(true);
-        const { data } = await axios.get(`/api/getMyCourses/${user?.username}`);
+        const config = {
+          headers: { Authorization: `Bearer ${userDetails.key}` },
+        };
+        const { data } = await axios.get(`/api/getMyCourses/${user?.username}`,config);
         if (!isUnmounted) {
           setAllCourses(data);
           setActiveCourses(data.active);

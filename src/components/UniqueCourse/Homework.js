@@ -12,7 +12,10 @@ const Homework = ({id}) => {
 
     const fetchHomework = async()=>{
         try{
-        const {data} = await axios.get(`/api/getHomework/${id}`)
+            const config = {
+                headers: { Authorization: `Bearer ${userDetails.key}` },
+              };
+        const {data} = await axios.get(`/api/getHomework/${id}`,config)
         setHomework(data)
         setLoading(false)
         console.log(data)
@@ -35,7 +38,10 @@ const Homework = ({id}) => {
         formData.append("lessons_content" , homework?.id)
 
         try{
-         const {data}= await axios.post(`/api/doHomework/${userDetails?.user?.username}` , formData)
+            const config = {
+                headers: { Authorization: `Bearer ${userDetails.key}` },
+              };
+         const {data}= await axios.post(`/api/doHomework/${userDetails?.user?.username}` , formData , config)
          console.log(data)
         }
         catch(err){

@@ -2,18 +2,30 @@ import React, { createContext, useState, useEffect } from "react";
 
 export const MediaContext = createContext();
 
+const getCurrentCourse = ()=>{
+  const data = localStorage.getItem("current-course")
+
+  if(data === null){
+    return
+  }
+  else{
+    return JSON.parse(data)
+  }
+}
+
 const MediaContextProvider = (props) => {
   const [mediaUrl, setMediaUrl] = useState("");
   const [mediaId, setMediaId] = useState("");
   const [text, setText] = useState("");
   const [mediaName , setMediaName] = useState("");
   const [mediaDescription, setMediaDescription] = useState("");
-  const [currentCourseId , setCurrentCourseId]= useState(null)
+  const [currentCourseId , setCurrentCourseId]= useState(getCurrentCourse)
   const [lessonIndex , setLessonIndex] = useState(0)
   const [mediaType, setMediaType] = useState("");
 
   const changeCurrentCourse = (id)=>{
     setCurrentCourseId(id)
+    localStorage.setItem("current-course" , JSON.stringify(currentCourseId))
   }
 
   const updateLessonIndex=(index)=>{

@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import UserContext from "../../context/authContext";
 import ReportModal from "./ReportModal";
 import CommentReplies from "./CommentReplies";
 import axios from "../../axios/axios";
@@ -36,15 +37,22 @@ const Comment = (props) => {
   const [totalReplies, setTotalReplies] = useState(totalreplies);
   const editDeleteRef = useRef(null);
   const now = new Date(time);
+  const { userDetails } = useContext(UserContext);
   const csrftoken = getCookie("csrftoken");
 
   const reportComment = async () => {
     try {
-      const response = await axios.post("/api/forum/reportComment", {
-        user: uid,
-        comment: id,
-      });
-      // console.log(response.data);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      const response = await axios.post(
+        "/api/forum/reportComment",
+        {
+          user: uid,
+          comment: id,
+        },
+        config
+      );
       if (response.status === 200) {
         setShowReportModal(true);
         if (response.data.message) {
@@ -60,7 +68,13 @@ const Comment = (props) => {
 
   const upvoteComment = async () => {
     try {
-      const { data } = await axios.patch(`/api/forum/upvote/${id}/rajat`);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      const { data } = await axios.patch(
+        `/api/forum/upvote/${id}/${userDetails?.user?.username}`,
+        config
+      );
       if (data.upvote.length === 1) {
         setComments(
           comments.map((reply) => {
@@ -85,7 +99,10 @@ const Comment = (props) => {
 
   const deleteComment = async () => {
     try {
-      await axios.delete(`/api/forum/editComment/${id}`);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.delete(`/api/forum/editComment/${id}`, config);
       setComments(comments.filter((comment) => comment.id !== id));
     } catch (err) {
       console.log(err.message);
@@ -94,11 +111,18 @@ const Comment = (props) => {
 
   const editComment = async () => {
     try {
-      const { data } = await axios.put(`/api/forum/editComment/${id}`, {
-        text: editedComment,
-        userid: uid,
-        postid: null,
-      });
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      const { data } = await axios.put(
+        `/api/forum/editComment/${id}`,
+        {
+          text: editedComment,
+          userid: uid,
+          postid: null,
+        },
+        config
+      );
       setIsEditingComment(false);
       // console.log(data);
       setComments(

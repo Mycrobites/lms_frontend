@@ -12,6 +12,7 @@ import MathJax from "react-mathjax3";
 import "./QuizPage.css";
 import Loader from "../../components/Loader/Loader";
 import UserContext from "../../context/authContext";
+import { MediaContext } from "../../context/MediaContext";
 
 const getResponses = () => {
     const responses = sessionStorage.getItem("quiz-responses");
@@ -43,7 +44,7 @@ const QuizPage = () => {
         userDetails,
         submitTest
       } = useContext(UserContext);
-
+    const{currentCourseId} = useContext(MediaContext)
     const { id } = useParams();
     const history = useHistory();
     const mountedRef = useRef(true);
@@ -114,7 +115,7 @@ const QuizPage = () => {
           const{data}=await axios.post("/api/quiz/create-response", res, config);
           submitTest();
           console.log(data)
-          history.push("/enrollment");
+          history.push(`/course/${currentCourseId}`);
         } catch (err) {
           console.log(err.message);
           setIsLoading(false);

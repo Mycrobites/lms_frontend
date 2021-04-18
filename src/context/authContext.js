@@ -32,7 +32,6 @@ const checkIsTestSubmitted = () => {
 const getUserProfilePic = () => {
   const pic = localStorage.getItem("user-profile-pic");
   if (pic) {
-    console.log(pic);
     return JSON.parse(pic);
   } else {
     return null;

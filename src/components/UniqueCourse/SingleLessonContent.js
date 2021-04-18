@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext , useState ,useRef } from "react";
 import { MediaContext } from "../../context/MediaContext";
 import "./UniqueCourse.css";
 import {VscFilePdf} from 'react-icons/vsc'
@@ -7,18 +7,54 @@ import {BiTask} from 'react-icons/bi'
 import {MdAssignment} from 'react-icons/md'
 import {IoIosPlayCircle} from 'react-icons/io'
 import {FaHandMiddleFinger} from 'react-icons/fa'
+import {MdCheckBoxOutlineBlank} from 'react-icons/md'
+import {MdCheckBox} from 'react-icons/md'
+import axios from "../../axios/axios";
+import UserContext from "../../context/authContext";
 
-const SingleLessonContent = ({ singleContent, id }) => {
+const SingleLessonContent = ({ singleContent, id ,index ,lessonId }) => {
   // console.log(singleContent);
-  const { changeMediaUrl, changeMediaType, changeText } = useContext(
+  const {changeMediaContent,currentCourseId , changeMediaUrl, changeMediaType, changeText } = useContext(
     MediaContext
   );
+  const{userDetails}= useContext(UserContext)
 
+
+  const[completed ,setCompleted] = useState(false)
+
+  const clickRef = useRef(null)
+
+  const handleCompletedLesson = async()=>{
+    setCompleted(true)
+    try{
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.post("/api/markAsComplete/",
+      {
+        course_id: currentCourseId,
+        lesson_id: lessonId,
+        lesson_no:(index+1).toString(),
+        user: userDetails?.user.pk
+    },config)
+
+    }
+    catch(err){
+      console.log(err.message)
+    }
+
+    
+
+  }
 
   const handleLessonClick = () => {
+
+    clickRef.current.id="clicked-content"
+
     if (singleContent?.media_type === "video") {
       changeMediaUrl(singleContent?.link);
       changeMediaType(singleContent?.media_type, id);
+      changeMediaContent(singleContent?.video_name, singleContent?.description)
     } 
     else if (singleContent?.media_type === "pdf") {
       changeMediaUrl(singleContent?.pdf_file);
@@ -30,9 +66,11 @@ const SingleLessonContent = ({ singleContent, id }) => {
     }
     else if (singleContent?.media_type === "quiz"){
       changeMediaType(singleContent?.media_type, singleContent?.quiz_id);
+      changeMediaContent(singleContent?.quiz_name, singleContent?.description)
     }
     else if (singleContent?.media_type === "assignment"){
       changeMediaType(singleContent?.media_type, singleContent?.assignment_id);
+      changeMediaContent(singleContent?.assignment_name, singleContent?.description)
     }
     else{
       changeMediaType(singleContent?.media_type, id);
@@ -60,13 +98,12 @@ const SingleLessonContent = ({ singleContent, id }) => {
   }
 
   return (
-    <div onClick={handleLessonClick} className="single-lesson-content">
+    <div onClick={handleLessonClick} ref={clickRef} className="single-lesson-content">
       <div className="lesson-left">
         <div className="label">
-          <input type="checkbox" />
+          <button className='lesson-custom-checkbox' disabled={singleContent?.is_complete || completed ? true : false} onClick={handleCompletedLesson}>{singleContent?.is_complete || completed ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }</button>
           <div>
             {singleContent?.media_type}
-            {singleContent?.descripion}
           </div>
         </div>
       </div>

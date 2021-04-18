@@ -5,10 +5,11 @@ import './UniqueCourse.css'
 
 const Quiz = () => {
     const history = useHistory()
-    const{mediaId} = useContext(MediaContext)
+    const{mediaId , mediaName , mediaDescription} = useContext(MediaContext)
     return (
         <div className='course-quiz'>
-          This is quiz
+          <h4 style={{fontSize:"20px" , fontWeight:"600" , color:"rgb(100,100,100"}}>{mediaName}</h4>
+          <p>{mediaDescription}</p>
           <button onClick={()=>{history.push(`/quiz/${mediaId}`)}}>Attempt Quiz</button>
         </div>
     )

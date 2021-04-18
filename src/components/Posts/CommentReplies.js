@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import Loader from "../Loader/Loader";
 import SingleReply from "./SingleReply";
 import axios from "../../axios/axios";
 import "./CommentReply.css";
+import UserContext from "../../context/authContext";
 
 const CommentReplies = ({ id, uid, setTotalReplies }) => {
   const [replies, setReplies] = useState(null);
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [replyText, setReplyText] = useState("");
+  const{userDetails}= useContext(UserContext)
 
   const replyComment = async () => {
     if (!replyText) {
@@ -21,7 +23,10 @@ const CommentReplies = ({ id, uid, setTotalReplies }) => {
         postid: null,
         parent: id,
       };
-      const { data } = await axios.post("/api/forum/createComments", reply);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      const { data } = await axios.post("/api/forum/createComments", reply,config);
       // console.log(data);
       setReplies([...replies, data.comment]);
       setTotalReplies((prevCount) => prevCount + 1);
@@ -36,7 +41,10 @@ const CommentReplies = ({ id, uid, setTotalReplies }) => {
     let isUnmounted = false;
     const fetchReplies = async () => {
       try {
-        const { data } = await axios.get(`/api/forum/getComments/${id}`);
+        const config = {
+          headers: { Authorization: `Bearer ${userDetails.key}` },
+        };
+        const { data } = await axios.get(`/api/forum/getComments/${id}`,config);
         if (!isUnmounted) {
           setReplies(data.comments);
         }

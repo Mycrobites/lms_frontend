@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef,useContext } from "react";
 import ReportModal from "./ReportModal";
 import months from "../../assets/months/months";
 import axios from "../../axios/axios";
@@ -7,6 +7,7 @@ import { AiFillCaretUp } from "react-icons/ai";
 import { MdReportProblem } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdEdit, MdDelete } from "react-icons/md";
+import UserContext from "../../context/authContext";
 
 const SingleReply = (props) => {
   const {
@@ -26,16 +27,20 @@ const SingleReply = (props) => {
   const [reportModalText, setReportModalText] = useState(false);
   const [isEditingReply, setIsEditingReply] = useState(false);
   const [editedReply, setEditedReply] = useState(text);
+  const{userDetails}= useContext(UserContext)
 
   const editDeleteRef = useRef(null);
   const now = new Date(time);
 
   const reportReply = async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
       const response = await axios.post("/api/forum/reportComment", {
         user: uid,
         comment: id,
-      });
+      },config);
       //   console.log(response.data);
       if (response.status === 200) {
         setShowReportModal(true);
@@ -52,7 +57,10 @@ const SingleReply = (props) => {
 
   const deleteReply = async () => {
     try {
-      await axios.delete(`/api/forum/editComment/${id}`);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.delete(`/api/forum/editComment/${id}`,config);
       setReplies(replies.filter((reply) => reply.id !== id));
     } catch (err) {
       console.log(err.message);
@@ -61,7 +69,10 @@ const SingleReply = (props) => {
 
   const upvoteReply = async () => {
     try {
-      const { data } = await axios.patch(`/api/forum/upvote/${id}/rajat`);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      const { data } = await axios.patch(`/api/forum/upvote/${id}/${userDetails?.user?.username}`,config);
       // console.log(data);
       if (data.upvote.length === 1) {
         setReplies(
@@ -87,11 +98,14 @@ const SingleReply = (props) => {
 
   const editReply = async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
       const { data } = await axios.put(`/api/forum/editComment/${id}`, {
         text: editedReply,
         userid: uid,
         postid: null,
-      });
+      },config);
       setIsEditingReply(false);
       //   console.log(data);
       setReplies(

@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef , useContext } from "react";
 import Loader from "../Loader/Loader";
 import Lesson from "./Lesson";
 import axios from "../../axios/axios";
 import "./UpcomingLessons.css";
+import UserContext from "../../context/authContext";
 
 const getUpcomingLessonsFromLocalStorage = () => {
   const lessons = localStorage.getItem("upcoming-lessons");
@@ -19,14 +20,17 @@ const UpcomingLessons = ({user}) => {
   );
   const [isLoading, setIsLoading] = useState(false);
   const mountedRef = useRef(true);
-
+  const{userDetails}= useContext(UserContext)
 
   useEffect(() => {
     // let isUnmounted = false;
     const fetchUpcomingEvents = async () => {
       if (!upcomingEvents) setIsLoading(true);
       try {
-        const { data } = await axios.get(`/api/upcomingEvents/${user?.username}`);
+        const config = {
+          headers: { Authorization: `Bearer ${userDetails.key}` },
+        };
+        const { data } = await axios.get(`/api/upcomingEvents/${user?.username}`,config);
         if (mountedRef.current) {
           const sortedData = data
             .sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp))

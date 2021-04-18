@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useContext } from "react";
 import Student from "./Student.js";
 import axios from "../../axios/axios";
 import "./LeaderBoard.css";
+import UserContext from "../../context/authContext.js";
 
 const getLeaderboardFromLocalStorage = () => {
   const leaderboard = localStorage.getItem("leaderboard");
@@ -14,12 +15,16 @@ const getLeaderboardFromLocalStorage = () => {
 
 const LeaderBoard = () => {
   const [students, setStudents] = useState(getLeaderboardFromLocalStorage);
+  const{userDetails} = useContext(UserContext)
 
   useEffect(() => {
     let isUnmounted = false;
     const fetchLeadeboard = async () => {
       try {
-        const { data } = await axios.get("/api/leaderboard/");
+        const config = {
+          headers: { Authorization: `Bearer ${userDetails.key}` },
+        };
+        const { data } = await axios.get("/api/leaderboard/",config);
         if (!isUnmounted) {
           setStudents(data);
           localStorage.setItem("leaderboard", JSON.stringify(data));

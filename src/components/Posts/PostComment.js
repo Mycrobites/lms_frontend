@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import UserContext from "../../context/authContext";
 import axios from "../../axios/axios";
 import { Avatar } from "@material-ui/core";
 import { IoWarningOutline } from "react-icons/io5";
@@ -10,6 +11,7 @@ const PostComment = ({ setShowPostComment, postid, uid, setTotalAnswers }) => {
   const [comment, setComment] = useState("");
   const [isError, setIsError] = useState(false);
   const csrftoken = getCookie("csrftoken");
+  const { userDetails } = useContext(UserContext);
 
   const postComment = async () => {
     try {
@@ -19,9 +21,13 @@ const PostComment = ({ setShowPostComment, postid, uid, setTotalAnswers }) => {
           userid: uid,
           postid: postid,
         };
+        const config = {
+          headers: { Authorization: `Bearer ${userDetails.key}` },
+        };
         const { data } = await axios.post(
           "/api/forum/createComments",
-          newComment
+          newComment,
+          config
         );
         setShowPostComment(false);
         if (data) {

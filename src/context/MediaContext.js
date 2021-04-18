@@ -2,12 +2,34 @@ import React, { createContext, useState, useEffect } from "react";
 
 export const MediaContext = createContext();
 
+const getCurrentCourse = () => {
+  const data = localStorage.getItem("current-course");
+
+  if (data) {
+    return JSON.parse(data);
+  } else {
+    return null;
+  }
+};
+
 const MediaContextProvider = (props) => {
   const [mediaUrl, setMediaUrl] = useState("");
   const [mediaId, setMediaId] = useState("");
   const [text, setText] = useState("");
-
+  const [mediaName, setMediaName] = useState("");
+  const [mediaDescription, setMediaDescription] = useState("");
+  const [currentCourseId, setCurrentCourseId] = useState(getCurrentCourse);
+  const [lessonIndex, setLessonIndex] = useState(0);
   const [mediaType, setMediaType] = useState("");
+
+  const changeCurrentCourse = (id) => {
+    setCurrentCourseId(id);
+    localStorage.setItem("current-course", JSON.stringify(currentCourseId));
+  };
+
+  const updateLessonIndex = (index) => {
+    setLessonIndex(index);
+  };
 
   const changeMediaUrl = (url) => {
     setMediaUrl(url);
@@ -18,13 +40,21 @@ const MediaContextProvider = (props) => {
     setMediaId(id);
   };
 
+  const changeMediaContent = (name, des) => {
+    setMediaName(name);
+    setMediaDescription(des);
+  };
+
   const changeText = (text) => {
     setText(text);
   };
 
   useEffect(() => {
     console.log(mediaType);
-  }, [mediaType]);
+    console.log(mediaDescription);
+    console.log(mediaName);
+    console.log(lessonIndex);
+  }, [mediaType, mediaName, mediaDescription, lessonIndex]);
 
   return (
     <MediaContext.Provider
@@ -35,6 +65,13 @@ const MediaContextProvider = (props) => {
         changeMediaType,
         mediaId,
         changeText,
+        changeMediaContent,
+        updateLessonIndex,
+        lessonIndex,
+        mediaName,
+        mediaDescription,
+        currentCourseId,
+        changeCurrentCourse,
         text,
       }}
     >

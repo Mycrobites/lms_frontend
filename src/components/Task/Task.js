@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "../../axios/axios";
 import SingleTask from "./SingleTask";
 import Loader from "../Loader/Loader";
 import { IoAdd, IoCloseOutline, IoWarningOutline } from "react-icons/io5";
 import "./Task.css";
+import UserContext from "../../context/authContext";
 
 const getTasksFromLocalStorage = () => {
   const task = localStorage.getItem("tasks");
@@ -21,6 +22,7 @@ const Task = ({ user }) => {
   const [isError, setIsError] = useState(false);
   const [newTask, setNewTask] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const { userDetails } = useContext(UserContext);
 
   const addTodo = async (e) => {
     e.preventDefault();
@@ -30,12 +32,19 @@ const Task = ({ user }) => {
         alert("You can't add more than 10 tasks");
       } else {
         if (newTask.length > 0 && dueDate) {
-          const { data } = await axios.post("/api/todo/create", {
-            title: newTask,
-            dueDate: dueDate,
-            isComplete: false,
-            user: user?.pk,
-          });
+          const config = {
+            headers: { Authorization: `Bearer ${userDetails.key}` },
+          };
+          const { data } = await axios.post(
+            "/api/todo/create",
+            {
+              title: newTask,
+              dueDate: dueDate,
+              isComplete: false,
+              user: user?.pk,
+            },
+            config
+          );
           setTasks([...tasks, data]);
           setNewTask("");
           setDueDate("");
@@ -54,7 +63,10 @@ const Task = ({ user }) => {
     let isUnmounted = false;
     const fetchTasks = async () => {
       try {
-        const { data } = await axios.get(`/api/todo/${user?.username}`);
+        const config = {
+          headers: { Authorization: `Bearer ${userDetails.key}` },
+        };
+        const { data } = await axios.get(`/api/todo/${user?.username}`, config);
         if (!isUnmounted) {
           setTasks(data);
           localStorage.setItem("tasks", JSON.stringify(data));
@@ -67,6 +79,7 @@ const Task = ({ user }) => {
     return () => {
       isUnmounted = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.username]);
 
   useEffect(() => {
@@ -89,7 +102,9 @@ const Task = ({ user }) => {
           {showInput ? <IoCloseOutline /> : <IoAdd />}
         </button>
       </div>
-      {tasks?.length === 0 && <p className="no-task">You haven't added any task</p>}
+      {tasks?.length === 0 && (
+        <p className="no-task">You haven't added any task</p>
+      )}
       <div className="Tasks-main-div">
         {showInput && (
           <div className="add-newtask">

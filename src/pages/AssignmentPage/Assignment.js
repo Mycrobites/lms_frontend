@@ -11,6 +11,7 @@ import MathJax from "react-mathjax3";
 import Loader from "../../components/Loader/Loader";
 import UserContext from "../../context/authContext";
 import './Assignment.css'
+import { MediaContext } from "../../context/MediaContext";
 
 
 const getResponses = () => {
@@ -34,7 +35,7 @@ const Assignment = () => {
         userDetails,
         submitTest
       } = useContext(UserContext);
-
+    const{currentCourseId} = useContext(MediaContext)
     const { id } = useParams();
     const history = useHistory();
     const mountedRef = useRef(true);
@@ -99,7 +100,7 @@ const Assignment = () => {
           const{data}=await axios.post("/api/quiz/create-response", res, config);
           submitTest();
           console.log(data)
-          history.push("/enrollment");
+          history.push(`/course/${currentCourseId}`);
         } catch (err) {
           console.log(err.message);
           setIsLoading(false);

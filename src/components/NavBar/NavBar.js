@@ -36,9 +36,18 @@ const NavBar = () => {
   const showNotificationBar = async () => {
     setShowNotification(true);
     setShowUser(false);
-    await axios.post("/api/notifSeen", {
-      user: userDetails?.user?.pk,
-    });
+    try{
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.post("/api/notifSeen", {
+        user: userDetails?.user?.pk,
+      },config);
+    }
+    catch(err){
+      console.log(err.message)
+    }
+    
   };
 
   const showUserBar = () => {
@@ -52,8 +61,11 @@ const NavBar = () => {
         setLoading(true);
       }
       try {
+        const config = {
+          headers: { Authorization: `Bearer ${userDetails.key}` },
+        };
         const { data } = await axios.get(
-          `/api/fetchNotification/${userDetails?.user?.username}`
+          `/api/fetchNotification/${userDetails?.user?.username}`,config
         );
         setNotifications(data);
         setLoading(false);

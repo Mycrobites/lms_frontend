@@ -5,11 +5,12 @@ import './UniqueCourse.css'
 
 const Assignment = () => {
     const history = useHistory()
-    const{mediaId} = useContext(MediaContext)
+    const{mediaId , mediaName , mediaDescription} = useContext(MediaContext)
     return (
         <div className='lesson-assignment'>
-        This is assignment
-            <button  onClick={()=>{history.push(`/assignment/${mediaId}`)}} >Solve Assignment</button>
+        <h4 style={{fontSize:"20px" , fontWeight:"600" , color:"rgb(100,100,100"}}>{mediaName}</h4>
+        <p>{mediaDescription}</p>
+        <button onClick={()=>{history.push(`/assignment/${mediaId}`)}}>Solve Assignment</button>
         </div>
     )
 }

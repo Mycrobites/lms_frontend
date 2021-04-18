@@ -7,8 +7,8 @@ const CourseContent = ({ lessons }) => {
       <div className="course-content-header">
         <h4>Course content</h4>
       </div>
-      {lessons?.map((lesson) => (
-        <SingleCourseContent key={lesson?.lesson_id} lesson={lesson} />
+      {lessons?.map((lesson,idx) => (
+        <SingleCourseContent key={lesson?.lesson_id} index={idx} lesson={lesson} />
       ))}
     </div>
   );

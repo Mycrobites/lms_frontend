@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef ,useContext} from "react";
 import Comment from "./Comment";
 import PostComment from "./PostComment";
 import ReportModal from "./ReportModal";
@@ -17,6 +17,7 @@ import { AiOutlineWarning } from "react-icons/ai";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getCookie } from "./getCookie";
+import UserContext from "../../context/authContext";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -60,6 +61,7 @@ const SinglePost = (props) => {
   const editDeleteRef = useRef(null);
   const classes = useStyles();
   const now = new Date(time);
+  const{userDetails}= useContext(UserContext)
 
   const csrftoken = getCookie("csrftoken");
 
@@ -68,7 +70,10 @@ const SinglePost = (props) => {
     setShowPostComment(false);
     setLoading(true);
     try {
-      const { data } = await axios.get(`/api/forum/getComments/${id}`);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      const { data } = await axios.get(`/api/forum/getComments/${id}`,config);
       setComments(data);
       // console.log(data);
     } catch (err) {
@@ -79,10 +84,13 @@ const SinglePost = (props) => {
 
   const reportPost = async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
       const response = await axios.post("/api/forum/reportPost", {
         user: uid,
         post: id,
-      });
+      },config);
       if (response.status === 200) {
         setShowReportModal(true);
         if (response.data.message) {
@@ -99,7 +107,10 @@ const SinglePost = (props) => {
 
   const deletePost = async () => {
     try {
-      await axios.delete(`/api/forum/editPost/${id}`);
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.delete(`/api/forum/editPost/${id}`,config);
       fetchPosts();
       // console.log(data);
     } catch (err) {
@@ -111,12 +122,15 @@ const SinglePost = (props) => {
     e.preventDefault();
     if (!editedTitle || !editedDesc) return setError(true);
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
       const { data } = await axios.put(`/api/forum/editPost/${id}`, {
         title: editedTitle,
         desc: editedDesc,
         userid: uid,
         tags: "",
-      });
+      },config);
       setPosts(
         posts.map((post) => {
           if (post.id === id)

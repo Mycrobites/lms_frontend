@@ -123,7 +123,7 @@ const Posts = () => {
                   config={{
                     ckfinder: {
                       uploadUrl:
-                        "http://lms-seg.herokuapp.com/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
+                        "http://lab.progressiveminds.in/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
                       options: {
                         resourceType: "Images",
                       },

@@ -36,6 +36,7 @@ const SingleCourseContent = ({ lesson,index }) => {
               key={idx}
               index={idx}
               id={content?.content_id}
+              lessonId={lesson?.lesson_id}
               singleContent={content}
             />
           ))}

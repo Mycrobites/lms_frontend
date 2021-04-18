@@ -33,7 +33,7 @@ const UniqueCourse = () => {
         const config = {
           headers: { Authorization: `Bearer ${userDetails.key}` },
         };
-        const { data } = await axios.get(`/api/course/${id}`,config);
+        const { data } = await axios.get(`/api/course/${id}/${userDetails?.user.pk}`,config);
         if (mountedRef.current) {
           console.log(data)
           setCourse(data.course_details);

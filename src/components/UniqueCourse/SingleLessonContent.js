@@ -9,16 +9,43 @@ import {IoIosPlayCircle} from 'react-icons/io'
 import {FaHandMiddleFinger} from 'react-icons/fa'
 import {MdCheckBoxOutlineBlank} from 'react-icons/md'
 import {MdCheckBox} from 'react-icons/md'
+import axios from "../../axios/axios";
+import UserContext from "../../context/authContext";
 
-const SingleLessonContent = ({ singleContent, id ,index }) => {
+const SingleLessonContent = ({ singleContent, id ,index ,lessonId }) => {
   // console.log(singleContent);
-  const {changeMediaContent, changeMediaUrl, changeMediaType, changeText } = useContext(
+  const {changeMediaContent,currentCourseId , changeMediaUrl, changeMediaType, changeText } = useContext(
     MediaContext
   );
+  const{userDetails}= useContext(UserContext)
+
 
   const[completed ,setCompleted] = useState(false)
 
   const clickRef = useRef(null)
+
+  const handleCompletedLesson = async()=>{
+    setCompleted(true)
+    try{
+      const config = {
+        headers: { Authorization: `Bearer ${userDetails.key}` },
+      };
+      await axios.post("/api/markAsComplete/",
+      {
+        course_id: currentCourseId,
+        lesson_id: lessonId,
+        lesson_no:(index+1).toString(),
+        user: userDetails?.user.pk
+    },config)
+
+    }
+    catch(err){
+      console.log(err.message)
+    }
+
+    
+
+  }
 
   const handleLessonClick = () => {
 
@@ -74,7 +101,7 @@ const SingleLessonContent = ({ singleContent, id ,index }) => {
     <div onClick={handleLessonClick} ref={clickRef} className="single-lesson-content">
       <div className="lesson-left">
         <div className="label">
-          <button className='lesson-custom-checkbox' onClick={()=> setCompleted(!completed)}>{completed ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }</button>
+          <button className='lesson-custom-checkbox' disabled={singleContent?.is_complete || completed ? true : false} onClick={handleCompletedLesson}>{singleContent?.is_complete || completed ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }</button>
           <div>
             {singleContent?.media_type}
           </div>

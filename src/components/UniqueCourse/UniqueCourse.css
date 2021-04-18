@@ -241,6 +241,9 @@ iframe {
 	display: grid;
 	place-items: center;
 }
+button:disabled {
+	opacity: 0.7;
+}
 
 .lesson-text-div {
 	width: 100%;

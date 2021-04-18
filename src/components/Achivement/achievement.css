@@ -74,12 +74,13 @@
 .achievement-table {
 	display: flex;
 	justify-content: space-between;
-	width: 100%;
 	padding: 5px;
 	border-radius: 5px;
 	height: 40px;
 	font-size: 0.8em;
 	font-weight: 500;
+
+	margin: 5px 0;
 }
 .heading {
 	height: 50px;
@@ -90,16 +91,12 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 100px;
+	min-width: 100px;
 	text-align: center;
 }
 .achievement-div {
+	padding: 10px 20px;
+	background: white;
 	overflow: scroll;
 	height: 400px;
-}
-.achievement-div::-webkit-scrollbar-thumb {
-	color: lightgray;
-}
-.achievement-div::-webkit-scrollbar {
-	width: 5px;
 }

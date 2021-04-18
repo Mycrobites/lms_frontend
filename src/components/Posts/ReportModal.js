@@ -1,5 +1,3 @@
-import React from "react";
-
 const ReportModal = ({ reportModalText, setShowReportModal }) => {
   return (
     <div className="report-modal">

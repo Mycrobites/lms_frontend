@@ -89,7 +89,7 @@ const NavBar = () => {
             </button>
             <h4 id="user-name">{userDetails?.user?.first_name}</h4>
             {/* <Avatar src={userDetails?.profile_pic} /> */}
-            <Avatar src={userProfilePic.profile} />
+            <Avatar src={userProfilePic?.profile} />
             <button onClick={showUserBar}>
               {showUser ? (
                 <ExpandLessOutlinedIcon />

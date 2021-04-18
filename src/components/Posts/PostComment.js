@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import axios from "../../axios/axios";
 import { Avatar } from "@material-ui/core";
 import { IoWarningOutline } from "react-icons/io5";
-// import { CKEditor } from "@ckeditor/ckeditor5-react";
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { getCookie } from "./getCookie";
 
-const PostComment = ({ setShowPostComment, postid, uid }) => {
+const PostComment = ({ setShowPostComment, postid, uid, setTotalAnswers }) => {
   const [comment, setComment] = useState("");
   const [isError, setIsError] = useState(false);
+  const csrftoken = getCookie("csrftoken");
 
   const postComment = async () => {
     try {
@@ -21,8 +23,10 @@ const PostComment = ({ setShowPostComment, postid, uid }) => {
           "/api/forum/createComments",
           newComment
         );
-        console.log(data);
         setShowPostComment(false);
+        if (data) {
+          setTotalAnswers((prevTotal) => prevTotal + 1);
+        }
       } else {
         setIsError(true);
       }
@@ -45,30 +49,29 @@ const PostComment = ({ setShowPostComment, postid, uid }) => {
       </div>
       <div className="post-comment-body">
         <form className="post-comment-form">
-          <textarea
-            placeholder="Leave a comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-          {/* <CKEditor
+          <CKEditor
             editor={ClassicEditor}
             data={comment}
-            onReady={(editor) => {
-              console.log("Editor is ready to use!", editor);
-              editor.editing.view.change((writer) => {
-                writer.setStyle(
-                  "height",
-                  "100px",
-                  editor.editing.view.document.getRoot()
-                );
-              });
+            config={{
+              ckfinder: {
+                uploadUrl:
+                  "http://lms-seg.herokuapp.com/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
+                options: {
+                  resourceType: "Images",
+                },
+                credentials: "include",
+                headers: {
+                  "X-CSRF-TOKEN": csrftoken,
+                  csrftoken: csrftoken,
+                  csrfmiddlewaretoken: csrftoken,
+                },
+              },
             }}
             onChange={(event, editor) => {
               const data = editor.getData();
               setComment(data);
-              console.log(comment);
             }}
-          /> */}
+          />
         </form>
         {isError && (
           <div className="error">

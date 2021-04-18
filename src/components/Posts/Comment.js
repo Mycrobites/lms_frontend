@@ -9,6 +9,9 @@ import { MdReportProblem } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { GoReply } from "react-icons/go";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { getCookie } from "./getCookie";
 
 const Comment = (props) => {
   const {
@@ -22,6 +25,7 @@ const Comment = (props) => {
     comments,
     setComments,
     uid,
+    totalreplies,
   } = props;
   const [showEditDelete, setShowEditDelete] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
@@ -29,8 +33,10 @@ const Comment = (props) => {
   const [isEditingComment, setIsEditingComment] = useState(false);
   const [editedComment, setEditedComment] = useState(text);
   const [showCommentReplies, setShowCommentReplies] = useState(false);
+  const [totalReplies, setTotalReplies] = useState(totalreplies);
   const editDeleteRef = useRef(null);
   const now = new Date(time);
+  const csrftoken = getCookie("csrftoken");
 
   const reportComment = async () => {
     try {
@@ -152,10 +158,28 @@ const Comment = (props) => {
           <p className="comment-text">{text}</p>
         ) : (
           <div className="edit-comment-div">
-            <textarea
-              placeholder="Edit comment..."
-              value={editedComment}
-              onChange={(e) => setEditedComment(e.target.value)}
+            <CKEditor
+              editor={ClassicEditor}
+              data={editedComment}
+              config={{
+                ckfinder: {
+                  uploadUrl:
+                    "http://lms-seg.herokuapp.com/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
+                  options: {
+                    resourceType: "Images",
+                  },
+                  credentials: "include",
+                  headers: {
+                    "X-CSRF-TOKEN": csrftoken,
+                    csrftoken: csrftoken,
+                    csrfmiddlewaretoken: csrftoken,
+                  },
+                },
+              }}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                setEditedComment(data);
+              }}
             />
             <div className="edit-div">
               <button onClick={() => setIsEditingComment(false)}>Cancel</button>
@@ -171,11 +195,13 @@ const Comment = (props) => {
             <MdReportProblem /> Report
           </button>
           <button onClick={() => setShowCommentReplies(!showCommentReplies)}>
-            <GoReply /> Replies
+            <GoReply /> {totalReplies} Replies
           </button>
         </div>
 
-        {showCommentReplies && <CommentReplies {...props} />}
+        {showCommentReplies && (
+          <CommentReplies uid={uid} id={id} setTotalReplies={setTotalReplies} />
+        )}
       </div>
 
       {showReportModal && (

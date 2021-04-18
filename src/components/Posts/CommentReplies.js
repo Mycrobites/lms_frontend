@@ -4,7 +4,7 @@ import SingleReply from "./SingleReply";
 import axios from "../../axios/axios";
 import "./CommentReply.css";
 
-const CommentReplies = ({ id, uid }) => {
+const CommentReplies = ({ id, uid, setTotalReplies }) => {
   const [replies, setReplies] = useState(null);
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [replyText, setReplyText] = useState("");
@@ -24,6 +24,7 @@ const CommentReplies = ({ id, uid }) => {
       const { data } = await axios.post("/api/forum/createComments", reply);
       // console.log(data);
       setReplies([...replies, data.comment]);
+      setTotalReplies((prevCount) => prevCount + 1);
       setReplyText("");
       setShowReplyInput(false);
     } catch (err) {
@@ -37,7 +38,6 @@ const CommentReplies = ({ id, uid }) => {
       try {
         const { data } = await axios.get(`/api/forum/getComments/${id}`);
         if (!isUnmounted) {
-          // console.log(data.comments);
           setReplies(data.comments);
         }
       } catch (err) {

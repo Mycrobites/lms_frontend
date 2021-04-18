@@ -1,28 +1,16 @@
 import { useContext, useEffect, useState } from "react";
+import UserContext from "../../context/authContext";
 import SinglePost from "./SinglePost";
 import Pagination from "./Pagination";
+import Sidebar from "./Sidebar";
+import Loader from "../Loader/Loader";
 import axios from "../../axios/axios";
 import { AiOutlineWarning } from "react-icons/ai";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import Loader from "../Loader/Loader";
-import UserContext from "../../context/authContext";
+import { getCookie } from "./getCookie";
 import "./Posts.css";
-
-const getCookie = (name) => {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    var cookies = document.cookie.split(";");
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-};
+import "./Sidebar.css";
 
 const Posts = () => {
   const [showAddPost, setShowAddPost] = useState(false);
@@ -31,9 +19,11 @@ const Posts = () => {
   const [tags, setTags] = useState("");
   const [error, setError] = useState(false);
   const [posts, setPosts] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [currentTab, setCurrentTab] = useState(1);
+  const [sidebarData, setSidebarData] = useState({ posts: 0, answers: 0 });
   const { userDetails } = useContext(UserContext);
 
   const csrftoken = getCookie("csrftoken");
@@ -62,20 +52,21 @@ const Posts = () => {
 
   const fetchPosts = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
         `/api/forum/getPosts?pageno=${currentPage}`
       );
       setPosts(data.response);
       setTotalPages(data.no_of_pages);
+      setSidebarData({ posts: data.total_posts, answers: data.totalanswers });
       setLoading(false);
-      // console.log(data.response);
     } catch (err) {
       console.log(err.message);
     }
   };
 
   useEffect(() => {
-    fetchPosts();
+    if (currentTab === 1 || currentTab === 2) fetchPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
@@ -129,19 +120,10 @@ const Posts = () => {
                       },
                     },
                   }}
-                  // onReady={(editor) => {
-                  //   console.log("Editor is ready to use!", editor);
-                  // }}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setDesc(data);
                   }}
-                  // onBlur={(event, editor) => {
-                  //   console.log("Blur.", editor);
-                  // }}
-                  // onFocus={(event, editor) => {
-                  //   console.log("Focus.", editor);
-                  // }}
                 />
               </label>
               <label>
@@ -167,30 +149,78 @@ const Posts = () => {
             </form>
           </div>
         )}
+
+        <div className="tabs">
+          <button
+            onClick={() => setCurrentTab(1)}
+            className={`tab-btn ${currentTab === 1 ? "active" : null}`}
+          >
+            All Questions
+          </button>
+          <button
+            onClick={() => setCurrentTab(2)}
+            className={`tab-btn ${currentTab === 2 ? "active" : null}`}
+          >
+            Recent Questions
+          </button>
+          <button
+            onClick={() => setCurrentTab(3)}
+            className={`tab-btn ${currentTab === 3 ? "active" : null}`}
+          >
+            Recently Answered
+          </button>
+          <button
+            onClick={() => setCurrentTab(4)}
+            className={`tab-btn ${currentTab === 4 ? "active" : null}`}
+          >
+            Most Voted
+          </button>
+        </div>
       </div>
-      <div className="all-posts">
-        {loading && (
-          <div className="forum-loader">
-            <Loader />
-          </div>
-        )}
-        {posts?.map((post) => (
-          <SinglePost
-            key={post.id}
-            {...post}
-            uid={userDetails.user.pk}
-            fetchPosts={fetchPosts}
-            posts={posts}
-            setPosts={setPosts}
-          />
-        ))}
-        {posts && (
-          <Pagination
-            totalPages={totalPages}
-            handlePages={handlePages}
-            currentPage={currentPage}
-          />
-        )}
+
+      <div className="forum-content">
+        <div className="all-posts">
+          {loading ? (
+            <div className="forum-loader">
+              <Loader />
+            </div>
+          ) : (
+            <>
+              {currentTab === 1 &&
+                posts?.map((post) => (
+                  <SinglePost
+                    key={post.id}
+                    {...post}
+                    uid={userDetails.user.pk}
+                    fetchPosts={fetchPosts}
+                    posts={posts}
+                    setPosts={setPosts}
+                  />
+                ))}
+              {currentTab === 2 &&
+                posts?.map((post) => (
+                  <SinglePost
+                    key={post.id}
+                    {...post}
+                    uid={userDetails.user.pk}
+                    fetchPosts={fetchPosts}
+                    posts={posts}
+                    setPosts={setPosts}
+                  />
+                ))}
+              {currentTab === 3 && <p>Recently answered</p>}
+              {currentTab === 4 && <p>Most voted</p>}
+            </>
+          )}
+          {posts && currentTab === 1 && (
+            <Pagination
+              totalPages={totalPages}
+              handlePages={handlePages}
+              currentPage={currentPage}
+            />
+          )}
+        </div>
+        <Sidebar sidebarData={sidebarData} />
       </div>
     </div>
   );

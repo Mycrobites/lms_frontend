@@ -5,17 +5,18 @@ import ReportModal from "./ReportModal";
 import Loader from "../Loader/Loader";
 import axios from "../../axios/axios";
 import months from "../../assets/months/months";
+import parse from "html-react-parser";
 import { Avatar } from "@material-ui/core";
-import { RiMessage2Fill } from "react-icons/ri";
 import { makeStyles } from "@material-ui/core/styles";
 import { FacebookShareButton, FacebookIcon } from "react-share";
+import { RiMessage2Fill } from "react-icons/ri";
 import { MdReportProblem } from "react-icons/md";
-import parse from "html-react-parser";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdEdit, MdDelete } from "react-icons/md";
+import { AiOutlineWarning } from "react-icons/ai";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { AiOutlineWarning } from "react-icons/ai";
+import { getCookie } from "./getCookie";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -23,21 +24,6 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(7),
   },
 }));
-
-const getCookie = (name) => {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    var cookies = document.cookie.split(";");
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-};
 
 const SinglePost = (props) => {
   const {
@@ -53,6 +39,7 @@ const SinglePost = (props) => {
     tags,
     posts,
     setPosts,
+    total_answer,
   } = props;
 
   const [comments, setComments] = useState(null);
@@ -69,6 +56,7 @@ const SinglePost = (props) => {
     tags?.map((t) => t.tag).toString()
   );
   const [error, setError] = useState(false);
+  const [totalAnswers, setTotalAnswers] = useState(total_answer);
   const editDeleteRef = useRef(null);
   const classes = useStyles();
   const now = new Date(time);
@@ -267,7 +255,7 @@ const SinglePost = (props) => {
         <div className="answer-btn-div">
           <div className="share">
             <button className="answers" onClick={getAnswers}>
-              <RiMessage2Fill /> Answers
+              <RiMessage2Fill /> &nbsp;{totalAnswers} Answers
             </button>
             <button className="report" onClick={reportPost}>
               <MdReportProblem /> Report
@@ -319,6 +307,7 @@ const SinglePost = (props) => {
             setShowPostComment={setShowPostComment}
             postid={id}
             uid={props.uid}
+            setTotalAnswers={setTotalAnswers}
           />
         )}
       </div>

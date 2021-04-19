@@ -4,6 +4,8 @@ import SinglePost from "./SinglePost";
 import Pagination from "./Pagination";
 import Sidebar from "./Sidebar";
 import Loader from "../Loader/Loader";
+import RecentlyAnswered from "./RecentlyAnswered";
+import MostAnswered from "./MostAnswered";
 import axios from "../../axios/axios";
 import { AiOutlineWarning } from "react-icons/ai";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -180,7 +182,7 @@ const Posts = () => {
             onClick={() => setCurrentTab(4)}
             className={`tab-btn ${currentTab === 4 ? "active" : null}`}
           >
-            Most Voted
+            Most Answered
           </button>
         </div>
       </div>
@@ -215,8 +217,18 @@ const Posts = () => {
                     setPosts={setPosts}
                   />
                 ))}
-              {currentTab === 3 && <p>Recently answered</p>}
-              {currentTab === 4 && <p>Most voted</p>}
+              {currentTab === 3 && (
+                <RecentlyAnswered
+                  uid={userDetails.user.pk}
+                  tokenkey={userDetails.key}
+                />
+              )}
+              {currentTab === 4 && (
+                <MostAnswered
+                  uid={userDetails.user.pk}
+                  tokenkey={userDetails.key}
+                />
+              )}
             </>
           )}
           {posts && currentTab === 1 && (

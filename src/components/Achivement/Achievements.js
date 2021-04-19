@@ -19,11 +19,11 @@ const Achievements = ({ achievements }) => {
       <div className='table-td'>Marks Obtained</div>
       </div>
       {achievements?.map((achievement,idx) => {
-        const { user, marks_obtained , total_question, correct, incorrect , positive_score ,negative_score ,attempted , not_attempted    } = achievement;
+        const { user, marks_obtained , total_question, correct, incorrect , positive_score ,negative_score ,attempted , not_attempted ,quiz} = achievement;
         return (
         
           <div key={idx} className="achievement-table">
-          <div className='table-td'>Quiz name</div>
+          <div className='table-td'>{quiz}</div>
           <div className='table-td'>{total_question}</div>
           <div className='table-td'>{attempted}</div>
           <div className='table-td'>{not_attempted}</div>

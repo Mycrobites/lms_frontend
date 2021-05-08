@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef ,useContext} from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Comment from "./Comment";
 import PostComment from "./PostComment";
 import ReportModal from "./ReportModal";
@@ -8,7 +8,6 @@ import months from "../../assets/months/months";
 import parse from "html-react-parser";
 import { Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { FacebookShareButton, FacebookIcon } from "react-share";
 import { RiMessage2Fill } from "react-icons/ri";
 import { MdReportProblem } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -61,7 +60,7 @@ const SinglePost = (props) => {
   const editDeleteRef = useRef(null);
   const classes = useStyles();
   const now = new Date(time);
-  const{userDetails}= useContext(UserContext)
+  const { userDetails } = useContext(UserContext);
 
   const csrftoken = getCookie("csrftoken");
 
@@ -71,9 +70,9 @@ const SinglePost = (props) => {
     setLoading(true);
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
-      const { data } = await axios.get(`/api/forum/getComments/${id}`,config);
+      const { data } = await axios.get(`/api/forum/getComments/${id}`, config);
       setComments(data);
       // console.log(data);
     } catch (err) {
@@ -85,12 +84,16 @@ const SinglePost = (props) => {
   const reportPost = async () => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
-      const response = await axios.post("/api/forum/reportPost", {
-        user: uid,
-        post: id,
-      },config);
+      const response = await axios.post(
+        "/api/forum/reportPost",
+        {
+          user: uid,
+          post: id,
+        },
+        config
+      );
       if (response.status === 200) {
         setShowReportModal(true);
         if (response.data.message) {
@@ -108,9 +111,9 @@ const SinglePost = (props) => {
   const deletePost = async () => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
-      await axios.delete(`/api/forum/editPost/${id}`,config);
+      await axios.delete(`/api/forum/editPost/${id}`, config);
       fetchPosts();
       // console.log(data);
     } catch (err) {
@@ -123,14 +126,18 @@ const SinglePost = (props) => {
     if (!editedTitle || !editedDesc) return setError(true);
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
-      const { data } = await axios.put(`/api/forum/editPost/${id}`, {
-        title: editedTitle,
-        desc: editedDesc,
-        userid: uid,
-        tags: "",
-      },config);
+      const { data } = await axios.put(
+        `/api/forum/editPost/${id}`,
+        {
+          title: editedTitle,
+          desc: editedDesc,
+          userid: uid,
+          tags: "",
+        },
+        config
+      );
       setPosts(
         posts.map((post) => {
           if (post.id === id)
@@ -276,13 +283,6 @@ const SinglePost = (props) => {
             </button>
           </div>
           <div className="share">
-            <FacebookShareButton
-              url={"https://www.youtube.com/"}
-              quote={desc}
-              hashtag="#ProgressiveMinds"
-            >
-              <FacebookIcon size={36} />
-            </FacebookShareButton>
             <button
               className="answer"
               onClick={() => {

@@ -1,20 +1,18 @@
-import { useState, useEffect, useRef ,useContext} from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "../../axios/axios";
 import months from "../../assets/months/months";
 import { IoCloseOutline } from "react-icons/io5";
 import { MdCheckCircle, MdRadioButtonUnchecked } from "react-icons/md";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import UserContext from "../../context/authContext";
 
 const SingleTasks = (props) => {
-  const { id, title, dueDate, isComplete, tasks, setTasks ,user} = props;
+  const { id, title, dueDate, isComplete, tasks, setTasks, user } = props;
   const [isCompleted, setIsCompleted] = useState(isComplete);
   const [showEdit, setShowEdit] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
   const [editDate, setEditDate] = useState(dueDate);
   const inputRef = useRef(null);
-  const{userDetails}= useContext(UserContext)
 
   const updateTask = async () => {
     setShowEdit(!showEdit);
@@ -24,7 +22,7 @@ const SingleTasks = (props) => {
         title: editTitle,
         dueDate: editDate,
         isComplete,
-        user: user?.pk,
+        user: user.user_id,
       };
       const updatedTasks = tasks.map((task) => {
         if (task.id === id) return editedTask;
@@ -33,9 +31,9 @@ const SingleTasks = (props) => {
       setTasks(updatedTasks);
       localStorage.setItem("tasks", JSON.stringify(updatedTasks));
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${user.access}` },
       };
-      await axios.put(`/api/todo/edit/${id}`, editedTask,config);
+      await axios.put(`/api/todo/edit/${id}`, editedTask, config);
     } catch (err) {
       console.log(err.message);
     }
@@ -47,9 +45,9 @@ const SingleTasks = (props) => {
       localStorage.setItem("tasks", JSON.stringify(deletedTasks));
       setTasks(deletedTasks);
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${user.access}` },
       };
-      await axios.delete(`/api/todo/edit/${id}`,config);
+      await axios.delete(`/api/todo/edit/${id}`, config);
     } catch (err) {
       console.log(err.message);
     }
@@ -71,9 +69,9 @@ const SingleTasks = (props) => {
     localStorage.setItem("tasks", JSON.stringify(completedTasks));
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${user.access}` },
       };
-      await axios.put(`/api/todo/edit/${id}`, completedTask,config);
+      await axios.put(`/api/todo/edit/${id}`, completedTask, config);
     } catch (err) {
       console.log(err.message);
     }
@@ -96,7 +94,7 @@ const SingleTasks = (props) => {
           <p>
             Due Date: {dueDate.split("-")[2]}{" "}
             {dueDate.split("-")[1] < 10
-              ? months[dueDate.split("-")[1].split("")[1]-1]
+              ? months[dueDate.split("-")[1].split("")[1] - 1]
               : months[dueDate.split("-")[1]]}{" "}
             {dueDate.split("-")[0]}
           </p>
@@ -111,18 +109,20 @@ const SingleTasks = (props) => {
       {showEdit && (
         <div className="edit-task">
           <form className="edit-task-form" onSubmit={updateTask}>
-            <input
-              type="text"
-              placeholder="Add New Task"
-              value={editTitle}
-              onChange={(e) => setEditTitle(e.target.value)}
-              ref={inputRef}
-            />
-            <input
-              type="date"
-              value={editDate}
-              onChange={(e) => setEditDate(e.target.value)}
-            />
+            <div className="edit-form-inputs">
+              <input
+                type="text"
+                placeholder="Add New Task"
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                ref={inputRef}
+              />
+              <input
+                type="date"
+                value={editDate}
+                onChange={(e) => setEditDate(e.target.value)}
+              />
+            </div>
             <button type="submit">save</button>
             <IoCloseOutline onClick={(e) => setShowEdit(!showEdit)} />
           </form>

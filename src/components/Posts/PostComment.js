@@ -22,7 +22,7 @@ const PostComment = ({ setShowPostComment, postid, uid, setTotalAnswers }) => {
           postid: postid,
         };
         const config = {
-          headers: { Authorization: `Bearer ${userDetails.key}` },
+          headers: { Authorization: `Bearer ${userDetails.access}` },
         };
         const { data } = await axios.post(
           "/api/forum/createComments",
@@ -61,7 +61,7 @@ const PostComment = ({ setShowPostComment, postid, uid, setTotalAnswers }) => {
             config={{
               ckfinder: {
                 uploadUrl:
-                  "http://lms-seg.herokuapp.com/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
+                  "https://lab.progressiveminds.in/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
                 options: {
                   resourceType: "Images",
                 },

@@ -38,11 +38,11 @@ const Posts = () => {
       const newPost = {
         title,
         desc,
-        userid: userDetails.user.pk,
+        userid: userDetails.user_id,
         tags,
       };
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
       await axios.post("/api/forum/createPosts", newPost, config);
       setTitle("");
@@ -58,7 +58,7 @@ const Posts = () => {
   const fetchPosts = async () => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
       setLoading(true);
       const { data } = await axios.get(
@@ -167,7 +167,10 @@ const Posts = () => {
             All Questions
           </button>
           <button
-            onClick={() => setCurrentTab(2)}
+            onClick={() => {
+              setCurrentTab(2);
+              setCurrentPage(0);
+            }}
             className={`tab-btn ${currentTab === 2 ? "active" : null}`}
           >
             Recent Questions
@@ -200,7 +203,7 @@ const Posts = () => {
                   <SinglePost
                     key={post.id}
                     {...post}
-                    uid={userDetails.user.pk}
+                    uid={userDetails.user_id}
                     fetchPosts={fetchPosts}
                     posts={posts}
                     setPosts={setPosts}
@@ -211,7 +214,7 @@ const Posts = () => {
                   <SinglePost
                     key={post.id}
                     {...post}
-                    uid={userDetails.user.pk}
+                    uid={userDetails.user_id}
                     fetchPosts={fetchPosts}
                     posts={posts}
                     setPosts={setPosts}
@@ -219,14 +222,14 @@ const Posts = () => {
                 ))}
               {currentTab === 3 && (
                 <RecentlyAnswered
-                  uid={userDetails.user.pk}
-                  tokenkey={userDetails.key}
+                  uid={userDetails.user_id}
+                  tokenkey={userDetails.access}
                 />
               )}
               {currentTab === 4 && (
                 <MostAnswered
-                  uid={userDetails.user.pk}
-                  tokenkey={userDetails.key}
+                  uid={userDetails.user_id}
+                  tokenkey={userDetails.access}
                 />
               )}
             </>

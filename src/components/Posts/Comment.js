@@ -13,6 +13,7 @@ import { GoReply } from "react-icons/go";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getCookie } from "./getCookie";
+import parse from "html-react-parser";
 
 const Comment = (props) => {
   const {
@@ -43,7 +44,7 @@ const Comment = (props) => {
   const reportComment = async () => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
       const response = await axios.post(
         "/api/forum/reportComment",
@@ -69,10 +70,10 @@ const Comment = (props) => {
   const upvoteComment = async () => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
       const { data } = await axios.patch(
-        `/api/forum/upvote/${id}/${userDetails?.user?.username}`,
+        `/api/forum/upvote/${id}/${userDetails.username}`,
         config
       );
       if (data.upvote.length === 1) {
@@ -100,7 +101,7 @@ const Comment = (props) => {
   const deleteComment = async () => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
       await axios.delete(`/api/forum/editComment/${id}`, config);
       setComments(comments.filter((comment) => comment.id !== id));
@@ -112,7 +113,7 @@ const Comment = (props) => {
   const editComment = async () => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
       const { data } = await axios.put(
         `/api/forum/editComment/${id}`,
@@ -124,7 +125,6 @@ const Comment = (props) => {
         config
       );
       setIsEditingComment(false);
-      // console.log(data);
       setComments(
         comments.map((comment) => {
           if (comment.id === id) return { ...comment, text: data.text };
@@ -179,7 +179,7 @@ const Comment = (props) => {
         </div>
         <h2 className="username">{user}</h2>
         {!isEditingComment ? (
-          <p className="comment-text">{text}</p>
+          <p className="comment-text">{text[0] === "<" ? parse(text) : text}</p>
         ) : (
           <div className="edit-comment-div">
             <CKEditor
@@ -188,7 +188,7 @@ const Comment = (props) => {
               config={{
                 ckfinder: {
                   uploadUrl:
-                    "http://lms-seg.herokuapp.com/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
+                    "https://lab.progressiveminds.in/api/uploadimages?command=QuickUpload&type=Images&responseType=json",
                   options: {
                     resourceType: "Images",
                   },

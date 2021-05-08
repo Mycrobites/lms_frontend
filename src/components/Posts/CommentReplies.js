@@ -1,4 +1,4 @@
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Loader from "../Loader/Loader";
 import SingleReply from "./SingleReply";
 import axios from "../../axios/axios";
@@ -9,7 +9,7 @@ const CommentReplies = ({ id, uid, setTotalReplies }) => {
   const [replies, setReplies] = useState(null);
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [replyText, setReplyText] = useState("");
-  const{userDetails}= useContext(UserContext)
+  const { userDetails } = useContext(UserContext);
 
   const replyComment = async () => {
     if (!replyText) {
@@ -24,9 +24,13 @@ const CommentReplies = ({ id, uid, setTotalReplies }) => {
         parent: id,
       };
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
-      const { data } = await axios.post("/api/forum/createComments", reply,config);
+      const { data } = await axios.post(
+        "/api/forum/createComments",
+        reply,
+        config
+      );
       // console.log(data);
       setReplies([...replies, data.comment]);
       setTotalReplies((prevCount) => prevCount + 1);
@@ -42,9 +46,12 @@ const CommentReplies = ({ id, uid, setTotalReplies }) => {
     const fetchReplies = async () => {
       try {
         const config = {
-          headers: { Authorization: `Bearer ${userDetails.key}` },
+          headers: { Authorization: `Bearer ${userDetails.access}` },
         };
-        const { data } = await axios.get(`/api/forum/getComments/${id}`,config);
+        const { data } = await axios.get(
+          `/api/forum/getComments/${id}`,
+          config
+        );
         if (!isUnmounted) {
           setReplies(data.comments);
         }
@@ -56,6 +63,7 @@ const CommentReplies = ({ id, uid, setTotalReplies }) => {
     return () => {
       isUnmounted = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return (

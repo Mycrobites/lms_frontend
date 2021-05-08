@@ -1,4 +1,5 @@
-import { useState, useEffect ,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import Student from "./Student.js";
 import axios from "../../axios/axios";
 import "./LeaderBoard.css";
@@ -15,7 +16,8 @@ const getLeaderboardFromLocalStorage = () => {
 
 const LeaderBoard = () => {
   const [students, setStudents] = useState(getLeaderboardFromLocalStorage);
-  const{userDetails} = useContext(UserContext)
+  const { userDetails } = useContext(UserContext);
+  const history = useHistory();
 
   useEffect(() => {
     let isUnmounted = false;
@@ -24,7 +26,7 @@ const LeaderBoard = () => {
         const config = {
           headers: { Authorization: `Bearer ${userDetails.key}` },
         };
-        const { data } = await axios.get("/api/leaderboard/",config);
+        const { data } = await axios.get("/api/leaderboard/", config);
         if (!isUnmounted) {
           setStudents(data);
           localStorage.setItem("leaderboard", JSON.stringify(data));
@@ -37,10 +39,11 @@ const LeaderBoard = () => {
     return () => {
       isUnmounted = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="Leaderboard">
+    <div className="Leaderboard" onClick={() => history.push("/achievement")}>
       <div className="header">
         <h2>Leaderboard</h2>
       </div>

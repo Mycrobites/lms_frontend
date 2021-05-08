@@ -5,6 +5,7 @@
   font-weight: 800;
   margin-bottom: 0 !important;
   height: 330px;
+  overflow: hidden;
 }
 
 .calendar {

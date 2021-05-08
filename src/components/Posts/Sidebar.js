@@ -22,11 +22,11 @@ const Sidebar = ({ sidebarData }) => {
     <div className="forum-sidebar">
       <div className="stats">
         <p>
-          Total Posts : {sidebarData.posts > 999 ? "999+" : sidebarData.posts}
+          Total Posts : {sidebarData?.posts > 999 ? "999+" : sidebarData?.posts}
         </p>
         <p>
           Total Answers :{" "}
-          {sidebarData.answers > 999 ? "999+" : sidebarData.answers}
+          {sidebarData?.answers > 999 ? "999+" : sidebarData?.answers}
         </p>
       </div>
       <div className="blogs">

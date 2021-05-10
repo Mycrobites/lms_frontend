@@ -13,6 +13,7 @@ import './QuizPage.css';
 import Loader from '../../components/Loader/Loader';
 import UserContext from '../../context/authContext';
 import { MediaContext } from '../../context/MediaContext';
+import parse from 'html-react-parser';
 
 const getResponses = () => {
 	const responses = sessionStorage.getItem('quiz-responses');
@@ -43,7 +44,6 @@ const QuizPage = () => {
 	const { currentCourseId } = useContext(MediaContext);
 	const { id } = useParams();
 	const history = useHistory();
-	const mountedRef = useRef(true);
 
 	const timerUpdate = () => {
 		setTimer(timer - 1000);
@@ -100,11 +100,18 @@ const QuizPage = () => {
 			const config = {
 				headers: { Authorization: `Bearer ${userDetails.key}` },
 			};
+			responses.forEach((response) => {
+				delete response.flag;
+			});
+			console.log(responses);
 			const res = {
 				quiz: id,
 				user: userDetails?.user.pk,
-				response: responses,
+				answers: responses,
 			};
+
+			console.log(res);
+
 			await axios.post('/api/quiz/create-response', res, config);
 			submitTest();
 
@@ -127,17 +134,17 @@ const QuizPage = () => {
 					headers: { Authorization: `Bearer ${userDetails.key}` },
 				};
 				const { data } = await axios.get(`/api/quiz/getQuiz/${id}`, config);
-				if (!mountedRef.current) return null;
 
-				setQuiz(data?.quiz_questions);
+				console.log(data.quiz_details.questions);
+				setQuiz(data?.quiz_details.questions);
 				const test_time = new Date(
 					'1970-01-01T' + data?.quiz_details.duration + 'Z',
 				).getTime();
 				setTimer(test_time);
-				//timerUpdate();
+
 				if (responses === null) {
 					setResponses(
-						data?.quiz_questions.map((quiz) => ({
+						data?.quiz_details?.questions?.map((quiz) => ({
 							key: quiz.id,
 							answer: '',
 							flag: false,
@@ -148,13 +155,11 @@ const QuizPage = () => {
 				sessionStorage.setItem('quiz-responses', JSON.stringify(responses));
 			} catch (err) {
 				console.log(err.message);
-				history.push('/404');
+				// history.push('/404');
 			}
 		};
 		fetchQuestion();
-		return function cleanup() {
-			mountedRef.current = false;
-		};
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -215,7 +220,7 @@ const QuizPage = () => {
 					<div className="quiz-page">
 						<div className="question-progress-bar">
 							<div
-								style={{ width: ((index + 1) / quiz.length) * 100 + '%' }}
+								style={{ width: ((index + 1) / quiz?.length) * 100 + '%' }}
 								className="question-progress"
 							></div>
 						</div>
@@ -257,7 +262,7 @@ const QuizPage = () => {
 														value={option}
 														name={option}
 														control={<Radio onClick={handleResponse} />}
-														label={option}
+														label={parse(option)}
 													/>
 												))}
 											</RadioGroup>

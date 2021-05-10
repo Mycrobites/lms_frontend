@@ -16,6 +16,10 @@
 	width: 750px;
 }
 
+.quiz-page img {
+	width: 100%;
+}
+
 .navigation-btn {
 	display: flex;
 	justify-content: space-between;

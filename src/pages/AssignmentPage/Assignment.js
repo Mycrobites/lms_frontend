@@ -1,5 +1,6 @@
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+
 import axios from '../../axios/axios';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { IoFlag } from 'react-icons/io5';
@@ -8,13 +9,14 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import MathJax from 'react-mathjax3';
+import './Assignment.css';
 import Loader from '../../components/Loader/Loader';
 import UserContext from '../../context/authContext';
-import './Assignment.css';
 import { MediaContext } from '../../context/MediaContext';
+import parse from 'html-react-parser';
 
 const getResponses = () => {
-	const responses = sessionStorage.getItem('assignment-responses');
+	const responses = sessionStorage.getItem('quiz-responses');
 	if (responses) {
 		return JSON.parse(responses);
 	} else {
@@ -22,18 +24,16 @@ const getResponses = () => {
 	}
 };
 
-const Assignment = () => {
+const QuizPage = () => {
 	const [quiz, setQuiz] = useState(null);
 	const [index, setIndex] = useState(0);
 	const [isLoading, setIsLoading] = useState(true);
 	const [showSubmit, setShowSubmit] = useState(false);
 	const [responses, setResponses] = useState(getResponses);
-
 	const { userDetails, submitTest } = useContext(UserContext);
 	const { currentCourseId } = useContext(MediaContext);
 	const { id } = useParams();
 	const history = useHistory();
-	const mountedRef = useRef(true);
 
 	const handlePrevious = () => {
 		if (index > 0) {
@@ -67,10 +67,7 @@ const Assignment = () => {
 			} else return ques;
 		});
 		setResponses(newResponses);
-		sessionStorage.setItem(
-			'assignment-responses',
-			JSON.stringify(newResponses),
-		);
+		sessionStorage.setItem('quiz-responses', JSON.stringify(newResponses));
 	};
 
 	const handleFlagQuestion = () => {
@@ -79,10 +76,7 @@ const Assignment = () => {
 			else return ques;
 		});
 		setResponses(newResponses);
-		sessionStorage.setItem(
-			'assignment-responses',
-			JSON.stringify(newResponses),
-		);
+		sessionStorage.setItem('quiz-responses', JSON.stringify(newResponses));
 	};
 
 	const testSubmit = async () => {
@@ -91,11 +85,18 @@ const Assignment = () => {
 			const config = {
 				headers: { Authorization: `Bearer ${userDetails.key}` },
 			};
+			responses.forEach((response) => {
+				delete response.flag;
+			});
+			console.log(responses);
 			const res = {
 				quiz: id,
 				user: userDetails?.user.pk,
-				response: responses,
+				answers: responses,
 			};
+
+			console.log(res);
+
 			await axios.post('/api/quiz/create-response', res, config);
 			submitTest();
 
@@ -118,14 +119,13 @@ const Assignment = () => {
 					headers: { Authorization: `Bearer ${userDetails.key}` },
 				};
 				const { data } = await axios.get(`/api/quiz/getQuiz/${id}`, config);
-				if (!mountedRef.current) return null;
 
-				setQuiz(data?.quiz_questions);
+				console.log(data.quiz_details.questions);
+				setQuiz(data?.quiz_details.questions);
 
-				//timerUpdate();
 				if (responses === null) {
 					setResponses(
-						data?.quiz_questions.map((quiz) => ({
+						data?.quiz_details?.questions?.map((quiz) => ({
 							key: quiz.id,
 							answer: '',
 							flag: false,
@@ -133,19 +133,14 @@ const Assignment = () => {
 					);
 				}
 				setIsLoading(false);
-				sessionStorage.setItem(
-					'assignment-responses',
-					JSON.stringify(responses),
-				);
+				sessionStorage.setItem('quiz-responses', JSON.stringify(responses));
 			} catch (err) {
 				console.log(err.message);
-				history.push('/404');
+				// history.push('/404');
 			}
 		};
 		fetchQuestion();
-		return function cleanup() {
-			mountedRef.current = false;
-		};
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -199,7 +194,7 @@ const Assignment = () => {
 					<div className="quiz-page">
 						<div className="question-progress-bar">
 							<div
-								style={{ width: ((index + 1) / quiz.length) * 100 + '%' }}
+								style={{ width: ((index + 1) / quiz?.length) * 100 + '%' }}
 								className="question-progress"
 							></div>
 						</div>
@@ -241,7 +236,7 @@ const Assignment = () => {
 														value={option}
 														name={option}
 														control={<Radio onClick={handleResponse} />}
-														label={option}
+														label={parse(option)}
 													/>
 												))}
 											</RadioGroup>
@@ -338,4 +333,4 @@ const Assignment = () => {
 	);
 };
 
-export default Assignment;
+export default QuizPage;

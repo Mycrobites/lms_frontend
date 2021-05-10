@@ -13,7 +13,6 @@ import axios from '../../axios/axios';
 import UserContext from '../../context/authContext';
 
 const SingleLessonContent = ({ singleContent, id, index, lessonId }) => {
-	// console.log(singleContent);
 	const {
 		changeMediaContent,
 		currentCourseId,
@@ -44,8 +43,6 @@ const SingleLessonContent = ({ singleContent, id, index, lessonId }) => {
 				},
 				config,
 			);
-
-			console.log(data);
 		} catch (err) {
 			console.log(err.message);
 		}

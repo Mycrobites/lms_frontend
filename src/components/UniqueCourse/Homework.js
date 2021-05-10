@@ -1,84 +1,68 @@
-import React ,{useState , useEffect ,useContext} from 'react'
-import axios from '../../axios/axios'
-import UserContext from '../../context/authContext'
-import Loader from '../Loader/Loader'
+import React, { useState, useEffect, useContext } from 'react';
+import axios from '../../axios/axios';
+import UserContext from '../../context/authContext';
+import Loader from '../Loader/Loader';
 
+const Homework = ({ id }) => {
+	const { userDetails } = useContext(UserContext);
+	const [homework, setHomework] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [homeworkFile, setHomeworkFile] = useState(null);
 
-const Homework = ({id}) => {
-    const{userDetails} = useContext(UserContext)
-    const [homework,setHomework] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const [homeworkFile , setHomeworkFile] =  useState(null)
+	const fetchHomework = async () => {
+		try {
+			const config = {
+				headers: { Authorization: `Bearer ${userDetails.key}` },
+			};
+			const { data } = await axios.get(`/api/getHomework/${id}`, config);
+			setHomework(data);
+			setLoading(false);
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
 
-    const fetchHomework = async()=>{
-        try{
-            const config = {
-                headers: { Authorization: `Bearer ${userDetails.key}` },
-              };
-        const {data} = await axios.get(`/api/getHomework/${id}`,config)
-        setHomework(data)
-        setLoading(false)
-        console.log(data)
-        }
-        catch(err){
-            console.log(err.message)
-        }
-    }
+	const handleFileChange = (e) => {
+		setHomeworkFile(e.target.files[0]);
+	};
 
-    const handleFileChange = (e)=>{
-        setHomeworkFile(e.target.files[0])
-        
-    }
+	const handleHomeworkUpload = async () => {
+		let formData = new FormData();
+		formData.append('answer', homeworkFile);
+		formData.append('lessons_content', homework?.id);
 
+		try {
+			const config = {
+				headers: { Authorization: `Bearer ${userDetails.key}` },
+			};
+			await axios.post(
+				`/api/doHomework/${userDetails?.user?.username}`,
+				formData,
+				config,
+			);
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
 
-    const handleHomeworkUpload = async() =>{
-       
-        let formData = new FormData()
-        formData.append("answer" , homeworkFile)
-        formData.append("lessons_content" , homework?.id)
+	useEffect(() => {
+		fetchHomework();
+	}, []);
 
-        try{
-            const config = {
-                headers: { Authorization: `Bearer ${userDetails.key}` },
-              };
-         const {data}= await axios.post(`/api/doHomework/${userDetails?.user?.username}` , formData , config)
-         console.log(data)
-        }
-        catch(err){
-            console.log(err.message)
-        }
-    }
+	return (
+		<div className="lesson-homework">
+			{loading ? (
+				<Loader />
+			) : (
+				<div className="homework-content">
+					<h4>{homework?.text_content}</h4>
 
-    useEffect(()=>{
-        fetchHomework()
-        
-    },[])
+					<input type="file" name="file" onChange={handleFileChange} />
+					<button onClick={handleHomeworkUpload}>Upload</button>
+				</div>
+			)}
+		</div>
+	);
+};
 
-
-
-    return (
-       
-        
-            <div className='lesson-homework'>
-
-            {loading ? <Loader/> :
-
-            <div className="homework-content">
-            
-            <h4>{homework?.text_content}</h4>
-        
-            <input type='file' name='file' onChange={handleFileChange} />
-            <button onClick={handleHomeworkUpload}>Upload</button>
-            
-            </div>
-            }
-            
-        
-                    
-            </div>
-       
-       
-    )
-}
-
-export default Homework
+export default Homework;

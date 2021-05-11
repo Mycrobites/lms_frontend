@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-
 import axios from '../../axios/axios';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { IoFlag } from 'react-icons/io5';
@@ -30,6 +29,7 @@ const QuizPage = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [showSubmit, setShowSubmit] = useState(false);
 	const [responses, setResponses] = useState(getResponses);
+
 	const { userDetails, submitTest } = useContext(UserContext);
 	const { currentCourseId } = useContext(MediaContext);
 	const { id } = useParams();
@@ -57,13 +57,19 @@ const QuizPage = () => {
 	}
 
 	const handleResponse = (e) => {
-		const { value } = e.target;
+		const { value, name } = e.target;
+		let ans = '';
+		if (name) {
+			ans = name;
+		} else {
+			ans = value;
+		}
 		const newResponses = responses.map((ques) => {
 			if (ques.key === quiz[index].id) {
 				if (ques.answer === value) {
-					return { ...ques, answer: '' };
+					return { ...ques, answer: '', selectetedAnswer: '' };
 				}
-				return { ...ques, answer: value };
+				return { ...ques, answer: value, selectetedAnswer: ans };
 			} else return ques;
 		});
 		setResponses(newResponses);
@@ -83,24 +89,19 @@ const QuizPage = () => {
 		setIsLoading(true);
 		try {
 			const config = {
-				headers: { Authorization: `Bearer ${userDetails.key}` },
+				headers: { Authorization: `Bearer ${userDetails.access}` },
 			};
-			responses.forEach((response) => {
-				delete response.flag;
-			});
-			console.log(responses);
 			const res = {
 				quiz: id,
-				user: userDetails?.user.pk,
-				answers: responses,
+				user: userDetails?.user_id,
+				response: responses.map((res) => ({
+					key: res.key,
+					answer: res.selectetedAnswer,
+				})),
 			};
-
-			console.log(res);
-
-			await axios.post('/api/quiz/create-response', res, config);
+			await axios.post('/api/create-response', res, config);
 			submitTest();
-
-			history.push(`/course/${currentCourseId}`);
+			history.push(`/course${currentCourseId}`);
 		} catch (err) {
 			console.log(err.message);
 			setIsLoading(false);
@@ -108,7 +109,7 @@ const QuizPage = () => {
 	};
 
 	const handleTestSubmit = (e) => {
-		//e.preventDefault()
+		e.preventDefault();
 		testSubmit();
 	};
 
@@ -143,11 +144,6 @@ const QuizPage = () => {
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	//   useEffect(() => {
-	//     addQuiz(quizid, quizDuration, test_time);
-	//     // eslint-disable-next-line react-hooks/exhaustive-deps
-	//   }, []);
 
 	return (
 		<>
@@ -234,7 +230,7 @@ const QuizPage = () => {
 													<FormControlLabel
 														key={idx}
 														value={option}
-														name={option}
+														name={idx + 1}
 														control={<Radio onClick={handleResponse} />}
 														label={parse(option)}
 													/>
@@ -243,7 +239,7 @@ const QuizPage = () => {
 										</FormControl>
 									) : (
 										<textarea
-											placeholder="Type your answer here"
+											placeholder="Type your answer here..."
 											value={responses[index]?.answer}
 											onChange={handleResponse}
 										/>
@@ -313,15 +309,24 @@ const QuizPage = () => {
 							</div>
 							<div className="choice-sign">
 								<div className="attempted-sign">
-									<button disabled={true} />
+									<button
+										disabled={true}
+										style={{ opacity: 1, cursor: 'default' }}
+									/>
 									<p>Attempted</p>
 								</div>
 								<div className="flagged-sign">
-									<button disabled={true} />
+									<button
+										disabled={true}
+										style={{ opacity: 1, cursor: 'default' }}
+									/>
 									<p>Flagged Question</p>
 								</div>
 								<div className="unattempted-sign">
-									<button disabled={true} />
+									<button
+										disabled={true}
+										style={{ opacity: 1, cursor: 'default' }}
+									/>
 									<p>Not Attempted</p>
 								</div>
 							</div>

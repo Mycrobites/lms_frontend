@@ -50,8 +50,12 @@ const Achievement = () => {
 					{ user: userDetails?.user.username },
 					config,
 				);
-
-				setAchievements(data);
+				console.log(data);
+				if (data.msg) {
+					return;
+				} else {
+					setAchievements(data);
+				}
 			} catch (err) {
 				console.log(err.message);
 			}

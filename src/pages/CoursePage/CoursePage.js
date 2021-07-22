@@ -4,12 +4,12 @@ import "./CoursePage.css";
 
 const CoursePage = () => {
   return (
-    <div className="course-page">
+    <>
       <SideBar active="enrollment" />
-      <div className="course">
-        <UniqueCourse />
+      <div className="course-page">
+          <UniqueCourse />
       </div>
-    </div>
+    </>
   );
 };
 

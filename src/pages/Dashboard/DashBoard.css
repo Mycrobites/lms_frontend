@@ -45,9 +45,11 @@
 @media (max-width: 768px) {
   .dashboard-items {
     display: block;
+    font-size: small;
   }
   .dashboard-items > div:nth-child(n) {
     height: auto;
     margin-bottom: 10px;
+    font-size: small;
   }
 }

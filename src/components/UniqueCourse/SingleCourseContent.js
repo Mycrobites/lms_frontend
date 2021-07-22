@@ -17,7 +17,7 @@ const SingleCourseContent = ({ lesson,index }) => {
 
   return (
     <div className="single-course-content">
-      <div onClick={handleClick} className="lesson_name">
+      <div onClick={handleClick} className={`${!showContent ? "lesson_name" : "lesson_name clicked"}`}>
         <div>
           <h5>
             Lesson {lesson?.lesson_no} : {lesson?.lesson_name}

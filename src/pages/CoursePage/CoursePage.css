@@ -1,14 +1,10 @@
 .course-page {
-	margin-left: 220px;
-	padding: 0 20px;
-	min-height: 100vh;
-	height: auto;
-	width: 60%;
+  margin-left: 220px;
 }
 @media (max-width: 900px) {
-	.course-page {
-		margin-left: 50px;
-		width: calc(100% - 50px);
-		margin-right: 0px;
-	}
+  .course-page {
+    margin-left: 50px;
+    width: calc(100% - 50px);
+    margin-right: 0px;
+  }
 }

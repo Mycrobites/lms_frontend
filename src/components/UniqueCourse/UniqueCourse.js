@@ -91,43 +91,44 @@ const UniqueCourse = () => {
 					<Loader />
 				</div>
 			) : (
-				<div className="course">
-					<h2 className="course-title">{CourseDetails?.course_name}</h2>
+				<div className="course-body">
+					<div className="course">
+						<h2 className="course-title">{CourseDetails?.course_name}</h2>
+						{toggleComponent()}
+						<div className="unresponsive">
+							{lessonIndex === 0 && <AboutCourse CourseDetails={CourseDetails} />}
+							{mediaType && mediaDescription ? (
+							<Description description={mediaDescription} />
+							) : (
+							<></>
+							)}
+						</div>
+						<div className="responsive-overview">
+							<div className="overview-headers">
+								<button onClick={() => setOverview('course_content')}>
+									Course
+								</button>
+								{mediaDescription && (
+									<button onClick={() => setOverview('description')}>
+										Description
+									</button>
+								)}
+							</div>
+
+							<div className="overview-body">
+								{overView === 'course_content' ? (
+									<CourseContentResponsive lessons={CourseDetails?.lessons} />
+								) : mediaDescription ? (
+									<Description description={mediaDescription} />
+								) : (
+									<></>
+								)}
+							</div>
+						</div>
+					</div>
+
 					<div className="unresponsive">
 						<CourseContent lessons={CourseDetails?.lessons} />
-					</div>
-
-					{toggleComponent()}
-
-					<div className="unresponsive">
-						{lessonIndex === 0 && <AboutCourse CourseDetails={CourseDetails} />}
-						{mediaType && mediaDescription ? (
-							<Description description={mediaDescription} />
-						) : (
-							<></>
-						)}
-					</div>
-					<div className="responsive-overview">
-						<div className="overview-headers">
-							<button onClick={() => setOverview('course_content')}>
-								Course
-							</button>
-							{mediaDescription && (
-								<button onClick={() => setOverview('description')}>
-									Description
-								</button>
-							)}
-						</div>
-
-						<div className="overview-body">
-							{overView === 'course_content' ? (
-								<CourseContentResponsive lessons={CourseDetails?.lessons} />
-							) : mediaDescription ? (
-								<Description description={mediaDescription} />
-							) : (
-								<></>
-							)}
-						</div>
 					</div>
 				</div>
 			)}

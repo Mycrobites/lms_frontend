@@ -38,3 +38,11 @@
 .timing1 p {
   margin: 0;
 }
+
+@media (max-width: 500px) {
+  .Subject {
+    width: 90%;
+    height: 90%;
+    margin: 25px 10px;
+  }
+}

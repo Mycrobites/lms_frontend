@@ -45,7 +45,7 @@ const Task = ({ user }) => {
 			isUnmounted = true;
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [tasks]);
+	}, []);
 
 	const addTodo = async (e) => {
 		e.preventDefault();
@@ -64,7 +64,7 @@ const Task = ({ user }) => {
 							title: newTask,
 							dueDate: dueDate,
 							isComplete: false,
-							user: user.user_id,
+							user: user.pk,
 						},
 						config,
 					);

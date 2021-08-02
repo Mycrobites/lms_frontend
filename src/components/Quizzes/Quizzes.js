@@ -44,20 +44,19 @@ function Quizzes() {
   
   const mountedRef = useRef(true);
 
-
   const fetchquizzes = async () => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.access}` },
+        headers: { Authorization: `Bearer ${userDetails.key}` },
       };
       setLoading(true);
-      const res = await axios.get(`api/get-all-quizes/${userDetails.user_id}`, config);
+      const res = await axios.get(`api/get-all-quizes/${userDetails.user.pk}`, config);
       setAttemptedQuiz(res.data[groupnumber]["attempted"]);
       setMissed(res.data[groupnumber]["missed"]);
       setUpcoming(res.data[groupnumber]["upcoming"]);
       setActiveQuiz(res.data[groupnumber]["active"]);
       setdata(res.data);
-
+      console.log(data)
       for(let x = 0; x < data.length;x++){
         setGroupnames([...groupnames,data[x].name])
         
@@ -74,15 +73,16 @@ function Quizzes() {
         }
       }
       setQuizCounts(counts);
-      console.log(res.data);
+      console.log(counts);
       
       setLoading(false);
     } catch (err) {
       console.log(err.message);
     }
   };
-
   
+  
+
   const setGroupdata = (group) => {
     console.log(group);
     
@@ -130,7 +130,7 @@ function Quizzes() {
   //   setCounts();
   // },[quizCounts.length]);
 
-  // console.log(quizCounts);
+  //console.log(quizCounts);
   // console.log(upcomingquiz);
   return (
     <div>
@@ -149,7 +149,6 @@ function Quizzes() {
                                 <>
                                 
                                 <div className="side-bar-item-advanced-1" onClick={() => {
-                                  setopen(!open);
                                   setopen(!open);
                                   setGroupdata(group);
                                 }}>

@@ -164,7 +164,7 @@
 .active {
   box-sizing: border-box;
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.4);
-  height: 85vh;
+  /* height: 85vh; */
   padding-left: 1vw;
   overflow: scroll;
   padding-right: 1vw;

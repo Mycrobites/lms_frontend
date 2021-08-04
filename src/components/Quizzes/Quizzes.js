@@ -44,37 +44,36 @@ function Quizzes() {
   
   const mountedRef = useRef(true);
 
-  const fetchquizzes = async () => {
+  const fetchquizzes = async() => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.key}` },
+        headers: { Authorization: `Bearer ${userDetails.access}` },
       };
       setLoading(true);
-      const res = await axios.get(`api/get-all-quizes/${userDetails.user.pk}`, config);
-      setAttemptedQuiz(res.data[groupnumber]["attempted"]);
-      setMissed(res.data[groupnumber]["missed"]);
-      setUpcoming(res.data[groupnumber]["upcoming"]);
-      setActiveQuiz(res.data[groupnumber]["active"]);
-      setdata(res.data);
-      console.log(data)
+      const { data } = await axios.get(`api/get-all-quizes/${userDetails.user_id}`, config);
+      setAttemptedQuiz(data[groupnumber]["attempted"]);
+      setMissed(data[groupnumber]["missed"]);
+      setUpcoming(data[groupnumber]["upcoming"]);
+      setActiveQuiz(data[groupnumber]["active"]);
+      setdata(data);
+      console.log("data", data)
       for(let x = 0; x < data.length;x++){
         setGroupnames([...groupnames,data[x].name])
         
       }
       let counts = [];
-      if(res.data.length > 0){
-        for(let h = 0; h < res.data.length;h++){
+      if(data.length > 0){
+        for(let h = 0; h < data.length;h++){
           counts[h] = {
-            active: res.data[h]["active"].length,
-            upcoming: res.data[h]["upcoming"].length,
-            attempted: res.data[h]["attempted"].length,
-            missed: res.data[h]["missed"].length
+            active: data[h]["active"].length,
+            upcoming: data[h]["upcoming"].length,
+            attempted: data[h]["attempted"].length,
+            missed: data[h]["missed"].length
           }
         }
       }
       setQuizCounts(counts);
-      console.log(counts);
-      
+      console.log(counts)
       setLoading(false);
     } catch (err) {
       console.log(err.message);
@@ -110,21 +109,18 @@ function Quizzes() {
     }
     setGroupnames(groups);
   }
-  console.log(groupnames);
 
   useEffect(() => {
     fetchquizzes();
-    
   }, []);
   // console.log(data[index].name);
   useEffect(() => {
-    
     setgroups();
   }, [groupnames.length]);
 
-  useEffect(() => {
-    setGroupdata();
-  },[index]);
+  // useEffect(() => {
+  //   setGroupdata();
+  // },[index]);
 
   // useEffect(() => {
   //   setCounts();
@@ -133,315 +129,309 @@ function Quizzes() {
   //console.log(quizCounts);
   // console.log(upcomingquiz);
   return (
-    <div>
-      {(
-                <div className="home-page">
-                {/* <NavBar /> */}
-                
-                <div className="content-home">
-                
-                          
-                  <div className="side-bar">
-                      
-                      {  groupnames.length > 0 && (
-                            groupnames.map((group,idx) => {
-                              return (
-                                <>
-                                
-                                <div className="side-bar-item-advanced-1" onClick={() => {
-                                  setopen(!open);
-                                  setGroupdata(group);
-                                }}>
-                                  {group}
-                                  
-                                </div>
-                                <div className="tabs"  style={{display:(data[index].name === group && open) ? "block":"none"}}>
-                                    <div className="type-count">
-                                        <p className="side-bar-item" onClick={() => {
-                                          setactive(true);
-                                          setupcoming(false);
-                                          setattempted(false);
-                                          setmissed(false);
-                                        }}>Active  </p>
-                                        <p className="side-bar-item">{quizCounts[idx].active}</p>
+    <>
+      {
+        loading || !data ? 
+        (
+          <div className="quizquestion-loader">
+            <Loader />
+          </div>
+        ) :
+        (<div>
+            {(
+                  <div className="home-page">
+                  {/* <NavBar /> */}
+                  
+                  <div className="content-home">
+                    <div className="side-bar">
+                        
+                        { groupnames.length > 0 && (
+                              groupnames.map((group,idx) => {
+                                return (
+                                  <>
+                                    <div className="side-bar-item-advanced-1" onClick={() => {
+                                      setopen(!open);
+                                      setGroupdata(group);
+                                    }}>
+                                      {group}
                                     </div>
-                                    <div className="type-count">
-                                        <p className="side-bar-item" onClick={() => {
-                                          setactive(false);
-                                          setupcoming(true);
-                                          setattempted(false);
-                                          setmissed(false);
-                                        }}>Upcoming</p>
-                                         <p className="side-bar-item">{quizCounts[idx].upcoming}</p>
-                                    </div>
-    
-                                    <div className="type-count">
-                                        <p className="side-bar-item" onClick={() => {
-                                          setactive(false);
-                                          setupcoming(false);
-                                          setattempted(true);
-                                          setmissed(false);
-                                        }}>Attempted</p>
-                                        <p className="side-bar-item">{quizCounts[idx].attempted}</p>
-                                    </div>
-    
-                                    <div className="type-count">
-                                        
-                                        <p className="side-bar-item" onClick={() => {
-                                          setactive(false);
-                                          setupcoming(false);
-                                          setattempted(false);
-                                          setmissed(true);
-                                        }}>Missed</p>
-                                        <p className="side-bar-item">{quizCounts[idx].missed}</p>
-                                    </div>
-                                    
-                                    
-                                    
-                                </div>
-                              </>
-                              )
-                            })
-                      )}
-                      
-                  </div>
-                  <div className="main-bar">
-                    {(activequiz.length > 0 && upcoming == false && attempted == false && missed == false && data.length > 0) && (
-                      <div className="active">
-                      <div className="active-active">
-                          <p className="active-title">{data[index].name} - Active</p>
-                      </div>
-                      {activequiz.map((quiz,index) => {
-                        return (
+                                    <div className="tabs"  style={{display:(data[index].name === group && open) ? "block":"none"}}>
+                                        <div className="type-count">
+                                            <p className="side-bar-item" onClick={() => {
+                                              setactive(true);
+                                              setupcoming(false);
+                                              setattempted(false);
+                                              setmissed(false);
+                                            }}>Active  </p>
+                                            <p className="side-bar-item">{quizCounts[idx].active}</p>
+                                        </div>
+                                        <div className="type-count">
+                                            <p className="side-bar-item" onClick={() => {
+                                              setactive(false);
+                                              setupcoming(true);
+                                              setattempted(false);
+                                              setmissed(false);
+                                            }}>Upcoming</p>
+                                            <p className="side-bar-item">{quizCounts[idx].upcoming}</p>
+                                        </div>
         
-                          <div className="active-quiz">
-                          <div className="active-quiz-description">
-                            <p className="active-quiz-title">
-                                {ReactHtmlParser(quiz.title)}
-                              </p>
-                              <p className="active-quiz-des">
-                                {ReactHtmlParser(quiz.desc)}
-                              </p>
-                              {/* <b>Instructions</b>
-                            <p className="instructions-box">
-                              {ReactHtmlParser(quiz.instructions)}
-                            </p> */}
-                              <p className="question-time">
-                                Duration :  {quiz.duration} 
-                              </p>
-                              <p className="start">
-                                Start Date : {quiz.starttime.slice(0,10) + "     " + quiz.starttime.slice(11,16) + " GMT"}
-                              </p>
-                              <p className="end">
-                                End Date : {quiz.endtime.slice(0,10) + "     " + quiz.endtime.slice(11,16)+ " GMT"}
-                              </p>
+                                        <div className="type-count">
+                                            <p className="side-bar-item" onClick={() => {
+                                              setactive(false);
+                                              setupcoming(false);
+                                              setattempted(true);
+                                              setmissed(false);
+                                            }}>Attempted</p>
+                                            <p className="side-bar-item">{quizCounts[idx].attempted}</p>
+                                        </div>
+        
+                                        <div className="type-count">
+                                            
+                                            <p className="side-bar-item" onClick={() => {
+                                              setactive(false);
+                                              setupcoming(false);
+                                              setattempted(false);
+                                              setmissed(true);
+                                            }}>Missed</p>
+                                            <p className="side-bar-item">{quizCounts[idx].missed}</p>
+                                        </div> 
+                                    </div>
+                                  </>
+                                )
+                              })
+                        )}
+                        
+                    </div>
+                    <div className="main-bar">
+                      {(activequiz.length > 0 && upcoming == false && attempted == false && missed == false && data.length > 0) && (
+                        <div className="active">
+                        <div className="active-active">
+                            <p className="active-title">{data[index].name} - Active</p>
+                        </div>
+                        {activequiz.map((quiz,index) => {
+                          return (
+          
+                            <div className="active-quiz">
+                            <div className="active-quiz-description">
+                              <p className="active-quiz-title">
+                                  {ReactHtmlParser(quiz.title)}
+                                </p>
+                                <p className="active-quiz-des">
+                                  {ReactHtmlParser(quiz.desc)}
+                                </p>
+                                {/* <b>Instructions</b>
+                              <p className="instructions-box">
+                                {ReactHtmlParser(quiz.instructions)}
+                              </p> */}
+                                <p className="question-time">
+                                  Duration :  {quiz.duration} 
+                                </p>
+                                <p className="start">
+                                  Start Date : {quiz.start_date.slice(0,10) + "     " + quiz.start_date.slice(11,16) + " GMT"}
+                                </p>
+                                <p className="end">
+                                  End Date : {quiz.expire_date.slice(0,10) + "     " + quiz.expire_date.slice(11,16)+ " GMT"}
+                                </p>
+                            </div>
+                                  <StartTest 
+                                  title={quiz.title} 
+                                  des={quiz.desc}
+                                  start={quiz.start_date}
+                                  end={quiz.expire_date}
+                                  duration={quiz.duration}
+                                  instructions={quiz.instructions}
+                                  id={quiz.id}/>
+                            
                           </div>
-                                <StartTest 
-                                title={quiz.title} 
-                                des={quiz.desc}
-                                start={quiz.starttime}
-                                end={quiz.endtime}
+                            
+                            
+                          )
+                        })}
+                        
+                      </div>
+                      )}
+          
+                      {(activequiz.length == 0 && upcoming == false && attempted == false && missed == false && data.length > 0) && (
+                              <div className="active">
+                              <div className="active-active">
+                                  <p className="active-title">{data[index].name} - Active</p>
+                              </div>
+                              <div className="active-quiz">
+                                    <p className="empty">Currently no active quizzes to show.</p>
+                              </div>
+                            </div>
+                        )}
+          
+                    
+          
+                      {(upcomingquiz.length > 0 && active == false && attempted == false && missed == false && data.length > 0)  && (
+                        <div className="active">
+                        <div className="active-active">
+                            <p className="active-title">{data[index].name} - Upcoming</p>
+                        </div>
+                        {upcomingquiz.map((quiz,index) => {
+                          return (
+                            <div className="active-quiz">
+                              <div className="active-quiz-description">
+                                <p className="active-quiz-title">
+                                    {ReactHtmlParser(quiz.title)}
+                                  </p>
+                                  <p className="active-quiz-des">
+                                    {ReactHtmlParser(quiz.desc)}
+                                  </p>
+                                  {/* <b>Instructions</b> */}
+                                {/* <p className="instructions-box">
+                                  {ReactHtmlParser(quiz.instructions)}
+                                </p> */}
+                                  <p className="question-time">
+                                    Duration :  {quiz.duration} 
+                                  </p>
+                                  <p className="start">
+                                    Start Date : {quiz.start_date.slice(0,10) + "     " + quiz.start_date.slice(11,16) + " GMT"}
+                                  </p>
+                                  <p className="end">
+                                    End Date : {quiz.expire_date.slice(0,10) + "     " + quiz.expire_date.slice(11,16)+ " GMT"}
+                                  </p>
+                              </div>
+                              {/* <div className="view-result">
+                                <button className="view-result-button">View Result</button>
+                              </div> */}
+                            </div>
+                          )
+                        })}
+                        
+                      </div>
+                      )}
+          
+                        {(upcomingquiz.length == 0 && active == false && attempted == false && missed == false && data.length > 0) && (
+                              <div className="active">
+                                <div className="active-active">
+                                    <p className="active-title">{data[index].name} - Upcoming</p>
+                                </div>
+                                <div className="active-quiz">
+                                      <p className="empty">Currently no upcoming quizzes to show.</p>
+                              </div>
+                              </div>
+                        )}
+          
+                      
+                    
+          
+          
+                      {(missedquiz.length > 0 && active == false && attempted == false && upcoming == false && data.length > 0) && (
+                        <div className="active">
+                        <div className="active-active">
+                            <p className="active-title">{data[index].name} - Missed</p>
+                        </div>
+                        {missedquiz.map((quiz,index) => {
+                          return (
+                            <div className="active-quiz">
+                              <div className="active-quiz-description">
+                              <p className="active-quiz-title">
+                                    {ReactHtmlParser(quiz.title)}
+                                  </p>
+                                  <p className="active-quiz-des">
+                                    {ReactHtmlParser(quiz.desc)}
+                                  </p>
+                                  {/* <b>Instructions</b> */}
+                                {/* <p className="instructions-box">
+                                  {ReactHtmlParser(quiz.instructions)}
+                                </p> */}
+                                  <p className="question-time">
+                                    Duration :  {quiz.duration} 
+                                  </p>
+                                  <p className="start">
+                                    Start Date : {quiz.start_date.slice(0,10) + "     " + quiz.start_date.slice(11,16)+ " GMT"}
+                                  </p>
+                                  <p className="end">
+                                    End Date : {quiz.expire_date.slice(0,10) + "     " + quiz.expire_date.slice(11,16)+ " GMT"}
+                                  </p>
+                              </div>
+                                  <StartTest 
                                 duration={quiz.duration}
                                 instructions={quiz.instructions}
                                 id={quiz.id}/>
-                          
-                        </div>
-                          
-                          
-                        )
-                      })}
-                       
-                    </div>
-                    )}
-        
-                    {(activequiz.length == 0 && upcoming == false && attempted == false && missed == false && data.length > 0) && (
-                             <div className="active">
-                             <div className="active-active">
-                                 <p className="active-title">{data[index].name} - Active</p>
-                             </div>
-                             <div className="active-quiz">
-                                   <p className="empty">Currently no active quizzes to show.</p>
                             </div>
-                           </div>
+                          )
+                        })}
+                        
+          
+                      </div>
                       )}
-        
-                   
-        
-                    {(upcomingquiz.length > 0 && active == false && attempted == false && missed == false && data.length > 0)  && (
-                      <div className="active">
-                      <div className="active-active">
-                          <p className="active-title">{data[index].name} - Upcoming</p>
-                      </div>
-                      {upcomingquiz.map((quiz,index) => {
-                        return (
-                          <div className="active-quiz">
-                            <div className="active-quiz-description">
-                              <p className="active-quiz-title">
-                                  {ReactHtmlParser(quiz.title)}
-                                </p>
-                                <p className="active-quiz-des">
-                                  {ReactHtmlParser(quiz.desc)}
-                                </p>
-                                {/* <b>Instructions</b> */}
-                              {/* <p className="instructions-box">
-                                {ReactHtmlParser(quiz.instructions)}
-                              </p> */}
-                                <p className="question-time">
-                                  Duration :  {quiz.duration} 
-                                </p>
-                                <p className="start">
-                                  Start Date : {quiz.starttime.slice(0,10) + "     " + quiz.starttime.slice(11,16) + " GMT"}
-                                </p>
-                                <p className="end">
-                                  End Date : {quiz.endtime.slice(0,10) + "     " + quiz.endtime.slice(11,16)+ " GMT"}
-                                </p>
-                            </div>
-                            {/* <div className="view-result">
-                              <button className="view-result-button">View Result</button>
-                            </div> */}
-                          </div>
-                        )
-                      })}
-                      
-                    </div>
-                    )}
-        
-                      {(upcomingquiz.length == 0 && active == false && attempted == false && missed == false && data.length > 0) && (
-                            <div className="active">
-                              <div className="active-active">
-                                  <p className="active-title">{data[index].name} - Upcoming</p>
-                              </div>
-                              <div className="active-quiz">
-                                    <p className="empty">Currently no upcoming quizzes to show.</p>
-                             </div>
-                            </div>
-                      )}
-        
-                    
-                   
-        
-        
-                    {(missedquiz.length > 0 && active == false && attempted == false && upcoming == false && data.length > 0) && (
-                      <div className="active">
-                      <div className="active-active">
-                          <p className="active-title">{data[index].name} - Missed</p>
-                      </div>
-                      {missedquiz.map((quiz,index) => {
-                        return (
-                          <div className="active-quiz">
-                            <div className="active-quiz-description">
-                            <p className="active-quiz-title">
-                                  {ReactHtmlParser(quiz.title)}
-                                </p>
-                                <p className="active-quiz-des">
-                                  {ReactHtmlParser(quiz.desc)}
-                                </p>
-                                {/* <b>Instructions</b> */}
-                              {/* <p className="instructions-box">
-                                {ReactHtmlParser(quiz.instructions)}
-                              </p> */}
-                                <p className="question-time">
-                                  Duration :  {quiz.duration} 
-                                </p>
-                                <p className="start">
-                                  Start Date : {quiz.starttime.slice(0,10) + "     " + quiz.starttime.slice(11,16)+ " GMT"}
-                                </p>
-                                <p className="end">
-                                  End Date : {quiz.endtime.slice(0,10) + "     " + quiz.endtime.slice(11,16)+ " GMT"}
-                                </p>
-                            </div>
-                                <StartTest 
-                              duration={quiz.duration}
-                              instructions={quiz.instructions}
-                              id={quiz.id}/>
-                          </div>
-                        )
-                      })}
-                      
-        
-                    </div>
-                    )}
-        
-                      {(missedquiz.length == 0 && active == false && attempted == false && upcoming == false && data.length > 0) && (
-                             <div className="active">
-                              <div className="active-active">
-                                  <p className="active-title">{data[index].name} - Missed</p>
-                              </div>
-                              <div className="active-quiz">
-                                    <p className="empty">Currently no missed quizzes to show.</p>
-                              </div>
-                           </div>
-                       )}
-        
-                    
-                    {(attemptedquiz.length > 0 && active == false && missed == false && upcoming == false && data) && (
-                      <div className="active">
-                      <div className="active-active">
-                          <p className="active-title">{data[index].name} - Attempted</p>
-                      </div>
-                      {attemptedquiz.map((quiz,index) => {
-                        return (
-                          <div className="active-quiz">
-                            <div className="active-quiz-description">
-                              <p className="active-quiz-title">
-                                {ReactHtmlParser(quiz.title)}
-                              </p>
-                              <p className="active-quiz-des">
-                                {ReactHtmlParser(quiz.desc)}
-                              </p>
-                              {/* <b>Instructions</b> */}
-                              {/* <p className="instructions-box">
-                                {ReactHtmlParser(quiz.instructions)}
-                              </p> */}
-                              <p className="question-time">
-                                Duration :  {quiz.duration} 
-                              </p>
-                              <p className="start">
-                                Start Date : {quiz.starttime.slice(0,10) + "     " + quiz.starttime.slice(11,16)+ " GMT"}
-                              </p>
-                              <p className="end">
-                                End Date : {quiz.endtime.slice(0,10) + "     " + quiz.endtime.slice(11,16)+ " GMT"}
-                              </p>
-                            </div>
-                            { quiz.id && (
-                              <div className="view-result">
-                                <button className="view-result-button" 
-                                onClick={() => history.push(`/studentreport/${quiz.id}`)}>View Result</button>
-                            </div>
-                            )}
-                          </div>
-                        )
-                      })}
-                     
-                    </div>
-                    )}
-        
-                      {(attemptedquiz.length == 0 && active == false && missed == false && upcoming == false && data.length > 0) && (
-                             <div className="active">
+          
+                        {(missedquiz.length == 0 && active == false && attempted == false && upcoming == false && data.length > 0) && (
+                              <div className="active">
                                 <div className="active-active">
-                                    <p className="active-title">{data[index].name} - Attempted</p>
+                                    <p className="active-title">{data[index].name} - Missed</p>
                                 </div>
                                 <div className="active-quiz">
-                                      <p className="empty">Currently no attempted quizzes to show.</p>
+                                      <p className="empty">Currently no missed quizzes to show.</p>
                                 </div>
-                           </div>
-                       )}
+                            </div>
+                        )}
+          
+                      
+                      {(attemptedquiz.length > 0 && active == false && missed == false && upcoming == false && data) && (
+                        <div className="active">
+                        <div className="active-active">
+                            <p className="active-title">{data[index].name} - Attempted</p>
+                        </div>
+                        {attemptedquiz.map((quiz,index) => {
+                          return (
+                            <div className="active-quiz">
+                              <div className="active-quiz-description">
+                                <p className="active-quiz-title">
+                                  {ReactHtmlParser(quiz.title)}
+                                </p>
+                                <p className="active-quiz-des">
+                                  {ReactHtmlParser(quiz.desc)}
+                                </p>
+                                {/* <b>Instructions</b> */}
+                                {/* <p className="instructions-box">
+                                  {ReactHtmlParser(quiz.instructions)}
+                                </p> */}
+                                <p className="question-time">
+                                  Duration :  {quiz.duration} 
+                                </p>
+                                <p className="start">
+                                  Start Date : {quiz.start_date.slice(0,10) + "     " + quiz.start_date.slice(11,16)+ " GMT"}
+                                </p>
+                                <p className="end">
+                                  End Date : {quiz.expire_date.slice(0,10) + "     " + quiz.expire_date.slice(11,16)+ " GMT"}
+                                </p>
+                              </div>
+                              { quiz.id && (
+                                <div className="view-result">
+                                  <button className="view-result-button" 
+                                  onClick={() => history.push(`/studentreport/${quiz.id}`)}>View Result</button>
+                              </div>
+                              )}
+                            </div>
+                          )
+                        })}
+                      
+                      </div>
+                      )}
+          
+                        {(attemptedquiz.length == 0 && active == false && missed == false && upcoming == false && data.length > 0) && (
+                              <div className="active">
+                                  <div className="active-active">
+                                      <p className="active-title">{data[index].name} - Attempted</p>
+                                  </div>
+                                  <div className="active-quiz">
+                                        <p className="empty">Currently no attempted quizzes to show.</p>
+                                  </div>
+                            </div>
+                        )}
+                    </div>
+                    
                   </div>
-                  
-                </div>
-                
-            </div>
-      )}
+              </div>
+        )}
+        </div>)
+      }
 
-                {/* {loading  && (
-                  <div className="quizquestion-loader">
-                    <Loader />
-                  </div>
-                )} */}
-    </div>
-    
-   
-    
+    </>
   )
 }
 

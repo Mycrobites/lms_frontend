@@ -59,7 +59,7 @@ const SideBar = ({ active }) => {
         <div id={active === "achievement" ? "active" : ""} className="menu">
           <Link to="/achievement">
             <EmojiEventsOutlinedIcon />
-            Achievements
+            My Quiz
           </Link>
         </div>
         <div id={active === "forum" ? "active" : ""} className="forum menu">

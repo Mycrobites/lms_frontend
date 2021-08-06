@@ -45,12 +45,13 @@ function Quizzes() {
   const mountedRef = useRef(true);
 
   const fetchquizzes = async() => {
+    console.log(userDetails)
     try {
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.access}` },
+        headers: { Authorization: `Bearer ${userDetails.key}` },
       };
       setLoading(true);
-      const { data } = await axios.get(`api/get-all-quizes/${userDetails.user_id}`, config);
+      const { data } = await axios.get(`api/get-all-quizes/${userDetails.user.pk}`, config);
       setAttemptedQuiz(data[groupnumber]["attempted"]);
       setMissed(data[groupnumber]["missed"]);
       setUpcoming(data[groupnumber]["upcoming"]);
@@ -214,10 +215,10 @@ function Quizzes() {
                             <div className="active-quiz">
                             <div className="active-quiz-description">
                               <p className="active-quiz-title">
-                                  {ReactHtmlParser(quiz.title)}
+                                  {ReactHtmlParser(quiz.quiz_name)}
                                 </p>
                                 <p className="active-quiz-des">
-                                  {ReactHtmlParser(quiz.desc)}
+                                  {ReactHtmlParser(quiz.description)}
                                 </p>
                                 {/* <b>Instructions</b>
                               <p className="instructions-box">
@@ -234,8 +235,8 @@ function Quizzes() {
                                 </p>
                             </div>
                                   <StartTest 
-                                  title={quiz.title} 
-                                  des={quiz.desc}
+                                  title={quiz.quiz_name} 
+                                  des={quiz.description}
                                   start={quiz.start_date}
                                   end={quiz.expire_date}
                                   duration={quiz.duration}
@@ -274,10 +275,10 @@ function Quizzes() {
                             <div className="active-quiz">
                               <div className="active-quiz-description">
                                 <p className="active-quiz-title">
-                                    {ReactHtmlParser(quiz.title)}
+                                    {ReactHtmlParser(quiz.quiz_name)}
                                   </p>
                                   <p className="active-quiz-des">
-                                    {ReactHtmlParser(quiz.desc)}
+                                    {ReactHtmlParser(quiz.description)}
                                   </p>
                                   {/* <b>Instructions</b> */}
                                 {/* <p className="instructions-box">
@@ -314,10 +315,6 @@ function Quizzes() {
                               </div>
                         )}
           
-                      
-                    
-          
-          
                       {(missedquiz.length > 0 && active == false && attempted == false && upcoming == false && data.length > 0) && (
                         <div className="active">
                         <div className="active-active">
@@ -328,10 +325,10 @@ function Quizzes() {
                             <div className="active-quiz">
                               <div className="active-quiz-description">
                               <p className="active-quiz-title">
-                                    {ReactHtmlParser(quiz.title)}
+                                    {ReactHtmlParser(quiz.quiz_name)}
                                   </p>
                                   <p className="active-quiz-des">
-                                    {ReactHtmlParser(quiz.desc)}
+                                    {ReactHtmlParser(quiz.description)}
                                   </p>
                                   {/* <b>Instructions</b> */}
                                 {/* <p className="instructions-box">
@@ -354,8 +351,7 @@ function Quizzes() {
                             </div>
                           )
                         })}
-                        
-          
+
                       </div>
                       )}
           
@@ -381,10 +377,10 @@ function Quizzes() {
                             <div className="active-quiz">
                               <div className="active-quiz-description">
                                 <p className="active-quiz-title">
-                                  {ReactHtmlParser(quiz.title)}
+                                  {ReactHtmlParser(quiz.quiz_name)}
                                 </p>
                                 <p className="active-quiz-des">
-                                  {ReactHtmlParser(quiz.desc)}
+                                  {ReactHtmlParser(quiz.description)}
                                 </p>
                                 {/* <b>Instructions</b> */}
                                 {/* <p className="instructions-box">

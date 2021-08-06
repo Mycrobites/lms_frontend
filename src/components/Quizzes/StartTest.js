@@ -19,10 +19,10 @@ function StartTest({instructions,duration,id}) {
     try {
       addQuiz(id, duration, test_time, instructions);
       const config = {
-        headers: { Authorization: `Bearer ${userDetails.access}` },
+        headers: { Authorization: `Bearer ${userDetails.key}` },
       };
       const postData = {
-        user: userDetails.user_id,
+        user: userDetails.user.pk,
         quiz: id,
       };
       const { data } = await axios.post(
@@ -32,7 +32,7 @@ function StartTest({instructions,duration,id}) {
       );
       console.log(data);
       setIsLoading(false);
-      history.push(`/instruction/${id}`);
+      history.push(`/quiz/${id}`)
     } catch (err) {
       setIsLoading(false);
       alert("You have already attempted the test!");
@@ -41,14 +41,14 @@ function StartTest({instructions,duration,id}) {
   };
     return (
         <div>
-                    <div className="view-result">
-                      <button className="view-result-button" onClick={handleClick}>Start Test</button>
-                    </div>
-                    {isLoading && (
-                        <div className="quizquestion-loader">
-                        <Loader />
-                        </div>
-                    )}
+          <div className="view-result">
+            <button className="view-result-button" onClick={handleClick}>Start Test</button>
+          </div>
+          {isLoading && (
+              <div className="quizquestion-loader">
+              <Loader />
+              </div>
+          )}
          </div>
     )
 }
